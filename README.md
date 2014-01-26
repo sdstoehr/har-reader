@@ -11,6 +11,6 @@ Read HTTP Archives with Java.
 </dependency>
 ```
 
-[![Build Status](https://travis-ci.org/sdstoehr/har-reader.png?branch=master)](https://travis-ci.org/sdstoehr/har-reader.png)
-[![Coverage Status](https://coveralls.io/repos/sdstoehr/har-reader.png/badge.png?branch=master)](https://coveralls.io/r/sdstoehr/har-reader.png?branch=master)
+[![Build Status](https://travis-ci.org/sdstoehr/har-reader.png?branch=master)](https://travis-ci.org/sdstoehr/har-reader)
+[![Coverage Status](https://coveralls.io/repos/sdstoehr/har-reader/badge.png?branch=master)](https://coveralls.io/r/sdstoehr/har-reader?branch=master)
 
