@@ -109,6 +109,9 @@ public class HarCache {
         }
 
         public void seteTag(String eTag) {
+            if (eTag == null) {
+                throw new IllegalArgumentException("ETag must not be null!");
+            }
             this.eTag = eTag;
         }
 
