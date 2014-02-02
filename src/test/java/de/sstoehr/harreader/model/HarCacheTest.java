@@ -30,6 +30,9 @@ public class HarCacheTest extends AbstractMapperTest<HarCache> {
 
         Assert.assertEquals("my comment 2", cache.getComment());
 
+        cache = map(UNKNOWN_PROPERTY, HarCache.class);
+        Assert.assertNotNull(cache);
+
     }
 
     @Test(expected = IllegalArgumentException.class)
