@@ -21,4 +21,9 @@ public class HttpStatusTest {
     public void testInvalidText() {
         HttpStatus.getByText("Not a HTTP status");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testTextNull() {
+        HttpStatus.getByText(null);
+    }
 }

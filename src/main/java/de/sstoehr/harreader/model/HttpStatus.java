@@ -1,5 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum HttpStatus {
 
     OK(200, "OK"), CREATED(201, "Created"), ACCEPTED(202, "Accepted"), NO_CONTENT(204, "No Content"), RESET_CONTENT(205, "Reset Content"),
@@ -20,6 +23,17 @@ public enum HttpStatus {
     BAD_GATEWAY(502, "Bad Gateway"), SERVICE_UNAVAILABLE(503, "Service Unavailable"), GATEWAY_TIMEOUT(504, "Gateway Timeout"),
     HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported");
 
+    private static final Map<String, HttpStatus> TEXT_MAP = new HashMap<>();
+    private static final Map<Integer, HttpStatus> CODE_MAP = new HashMap<>();
+
+    static {
+        for (HttpStatus status : HttpStatus.values()) {
+            TEXT_MAP.put(status.getText().toLowerCase(), status);
+            CODE_MAP.put(status.getCode(), status);
+        }
+        TEXT_MAP.put("moved temporarily", HttpStatus.FOUND);
+    }
+
     private int code;
     private String text;
 
@@ -37,23 +51,21 @@ public enum HttpStatus {
     }
 
     public static HttpStatus getByCode(int code) {
-        for (HttpStatus httpStatus : HttpStatus.values()) {
-            if (httpStatus.getCode() == code) {
-                return httpStatus;
-            }
+        HttpStatus status = CODE_MAP.get(code);
+        if (status == null) {
+            throw new IllegalArgumentException("Unknown HttpStatus: " + code + ".");
         }
-        throw new IllegalArgumentException("Unknown HttpStatus: " + code + ".");
+        return status;
     }
 
     public static HttpStatus getByText(String text) {
-        if (text.equalsIgnoreCase("Moved Temporarily")) {
-            return HttpStatus.FOUND;
+        if (text == null) {
+            throw new IllegalArgumentException("Unknown HttpStatus: " + text + ".");
         }
-        for (HttpStatus httpStatus : HttpStatus.values()) {
-            if (httpStatus.getText().equalsIgnoreCase(text)) {
-                return httpStatus;
-            }
+        HttpStatus status = TEXT_MAP.get(text.toLowerCase());
+        if (status == null) {
+            throw new IllegalArgumentException("Unknown HttpStatus: " + text + ".");
         }
-        throw new IllegalArgumentException("Unknown HttpStatus: " + text + ".");
+        return status;
     }
 }
