@@ -1,7 +1,7 @@
 HAR reader
 ==========
 
-Read [HTTP Archives](www.softwareishard.com/blog/har-12-spec/) with Java.
+Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 
 ```
 <dependency>
