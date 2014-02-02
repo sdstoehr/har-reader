@@ -14,4 +14,10 @@ public class HarReaderTest {
         Har har = HarReader.fromFile(harFile);
         Assert.assertNotNull(har);
     }
+
+    @Test
+    public void missingLog() throws HarReaderException {
+        Har har = HarReader.fromString("{\"unknown\":\"!\"}");
+        Assert.assertNotNull(har);
+    }
 }
