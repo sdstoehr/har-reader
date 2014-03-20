@@ -28,3 +28,5 @@ Reading HAR from String:
 ```
 Har har = HarReader.fromString("{ ... HAR-JSON-Data ... }");
 ```
+
+![Piwik](http://analytics.sstoehr.de/piwik.php?idsite=5&rec=1&action_name=har-reader)
