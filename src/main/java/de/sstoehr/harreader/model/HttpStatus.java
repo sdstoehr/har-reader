@@ -8,7 +8,7 @@ public enum HttpStatus {
     OK(200, "OK"), CREATED(201, "Created"), ACCEPTED(202, "Accepted"), NO_CONTENT(204, "No Content"), RESET_CONTENT(205, "Reset Content"),
     PARTIAL_CONTENT(206, "Partial Content"),
 
-    MOVED_PERMANENTLY(301, "Moved Permanently"), FOUND(302, "Found"), SEE_OTHER(303, "See Other"), NOT_MODIFIED(304, "Not Modified"),
+    MOVED_PERMANENTLY(301, "Moved Permanently"), FOUND(302, "Found", "Object Moved", "Moved temporarily"), SEE_OTHER(303, "See Other"), NOT_MODIFIED(304, "Not Modified"),
     USE_PROXY(305, "Use Proxy"), TEMPORARY_REDIRECT(307, "Temporary Redirect"),
 
     BAD_REQUEST(400, "Bad Request"), UNAUTHORIZED(401, "Unauthorized"), PAYMENT_REQUIRED(402, "Payment Required"), FORBIDDEN(403, "Forbidden"),
@@ -28,16 +28,17 @@ public enum HttpStatus {
 
     static {
         for (HttpStatus status : HttpStatus.values()) {
-            TEXT_MAP.put(status.getText().toLowerCase(), status);
+            for (String text : status.getText()) {
+                TEXT_MAP.put(text.toLowerCase(), status);
+            }
             CODE_MAP.put(status.getCode(), status);
         }
-        TEXT_MAP.put("moved temporarily", HttpStatus.FOUND);
     }
 
     private int code;
-    private String text;
+    private String[] text;
 
-    private HttpStatus(int code, String text) {
+    private HttpStatus(int code, String... text) {
         this.code = code;
         this.text = text;
     }
@@ -46,7 +47,7 @@ public enum HttpStatus {
         return code;
     }
 
-    public String getText() {
+    public String[] getText() {
         return text;
     }
 

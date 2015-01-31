@@ -1,10 +1,18 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Information about a performed request.
+ * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#request">specification</a>
+ */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HarRequest {
 
     private HttpMethod method;
@@ -18,6 +26,7 @@ public class HarRequest {
     private Long bodySize;
     private String comment;
 
+    @NotNull
     public HttpMethod getMethod() {
         return method;
     }
@@ -26,6 +35,7 @@ public class HarRequest {
         this.method = method;
     }
 
+    @NotNull
     public String getUrl() {
         return url;
     }
@@ -34,6 +44,7 @@ public class HarRequest {
         this.url = url;
     }
 
+    @NotNull
     public String getHttpVersion() {
         return httpVersion;
     }
@@ -42,6 +53,7 @@ public class HarRequest {
         this.httpVersion = httpVersion;
     }
 
+    @NotNull
     public List<HarCookie> getCookies() {
         return cookies;
     }
@@ -50,6 +62,7 @@ public class HarRequest {
         this.cookies = cookies;
     }
 
+    @NotNull
     public List<HarHeader> getHeaders() {
         return headers;
     }
@@ -58,6 +71,8 @@ public class HarRequest {
         this.headers = headers;
     }
 
+    @NotNull
+    @Valid
     public List<HarQueryParam> getQueryString() {
         return queryString;
     }
@@ -66,6 +81,7 @@ public class HarRequest {
         this.queryString = queryString;
     }
 
+    @Valid
     public HarPostData getPostData() {
         return postData;
     }
@@ -74,6 +90,7 @@ public class HarRequest {
         this.postData = postData;
     }
 
+    @NotNull
     public Long getHeadersSize() {
         return headersSize;
     }
@@ -82,6 +99,7 @@ public class HarRequest {
         this.headersSize = headersSize;
     }
 
+    @NotNull
     public Long getBodySize() {
         return bodySize;
     }
@@ -90,6 +108,9 @@ public class HarRequest {
         this.bodySize = bodySize;
     }
 
+    /**
+     * @return Comment provided by the user or application, may be null.
+     */
     public String getComment() {
         return comment;
     }

@@ -10,6 +10,7 @@ public class HttpStatusTest {
         Assert.assertEquals(HttpStatus.FOUND, HttpStatus.getByCode(302));
         Assert.assertEquals(HttpStatus.FOUND, HttpStatus.getByText("fOUnd"));
         Assert.assertEquals(HttpStatus.FOUND, HttpStatus.getByText("Moved temporarily"));
+        Assert.assertEquals(HttpStatus.FOUND, HttpStatus.getByText("Object moved"));
     }
 
     @Test(expected = IllegalArgumentException.class)

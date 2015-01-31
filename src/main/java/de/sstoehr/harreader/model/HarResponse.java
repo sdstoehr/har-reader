@@ -26,7 +26,11 @@ public class HarResponse {
     }
 
     public String getStatusText() {
-        return status.getText();
+        String[] text = status.getText();
+        if (text == null || text.length == 0) {
+            return null;
+        }
+        return text[0];
     }
 
     public void setStatusText(String statusText) {
