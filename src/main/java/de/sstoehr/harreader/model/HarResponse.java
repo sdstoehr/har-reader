@@ -8,6 +8,7 @@ import java.util.List;
 public class HarResponse {
 
     private HttpStatus status;
+    private String statusText;
     private String httpVersion;
     private List<HarCookie> cookies;
     private List<HarHeader> headers;
@@ -22,19 +23,15 @@ public class HarResponse {
     }
 
     public void setStatus(int status) {
-        this.status = HttpStatus.getByCode(status);
+        this.status = HttpStatus.byCode(status);
     }
 
     public String getStatusText() {
-        String[] text = status.getText();
-        if (text == null || text.length == 0) {
-            return null;
-        }
-        return text[0];
+        return statusText;
     }
 
     public void setStatusText(String statusText) {
-        this.status = HttpStatus.getByText(statusText);
+        this.statusText = statusText;
     }
 
     public String getHttpVersion() {

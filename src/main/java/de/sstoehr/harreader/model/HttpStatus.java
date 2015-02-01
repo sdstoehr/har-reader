@@ -5,53 +5,43 @@ import java.util.Map;
 
 public enum HttpStatus {
 
-    OK(200, "OK"), CREATED(201, "Created"), ACCEPTED(202, "Accepted"), NO_CONTENT(204, "No Content"), RESET_CONTENT(205, "Reset Content"),
-    PARTIAL_CONTENT(206, "Partial Content"),
+    OK(200), CREATED(201), ACCEPTED(202), NO_CONTENT(204), RESET_CONTENT(205),
+    PARTIAL_CONTENT(206),
 
-    MOVED_PERMANENTLY(301, "Moved Permanently"), FOUND(302, "Found", "Object Moved", "Moved temporarily"), SEE_OTHER(303, "See Other"), NOT_MODIFIED(304, "Not Modified"),
-    USE_PROXY(305, "Use Proxy"), TEMPORARY_REDIRECT(307, "Temporary Redirect"),
+    MOVED_PERMANENTLY(301), FOUND(302), SEE_OTHER(303), NOT_MODIFIED(304),
+    USE_PROXY(305), TEMPORARY_REDIRECT(307),
 
-    BAD_REQUEST(400, "Bad Request"), UNAUTHORIZED(401, "Unauthorized"), PAYMENT_REQUIRED(402, "Payment Required"), FORBIDDEN(403, "Forbidden"),
-    NOT_FOUND(404, "Not Found"), METHOD_NOT_ALLOWED(405, "Method Not Allowed"), NOT_ACCEPTABLE(406, "Not Acceptable"),
-    PROXY_AUTHENTICATION_REQUIRED(407, "Proxy Authentication Required"), REQUEST_TIMEOUT(408, "Request Timeout"),
-    CONFLICT(409, "Conflict"), GONE(410, "Gone"), LENGTH_REQUIRED(411, "Length Required"), PRECONDITION_FAILED(412, "Precondition Failed"),
-    REQUEST_ENTITY_TOO_LARGE(413, "Request Entity Too Large"), REQUEST_URI_TOO_LONG(414, "Request-URI Too Long"),
-    UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type"), REQUESTED_RANGE_NOT_SATISFIABLE(416, "Requested Range Not Satisfiable"),
-    EXPECTATION_FAILED(417, "Expectation Failed"),
+    BAD_REQUEST(400), UNAUTHORIZED(401), PAYMENT_REQUIRED(402), FORBIDDEN(403),
+    NOT_FOUND(404), METHOD_NOT_ALLOWED(405), NOT_ACCEPTABLE(406),
+    PROXY_AUTHENTICATION_REQUIRED(407), REQUEST_TIMEOUT(408),
+    CONFLICT(409), GONE(410), LENGTH_REQUIRED(411), PRECONDITION_FAILED(412),
+    REQUEST_ENTITY_TOO_LARGE(413), REQUEST_URI_TOO_LONG(414),
+    UNSUPPORTED_MEDIA_TYPE(415), REQUESTED_RANGE_NOT_SATISFIABLE(416),
+    EXPECTATION_FAILED(417),
 
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error"), NOT_IMPLEMENTED(501, "Not Implemented"),
-    BAD_GATEWAY(502, "Bad Gateway"), SERVICE_UNAVAILABLE(503, "Service Unavailable"), GATEWAY_TIMEOUT(504, "Gateway Timeout"),
-    HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported");
+    INTERNAL_SERVER_ERROR(500), NOT_IMPLEMENTED(501),
+    BAD_GATEWAY(502), SERVICE_UNAVAILABLE(503), GATEWAY_TIMEOUT(504),
+    HTTP_VERSION_NOT_SUPPORTED(505);
 
-    private static final Map<String, HttpStatus> TEXT_MAP = new HashMap<>();
     private static final Map<Integer, HttpStatus> CODE_MAP = new HashMap<>();
 
     static {
         for (HttpStatus status : HttpStatus.values()) {
-            for (String text : status.getText()) {
-                TEXT_MAP.put(text.toLowerCase(), status);
-            }
             CODE_MAP.put(status.getCode(), status);
         }
     }
 
     private int code;
-    private String[] text;
 
-    private HttpStatus(int code, String... text) {
+    private HttpStatus(int code) {
         this.code = code;
-        this.text = text;
     }
 
     public int getCode() {
         return code;
     }
 
-    public String[] getText() {
-        return text;
-    }
-
-    public static HttpStatus getByCode(int code) {
+    public static HttpStatus byCode(int code) {
         HttpStatus status = CODE_MAP.get(code);
         if (status == null) {
             throw new IllegalArgumentException("Unknown HttpStatus: " + code + ".");
@@ -59,14 +49,4 @@ public enum HttpStatus {
         return status;
     }
 
-    public static HttpStatus getByText(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Unknown HttpStatus: " + text + ".");
-        }
-        HttpStatus status = TEXT_MAP.get(text.toLowerCase());
-        if (status == null) {
-            throw new IllegalArgumentException("Unknown HttpStatus: " + text + ".");
-        }
-        return status;
-    }
 }
