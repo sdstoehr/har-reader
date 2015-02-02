@@ -5,4 +5,4 @@ jdk:
   - oraclejdk8
 script: "mvn verify -B"
 after_success:
-  - mvn test jacoco:report coveralls:jacoco
+  - mvn cobertura:cobertura coveralls:report
