@@ -56,7 +56,7 @@ public class HarContent {
     public String getMimeType() {
         return mimeType;
     }
-    
+
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
     }

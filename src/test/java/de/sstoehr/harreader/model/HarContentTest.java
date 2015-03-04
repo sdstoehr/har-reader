@@ -27,9 +27,4 @@ public class HarContentTest extends AbstractMapperTest<HarContent> {
         content.setSize(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMimeTypeNull() {
-        HarContent content = new HarContent();
-        content.setMimeType(null);
-    }
 }
