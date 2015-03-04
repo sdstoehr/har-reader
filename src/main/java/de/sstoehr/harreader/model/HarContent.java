@@ -1,9 +1,9 @@
 package de.sstoehr.harreader.model;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Information about the response's content.
@@ -56,14 +56,8 @@ public class HarContent {
     public String getMimeType() {
         return mimeType;
     }
-
-    /**
-     * @throws java.lang.IllegalArgumentException if mimeType is null.
-     */
+    
     public void setMimeType(String mimeType) {
-        if (mimeType == null) {
-            throw new IllegalArgumentException("MIME-Type must not be null!");
-        }
         this.mimeType = mimeType;
     }
 
