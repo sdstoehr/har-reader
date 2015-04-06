@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum HttpStatus {
 
-    MISSING(0),
+    UNKNOWN_HTTP_STATUS(0),
 
     OK(200), CREATED(201), ACCEPTED(202), NO_CONTENT(204), RESET_CONTENT(205),
     PARTIAL_CONTENT(206),
@@ -46,7 +46,7 @@ public enum HttpStatus {
     public static HttpStatus byCode(int code) {
         HttpStatus status = CODE_MAP.get(code);
         if (status == null) {
-            throw new IllegalArgumentException("Unknown HttpStatus: " + code + ".");
+            return UNKNOWN_HTTP_STATUS;
         }
         return status;
     }

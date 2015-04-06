@@ -10,9 +10,11 @@ public class HttpStatusTest {
         Assert.assertEquals(HttpStatus.FOUND, HttpStatus.byCode(302));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidCode() {
-        HttpStatus.byCode(1000);
+        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(0));
+        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(1000));
+        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(-999));
     }
 
 }
