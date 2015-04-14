@@ -13,6 +13,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 
 [![Build Status](https://travis-ci.org/sdstoehr/har-reader.png?branch=master)](https://travis-ci.org/sdstoehr/har-reader)
 [![Coverage Status](https://coveralls.io/repos/sdstoehr/har-reader/badge.png?branch=master)](https://coveralls.io/r/sdstoehr/har-reader?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/de.sstoehr/har-reader.svg)](http://mvnrepository.com/artifact/de.sstoehr/har-reader)
 
 ## Usage
 
