@@ -10,6 +10,9 @@ import de.sstoehr.harreader.model.Har;
 
 public class HarReader {
 
+    private HarReader() {
+    }
+
     public static Har fromFile(File har) throws HarReaderException {
         return fromFile(har, HarReaderMode.STRICT);
     }
