@@ -11,7 +11,11 @@ import de.sstoehr.harreader.model.Har;
 public class HarReader {
 
     public static Har fromFile(File har) throws HarReaderException {
-        ObjectMapper mapper = MapperFactory.instance();
+        return fromFile(har, HarReaderMode.STRICT);
+    }
+
+    public static Har fromFile(File har, HarReaderMode mode) throws HarReaderException {
+        ObjectMapper mapper = MapperFactory.instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {
@@ -20,7 +24,11 @@ public class HarReader {
     }
 
     public static Har fromString(String har) throws HarReaderException {
-        ObjectMapper mapper = MapperFactory.instance();
+        return fromString(har, HarReaderMode.STRICT);
+    }
+
+    public static Har fromString(String har, HarReaderMode mode) throws HarReaderException {
+        ObjectMapper mapper = MapperFactory.instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {

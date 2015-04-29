@@ -1,4 +1,5 @@
 package de.sstoehr.harreader.jackson;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -6,7 +7,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+
 public class ExceptionIgnoringDateDeserializer extends JsonDeserializer<Date> {
+
     @Override
     public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws java.io.IOException {
         try {
@@ -15,6 +18,7 @@ public class ExceptionIgnoringDateDeserializer extends JsonDeserializer<Date> {
         } catch (IOException e) {
             //ignore
         }
-        return new Date();
+        return new Date(0L);
     }
+
 }

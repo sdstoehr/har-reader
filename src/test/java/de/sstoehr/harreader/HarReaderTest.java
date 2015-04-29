@@ -22,10 +22,16 @@ public class HarReaderTest {
         Assert.assertNotNull(har);
     }
 
-    @Test
-    public void invalidDate() throws HarReaderException {
+    @Test(expected = HarReaderException.class)
+    public void invalidDateStrict() throws HarReaderException {
         File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
         Har har = HarReader.fromFile(harFile);
+    }
+
+    @Test
+    public void invalidDateLax() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
+        Har har = HarReader.fromFile(harFile, HarReaderMode.LAX);
         Assert.assertNotNull(har);
     }
 }
