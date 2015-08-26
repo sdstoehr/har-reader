@@ -14,6 +14,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Jackson date parser is poor at parsing dates, especially given the date formats used in HTTP is very
+ * forgiving. This class contains few more parsing formats to handle that. It may still need some work
+ * before it can parse all dates though.
+ */
 public class HttpDateDeserializer extends DateDeserializers.DateDeserializer {
 
   private HarReaderMode harReaderMode;
@@ -25,18 +30,17 @@ public class HttpDateDeserializer extends DateDeserializers.DateDeserializer {
       "EEE',' dd-MMM-YYYY HH:mm:ss 'GMT" // Tue, 25-Aug-2015 16:01:35 GMT
   };
 
-  public HttpDateDeserializer(HarReaderMode harReaderMode) {
-    this.harReaderMode = harReaderMode;
-    initializeDateFormats();
+  protected final static DateTimeFormatter[] DATE_FORMATTERS;
+
+  static {
+    DATE_FORMATTERS = new DateTimeFormatter[ALL_DATE_FORMATS.length];
+    for (int i = 0; i < ALL_DATE_FORMATS.length; i++) {
+      DATE_FORMATTERS[i] = withLocalTZ(ALL_DATE_FORMATS[i]);
+    }
   }
 
-  protected DateTimeFormatter[] dateFormats;
-
-  protected void initializeDateFormats() {
-    dateFormats = new DateTimeFormatter[ALL_DATE_FORMATS.length];
-    for (int i = 0; i < ALL_DATE_FORMATS.length; i++) {
-      dateFormats[i] = withLocalTZ(ALL_DATE_FORMATS[i]);
-    }
+  public HttpDateDeserializer(HarReaderMode harReaderMode) {
+    this.harReaderMode = harReaderMode;
   }
 
   protected static DateTimeFormatter withLocalTZ(String dateFormat) {
@@ -53,7 +57,7 @@ public class HttpDateDeserializer extends DateDeserializers.DateDeserializer {
       try {
         return super.deserialize(jp, ctxt);
       } catch (IOException defaultTimeParserException) {
-        for (DateTimeFormatter dateFormat : dateFormats) {
+        for (DateTimeFormatter dateFormat : DATE_FORMATTERS) {
           try {
             return dateFormat.parseDateTime(dateStr).toDate();
           } catch (Exception e) {
