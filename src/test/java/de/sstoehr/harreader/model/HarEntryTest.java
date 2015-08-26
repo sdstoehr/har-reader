@@ -33,8 +33,8 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
         Assert.assertNotNull(entry);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testStartedDateTimeNull() {
+    @Test
+    public void testStartedDateTimeCouldBeNull() {
         HarEntry entry = new HarEntry();
         entry.setStartedDateTime(null);
     }

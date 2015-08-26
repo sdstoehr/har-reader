@@ -42,18 +42,11 @@ public class HarEntry {
      * @return Start time of request.
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @NotNull
     public Date getStartedDateTime() {
         return startedDateTime;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if startedDateTime is null.
-     */
     public void setStartedDateTime(Date startedDateTime) {
-        if (startedDateTime == null) {
-            throw new IllegalArgumentException("StartedDateTime must not be null!");
-        }
         this.startedDateTime = startedDateTime;
     }
 
