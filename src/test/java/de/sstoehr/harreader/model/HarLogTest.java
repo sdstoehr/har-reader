@@ -55,6 +55,13 @@ public class HarLogTest extends AbstractMapperTest<HarLog> {
         Assert.assertNotNull(log.getCreator());
     }
 
+    @Test
+    public void testBrowserNull() {
+        HarLog log = new HarLog();
+        log.setBrowser(null);
+        Assert.assertNotNull(log.getBrowser());
+    }
+
     @Override
     public void testMapping() {
         HarLog log = map("{\"creator\": {}, \"browser\": {}, \"comment\": \"My comment\"}", HarLog.class);

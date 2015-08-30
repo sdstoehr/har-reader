@@ -14,6 +14,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarRequest {
 
+    protected static final Long DEFAULT_SIZE = -1L;
+
     private HttpMethod method;
     private String url;
     private String httpVersion;
@@ -25,6 +27,9 @@ public class HarRequest {
     private Long bodySize;
     private String comment;
 
+    /**
+     * @return Request method, null if not present.
+     */
     public HttpMethod getMethod() {
         return method;
     }
@@ -33,6 +38,9 @@ public class HarRequest {
         this.method = method;
     }
 
+    /**
+     * @return Absolute URL of the request (fragments are not included), null if not present.
+     */
     public String getUrl() {
         return url;
     }
@@ -41,6 +49,9 @@ public class HarRequest {
         this.url = url;
     }
 
+    /**
+     * @return Request HTTP Version, null if not present.
+     */
     public String getHttpVersion() {
         return httpVersion;
     }
@@ -49,6 +60,9 @@ public class HarRequest {
         this.httpVersion = httpVersion;
     }
 
+    /**
+     * @return List of cookie objects.
+     */
     public List<HarCookie> getCookies() {
         if (cookies == null) {
             cookies = new ArrayList<>();
@@ -60,6 +74,9 @@ public class HarRequest {
         this.cookies = cookies;
     }
 
+    /**
+     * @return List of header objects.
+     */
     public List<HarHeader> getHeaders() {
         if (headers == null) {
             headers = new ArrayList<>();
@@ -71,6 +88,9 @@ public class HarRequest {
         this.headers = headers;
     }
 
+    /**
+     * @return List of query parameter objects.
+     */
     public List<HarQueryParam> getQueryString() {
         if (queryString == null) {
             queryString = new ArrayList<>();
@@ -82,7 +102,13 @@ public class HarRequest {
         this.queryString = queryString;
     }
 
+    /**
+     * @return Posted data info.
+     */
     public HarPostData getPostData() {
+        if (postData == null) {
+            postData = new HarPostData();
+        }
         return postData;
     }
 
@@ -90,7 +116,14 @@ public class HarRequest {
         this.postData = postData;
     }
 
+    /**
+     * @return Total number of bytes from the start of the HTTP request message until (and including) the double
+     * CRLF before the body. {@link #DEFAULT_SIZE} if the info is not available.
+     */
     public Long getHeadersSize() {
+        if (headersSize == null) {
+            return DEFAULT_SIZE;
+        }
         return headersSize;
     }
 
@@ -98,7 +131,14 @@ public class HarRequest {
         this.headersSize = headersSize;
     }
 
+    /**
+     * @return Size of the request body (POST data payload) in bytes.
+     * {@link #DEFAULT_SIZE} if the info is not available.
+     */
     public Long getBodySize() {
+        if (bodySize == null) {
+            return DEFAULT_SIZE;
+        }
         return bodySize;
     }
 
@@ -107,7 +147,7 @@ public class HarRequest {
     }
 
     /**
-     * @return Comment provided by the user or application.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

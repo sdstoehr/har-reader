@@ -36,4 +36,8 @@ public class HarReaderTest {
         Assert.assertNotNull(har);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void mapperFactoryNotNull() {
+        new HarReader(null);
+    }
 }

@@ -10,6 +10,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarResponse {
 
+    protected static final Long DEFAULT_SIZE = -1L;
+
     private HttpStatus status;
     private String statusText;
     private String httpVersion;
@@ -21,7 +23,13 @@ public class HarResponse {
     private Long bodySize;
     private String comment;
 
+    /**
+     * @return Response status, null if not present.
+     */
     public int getStatus() {
+        if (status == null) {
+            status = HttpStatus.UNKNOWN_HTTP_STATUS;
+        }
         return status.getCode();
     }
 
@@ -29,6 +37,9 @@ public class HarResponse {
         this.status = HttpStatus.byCode(status);
     }
 
+    /**
+     * @return Response status description, null if not present.
+     */
     public String getStatusText() {
         return statusText;
     }
@@ -37,6 +48,9 @@ public class HarResponse {
         this.statusText = statusText;
     }
 
+    /**
+     * @return Response HTTP Version, null if not present.
+     */
     public String getHttpVersion() {
         return httpVersion;
     }
@@ -45,6 +59,9 @@ public class HarResponse {
         this.httpVersion = httpVersion;
     }
 
+    /**
+     * @return List of cookie objects.
+     */
     public List<HarCookie> getCookies() {
         if (cookies == null) {
             cookies = new ArrayList<>();
@@ -56,6 +73,9 @@ public class HarResponse {
         this.cookies = cookies;
     }
 
+    /**
+     * @return List of header objects.
+     */
     public List<HarHeader> getHeaders() {
         if (headers == null) {
             headers = new ArrayList<>();
@@ -67,7 +87,13 @@ public class HarResponse {
         this.headers = headers;
     }
 
+    /**
+     * @return Details about the response body.
+     */
     public HarContent getContent() {
+        if (content == null) {
+            content = new HarContent();
+        }
         return content;
     }
 
@@ -75,6 +101,9 @@ public class HarResponse {
         this.content = content;
     }
 
+    /**
+     * @return Redirection target URL from the Location response header, null if not present.
+     */
     public String getRedirectURL() {
         return redirectURL;
     }
@@ -83,7 +112,14 @@ public class HarResponse {
         this.redirectURL = redirectURL;
     }
 
+    /**
+     * @return Total number of bytes from the start of the HTTP response message until (and including) the double
+     * CRLF before the body. {@link #DEFAULT_SIZE} if the info is not available.
+     */
     public Long getHeadersSize() {
+        if (headersSize == null) {
+            return DEFAULT_SIZE;
+        }
         return headersSize;
     }
 
@@ -91,7 +127,15 @@ public class HarResponse {
         this.headersSize = headersSize;
     }
 
+    /**
+     * @return Size of the received response body in bytes.
+     * Set to zero in case of responses coming from the cache (304).
+     * {@link #DEFAULT_SIZE} if the info is not available.
+     */
     public Long getBodySize() {
+        if (bodySize == null) {
+            return DEFAULT_SIZE;
+        }
         return bodySize;
     }
 
@@ -99,6 +143,9 @@ public class HarResponse {
         this.bodySize = bodySize;
     }
 
+    /**
+     * @return Comment provided by the user or application, null if not present.
+     */
     public String getComment() {
         return comment;
     }

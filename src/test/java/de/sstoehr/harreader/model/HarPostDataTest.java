@@ -1,6 +1,7 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,4 +23,10 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
         Assert.assertNotNull(postData);
     }
 
+    @Test
+    public void testParams() {
+        HarPostData postData = new HarPostData();
+        postData.setParams(null);
+        Assert.assertNotNull(postData.getParams());
+    }
 }
