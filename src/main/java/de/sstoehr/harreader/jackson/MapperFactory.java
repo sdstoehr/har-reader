@@ -14,9 +14,7 @@ public class MapperFactory {
     public static ObjectMapper instance(HarReaderMode mode) {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        if (mode == HarReaderMode.LAX) {
-            module.addDeserializer(Date.class, new ExceptionIgnoringDateDeserializer());
-        }
+        module.addDeserializer(Date.class, new HttpDateDeserializer(mode));
         mapper.registerModule(module);
         return mapper;
     }

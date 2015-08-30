@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.3</version>
 </dependency>
 ```
 
@@ -29,4 +29,8 @@ Reading HAR from String:
 ```
 Har har = HarReader.fromString("{ ... HAR-JSON-Data ... }");
 ```
+
+## Note
+
+ - This library has been tested to work against HAR logs exported from charles web debugging proxy 
 

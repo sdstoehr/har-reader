@@ -24,18 +24,11 @@ public class HarPostData {
     /**
      * @return MIME type of posted data.
      */
-    @NotNull
     public String getMimeType() {
         return mimeType;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if mimeType is null.
-     */
     public void setMimeType(String mimeType) {
-        if (mimeType == null) {
-            throw new IllegalArgumentException("MimeType must not be null!");
-        }
         this.mimeType = mimeType;
     }
 

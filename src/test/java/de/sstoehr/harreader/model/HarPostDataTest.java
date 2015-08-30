@@ -23,8 +23,8 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
         Assert.assertNotNull(postData);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMimeTypeNull() {
+    @Test
+    public void testMimeTypeCouldBeNull() {
         HarPostData postData = new HarPostData();
         postData.setMimeType(null);
     }

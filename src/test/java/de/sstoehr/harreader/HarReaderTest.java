@@ -1,11 +1,11 @@
 package de.sstoehr.harreader;
 
-import java.io.File;
-
+import de.sstoehr.harreader.model.Har;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.sstoehr.harreader.model.Har;
+import java.io.File;
 
 public class HarReaderTest {
 
@@ -22,10 +22,16 @@ public class HarReaderTest {
         Assert.assertNotNull(har);
     }
 
-    @Test(expected = HarReaderException.class)
-    public void invalidDateStrict() throws HarReaderException {
+    @Test
+    public void invalidDateStrict() {
         File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
-        Har har = HarReader.fromFile(harFile);
+        try {
+            HarReader.fromFile(harFile);
+            Assert.fail("Expected exception " + HarReaderException.class + " not found");
+        } catch (HarReaderException e) {
+            Assert.assertThat(e.getMessage(),
+                CoreMatchers.containsString("Tried default date formats of jackson"));
+        }
     }
 
     @Test
