@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 public class HarContentTest extends AbstractMapperTest<HarContent> {
 
@@ -19,12 +18,6 @@ public class HarContentTest extends AbstractMapperTest<HarContent> {
 
         content = map(UNKNOWN_PROPERTY, HarContent.class);
         Assert.assertNotNull(content);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testSizeNull() {
-        HarContent content = new HarContent();
-        content.setSize(null);
     }
 
 }

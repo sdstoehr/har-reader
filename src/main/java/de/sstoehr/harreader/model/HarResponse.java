@@ -1,11 +1,12 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarResponse {
 
@@ -45,6 +46,9 @@ public class HarResponse {
     }
 
     public List<HarCookie> getCookies() {
+        if (cookies == null) {
+            cookies = new ArrayList<>();
+        }
         return cookies;
     }
 
@@ -53,6 +57,9 @@ public class HarResponse {
     }
 
     public List<HarHeader> getHeaders() {
+        if (headers == null) {
+            headers = new ArrayList<>();
+        }
         return headers;
     }
 

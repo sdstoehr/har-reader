@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 public class HarPostDataParamTest extends AbstractMapperTest<HarPostDataParam> {
 
@@ -20,9 +19,4 @@ public class HarPostDataParamTest extends AbstractMapperTest<HarPostDataParam> {
         Assert.assertNotNull(postDataParam);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNameNull() {
-        HarPostDataParam postDataParam = new HarPostDataParam();
-        postDataParam.setName(null);
-    }
 }

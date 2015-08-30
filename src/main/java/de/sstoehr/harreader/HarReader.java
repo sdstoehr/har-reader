@@ -1,24 +1,34 @@
 package de.sstoehr.harreader;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import de.sstoehr.harreader.jackson.DefaultMapperFactory;
 import de.sstoehr.harreader.jackson.MapperFactory;
 import de.sstoehr.harreader.model.Har;
 
+import java.io.File;
+import java.io.IOException;
+
 public class HarReader {
 
-    private HarReader() {
+    private final MapperFactory mapperFactory;
+
+    public HarReader(MapperFactory mapperFactory) {
+        if (mapperFactory == null) {
+            throw new IllegalArgumentException("mapperFactory must not be null!");
+        }
+        this.mapperFactory = mapperFactory;
     }
 
-    public static Har fromFile(File har) throws HarReaderException {
-        return fromFile(har, HarReaderMode.STRICT);
+    public HarReader() {
+        this(new DefaultMapperFactory());
     }
 
-    public static Har fromFile(File har, HarReaderMode mode) throws HarReaderException {
-        ObjectMapper mapper = MapperFactory.instance(mode);
+    public Har readFromFile(File har) throws HarReaderException {
+        return this.readFromFile(har, HarReaderMode.STRICT);
+    }
+
+    public Har readFromFile(File har, HarReaderMode mode) throws HarReaderException {
+        ObjectMapper mapper = mapperFactory.instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {
@@ -26,12 +36,12 @@ public class HarReader {
         }
     }
 
-    public static Har fromString(String har) throws HarReaderException {
-        return fromString(har, HarReaderMode.STRICT);
+    public Har readFromString(String har) throws HarReaderException {
+        return this.readFromString(har, HarReaderMode.STRICT);
     }
 
-    public static Har fromString(String har, HarReaderMode mode) throws HarReaderException {
-        ObjectMapper mapper = MapperFactory.instance(mode);
+    public Har readFromString(String har, HarReaderMode mode) throws HarReaderException {
+        ObjectMapper mapper = mapperFactory.instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {

@@ -5,10 +5,11 @@ import org.junit.Test;
 
 public class HarTest extends AbstractMapperTest<Har>{
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreatorNull() {
+    @Test
+    public void testLogNull() {
         Har har = new Har();
         har.setLog(null);
+        Assert.assertNotNull(har.getLog());
     }
 
     @Override

@@ -33,39 +33,31 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
         Assert.assertNotNull(entry);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testStartedDateTimeNull() {
-        HarEntry entry = new HarEntry();
-        entry.setStartedDateTime(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTimeNull() {
-        HarEntry entry = new HarEntry();
-        entry.setTime(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRequestNull() {
         HarEntry entry = new HarEntry();
         entry.setRequest(null);
+        Assert.assertNotNull(entry.getRequest());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testResponseNull() {
         HarEntry entry = new HarEntry();
         entry.setResponse(null);
+        Assert.assertNotNull(entry.getResponse());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCacheNull() {
         HarEntry entry = new HarEntry();
         entry.setCache(null);
+        Assert.assertNotNull(entry.getCache());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testTimingsNull() {
         HarEntry entry = new HarEntry();
         entry.setTimings(null);
+        Assert.assertNotNull(entry.getTimings());
     }
 }

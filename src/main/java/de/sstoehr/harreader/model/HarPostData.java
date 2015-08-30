@@ -1,10 +1,8 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
  * Information about POST data.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#postData">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarPostData {
 
@@ -22,62 +20,43 @@ public class HarPostData {
     private String comment;
 
     /**
-     * @return MIME type of posted data.
+     * @return MIME type of posted data, null if not present.
      */
-    @NotNull
     public String getMimeType() {
         return mimeType;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if mimeType is null.
-     */
     public void setMimeType(String mimeType) {
-        if (mimeType == null) {
-            throw new IllegalArgumentException("MimeType must not be null!");
-        }
         this.mimeType = mimeType;
     }
 
     /**
      * @return List of posted params.
      */
-    @NotNull
-    @Valid
     public List<HarPostDataParam> getParams() {
+        if (params == null) {
+            params = new ArrayList<>();
+        }
         return params;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if params is null.
-     */
     public void setParams(List<HarPostDataParam> params) {
-        if (params == null) {
-            throw new IllegalArgumentException("Params must not be null!");
-        }
         this.params = params;
     }
 
     /**
-     * @return Plain text posted data.
+     * @return Plain text posted data, null if not present.
      */
-    @NotNull
     public String getText() {
         return text;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if text is null.
-     */
     public void setText(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Text must not be null!");
-        }
         this.text = text;
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

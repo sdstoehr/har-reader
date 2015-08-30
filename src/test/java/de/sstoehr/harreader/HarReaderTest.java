@@ -1,37 +1,39 @@
 package de.sstoehr.harreader;
 
-import java.io.File;
-
+import de.sstoehr.harreader.model.Har;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.sstoehr.harreader.model.Har;
+import java.io.File;
 
 public class HarReaderTest {
+
+    private HarReader harReader = new HarReader();
 
     @Test
     public void test() throws HarReaderException {
         File harFile = new File("src/test/resources/sstoehr.har");
-        Har har = HarReader.fromFile(harFile);
+        Har har = harReader.readFromFile(harFile);
         Assert.assertNotNull(har);
     }
 
     @Test
     public void missingLog() throws HarReaderException {
-        Har har = HarReader.fromString("{\"unknown\":\"!\"}");
+        Har har = harReader.readFromString("{\"unknown\":\"!\"}");
         Assert.assertNotNull(har);
     }
 
     @Test(expected = HarReaderException.class)
     public void invalidDateStrict() throws HarReaderException {
         File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
-        Har har = HarReader.fromFile(harFile);
+        harReader.readFromFile(harFile);
     }
 
     @Test
     public void invalidDateLax() throws HarReaderException {
         File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
-        Har har = HarReader.fromFile(harFile, HarReaderMode.LAX);
+        Har har = harReader.readFromFile(harFile, HarReaderMode.LAX);
         Assert.assertNotNull(har);
     }
+
 }

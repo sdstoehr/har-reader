@@ -2,17 +2,15 @@ package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Information about an exported page.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#pages">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarPage {
 
@@ -23,81 +21,55 @@ public class HarPage {
     private String comment;
 
     /**
-     * @return Start time of page load.
+     * @return Start time of page load, null if not present.
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @NotNull
     public Date getStartedDateTime() {
         return startedDateTime;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if startedDateTime is null.
-     */
     public void setStartedDateTime(Date startedDateTime) {
-        if (startedDateTime == null) {
-            throw new IllegalArgumentException("StartedDateTime must not be null!");
-        }
         this.startedDateTime = startedDateTime;
     }
 
     /**
-     * @return Unique identifier.
+     * @return Unique identifier, null if not present.
      */
-    @NotNull
     public String getId() {
         return id;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if id is null.
-     */
     public void setId(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID must not be null!");
-        }
         this.id = id;
     }
 
     /**
-     * @return Page title.
+     * @return Page title, null if not present.
      */
-    @NotNull
     public String getTitle() {
         return title;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if title is null.
-     */
     public void setTitle(String title) {
-        if (title == null) {
-            throw new IllegalArgumentException("Title must not be null!");
-        }
         this.title = title;
     }
 
     /**
      * @return Detailed information about page loading timings.
      */
-    @NotNull
-    @Valid
     public HarPageTiming getPageTimings() {
+        if (pageTimings == null) {
+            pageTimings = new HarPageTiming();
+        }
         return pageTimings;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if pageTimings is null.
-     */
     public void setPageTimings(HarPageTiming pageTimings) {
-        if (pageTimings == null) {
-            throw new IllegalArgumentException("PageTimings must not be null!");
-        }
         this.pageTimings = pageTimings;
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 public class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
 
@@ -14,9 +13,4 @@ public class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
         Assert.assertEquals("My comment", queryParam.getComment());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNameNull() {
-        HarQueryParam queryParam = new HarQueryParam();
-        queryParam.setName(null);
-    }
 }

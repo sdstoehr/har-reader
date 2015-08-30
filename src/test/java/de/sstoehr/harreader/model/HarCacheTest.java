@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.Date;
 
@@ -35,21 +34,4 @@ public class HarCacheTest extends AbstractMapperTest<HarCache> {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testLastAccessNull() {
-        HarCache.HarCacheInfo cacheInfo = new HarCache.HarCacheInfo();
-        cacheInfo.setLastAccess(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testETagNull() {
-        HarCache.HarCacheInfo cacheInfo = new HarCache.HarCacheInfo();
-        cacheInfo.seteTag(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testHitCountNull() {
-        HarCache.HarCacheInfo cacheInfo = new HarCache.HarCacheInfo();
-        cacheInfo.setHitCount(null);
-    }
 }

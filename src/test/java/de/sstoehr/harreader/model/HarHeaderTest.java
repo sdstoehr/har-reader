@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 public class HarHeaderTest extends AbstractMapperTest<HarHeader> {
 
@@ -18,15 +17,4 @@ public class HarHeaderTest extends AbstractMapperTest<HarHeader> {
         Assert.assertNotNull(header);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNameNull() {
-        HarHeader header = new HarHeader();
-        header.setName(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testValueNull() {
-        HarHeader header = new HarHeader();
-        header.setValue(null);
-    }
 }

@@ -1,13 +1,13 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Information about events occuring during page load.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#pageTimings">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarPageTiming {
 
@@ -22,13 +22,13 @@ public class HarPageTiming {
      * {@link #DEFAULT_TIME} when no information available.
      */
     public Integer getOnContentLoad() {
+        if (onContentLoad == null) {
+            return DEFAULT_TIME;
+        }
         return onContentLoad;
     }
 
     public void setOnContentLoad(Integer onContentLoad) {
-        if (onContentLoad == null) {
-            onContentLoad = DEFAULT_TIME;
-        }
         this.onContentLoad = onContentLoad;
     }
 
@@ -37,18 +37,18 @@ public class HarPageTiming {
      * {@link #DEFAULT_TIME} when no information available.
      */
     public Integer getOnLoad() {
+        if (onLoad == null) {
+            return DEFAULT_TIME;
+        }
         return onLoad;
     }
 
     public void setOnLoad(Integer onLoad) {
-        if (onLoad == null) {
-            onLoad = DEFAULT_TIME;
-        }
         this.onLoad = onLoad;
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

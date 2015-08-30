@@ -1,15 +1,13 @@
 package de.sstoehr.harreader.model;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Information about the response's content.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#content">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarContent {
 
@@ -21,25 +19,18 @@ public class HarContent {
     private String comment;
 
     /**
-     * @return Length of returned content in bytes.
+     * @return Length of returned content in bytes, null if not present.
      */
-    @NotNull
     public Long getSize() {
         return size;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if size is null.
-     */
     public void setSize(Long size) {
-        if (size == null) {
-            throw new IllegalArgumentException("Size must not be null!");
-        }
         this.size = size;
     }
 
     /**
-     * @return Number of byted saved by compression, may be null.
+     * @return Number of bytes saved by compression, null if not present.
      */
     public Long getCompression() {
         return compression;
@@ -50,9 +41,8 @@ public class HarContent {
     }
 
     /**
-     * @return MIME-Type of response. May include the charset.
+     * @return MIME-Type of response, null if not present. May include the charset.
      */
-    @NotNull
     public String getMimeType() {
         return mimeType;
     }
@@ -62,7 +52,7 @@ public class HarContent {
     }
 
     /**
-     * @return Response body loaded from server or cache, may be null.
+     * @return Response body loaded from server or cache, null if not present.
      * Binary content may be encoded using encoding specified by {@link #getEncoding()}.
      */
     public String getText() {
@@ -74,7 +64,7 @@ public class HarContent {
     }
 
     /**
-     * @return Encoding used for encoding response body, may be null.
+     * @return Encoding used for encoding response body, null if not present.
      * @see #getText()
      */
     public String getEncoding() {
@@ -86,7 +76,7 @@ public class HarContent {
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

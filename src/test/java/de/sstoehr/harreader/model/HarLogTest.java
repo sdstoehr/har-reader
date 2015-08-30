@@ -48,10 +48,11 @@ public class HarLogTest extends AbstractMapperTest<HarLog> {
         Assert.assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreatorNull() {
         HarLog log = new HarLog();
         log.setCreator(null);
+        Assert.assertNotNull(log.getCreator());
     }
 
     @Override

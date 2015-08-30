@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>1.1.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
@@ -20,13 +20,28 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 Reading HAR from File:
 
 ```
-Har har = HarReader.fromFile(new File("myhar.har"));
+HarReader harReader = new HarReader();
+Har har = harReader.readFromFile(new File("myhar.har"));
 System.out.println(har.getLog().getCreator().getName());
 ```
 
 Reading HAR from String:
 
 ```
-Har har = HarReader.fromString("{ ... HAR-JSON-Data ... }");
+HarReader harReader = new HarReader();
+Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }");
 ```
 
+## Migrating from 1.* to 2.0
+
+`HarReader` can't be called statically anymore. Please create your own `HarReader` instance:
+
+* `HarReader.fromFile()` should be `harReader.readFromFile()`
+* `HarReader.fromString()` should be  `harReader.readFromString()`
+
+`HarReader` should be thread-safe (when using the `DefaultMapperFactory`).
+
+In old versions `HarReader` threw `IllegalArgumentExceptions` when the HAR contained null values, although the spec
+stated, that this field is not optional. This behaviour was changed. `HarReader` does not check, whether required
+fields are not null.
+To allow easier read access, `HarReader` will return "empty" objects and lists wherever possible.  

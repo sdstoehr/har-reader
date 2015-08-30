@@ -27,27 +27,10 @@ public class HarPageTest extends AbstractMapperTest<HarPage> {
         Assert.assertNotNull(page);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testStartedDateTimeNull() {
-        HarPage page = new HarPage();
-        page.setStartedDateTime(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testIdNull() {
-        HarPage page = new HarPage();
-        page.setId(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTitleNull() {
-        HarPage page = new HarPage();
-        page.setTitle(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testPageTimingsNull() {
         HarPage page = new HarPage();
         page.setPageTimings(null);
+        Assert.assertNotNull(page.getPageTimings());
     }
 }

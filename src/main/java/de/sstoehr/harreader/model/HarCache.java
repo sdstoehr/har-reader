@@ -2,17 +2,15 @@ package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Information about a request coming from browser cache.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#cache">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarCache {
 
@@ -21,9 +19,8 @@ public class HarCache {
     private String comment;
 
     /**
-     * @return State of the cache entry before the request, may be null.
+     * @return State of the cache entry before the request, null if not present.
      */
-    @Valid
     public HarCacheInfo getBeforeRequest() {
         return beforeRequest;
     }
@@ -33,9 +30,8 @@ public class HarCache {
     }
 
     /**
-     * @return State of the cache entry after the request, may be null.
+     * @return State of the cache entry after the request, null if not present.
      */
-    @Valid
     public HarCacheInfo getAfterRequest() {
         return afterRequest;
     }
@@ -45,7 +41,7 @@ public class HarCache {
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;
@@ -59,7 +55,7 @@ public class HarCache {
      * Information about a request coming from browser cache.
      * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#cache">specification</a>
      */
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class HarCacheInfo {
 
@@ -70,7 +66,7 @@ public class HarCache {
         private String comment;
 
         /**
-         * @return Expiration time of entry, may be null.
+         * @return Expiration time of entry, null if not present.
          */
         @JsonFormat(shape = JsonFormat.Shape.STRING)
         public Date getExpires() {
@@ -82,59 +78,41 @@ public class HarCache {
         }
 
         /**
-         * @return Last time the entry was opened.
+         * @return Last time the entry was opened, null if not present.
          */
-        @NotNull
         @JsonFormat(shape = JsonFormat.Shape.STRING)
         public Date getLastAccess() {
             return lastAccess;
         }
 
-        /**
-         * @throws java.lang.IllegalArgumentException if lastAccess is null
-         */
         public void setLastAccess(Date lastAccess) {
-            if (lastAccess == null) {
-                throw new IllegalArgumentException("LastAccess must not be null!");
-            }
             this.lastAccess = lastAccess;
         }
 
         /**
-         * @return ETag.
+         * @return ETag, null if not present.
          */
-        @NotNull
         public String geteTag() {
             return eTag;
         }
 
         public void seteTag(String eTag) {
-            if (eTag == null) {
-                throw new IllegalArgumentException("ETag must not be null!");
-            }
             this.eTag = eTag;
         }
 
         /**
-         * @return Number of times the entry has been opened.
+         * @return Number of times the entry has been opened, null if not present.
          */
-        @NotNull
         public Integer getHitCount() {
             return hitCount;
         }
 
-        /**
-         * @throws java.lang.IllegalArgumentException if hitCount is null
-         */
         public void setHitCount(Integer hitCount) {
-            if (hitCount == null) {
-                throw new IllegalArgumentException("HitCount must not be null!");
-            }
             this.hitCount = hitCount;
         }
 
         /**
-         * @return Comment provided by the user or application, may be null.
+         * @return Comment provided by the user or application, null if not present.
          */
         public String getComment() {
             return comment;

@@ -1,15 +1,13 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Information about query params.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#queryString">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarQueryParam {
 
@@ -18,25 +16,18 @@ public class HarQueryParam {
     private String comment;
 
     /**
-     * @return Name of param.
+     * @return Name of param, null if not present.
      */
-    @NotNull
     public String getName() {
         return name;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if name is null
-     */
     public void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Name must not be null!");
-        }
         this.name = name;
     }
 
     /**
-     * @return Value of param, may be null.
+     * @return Value of param, null if not present.
      */
     public String getValue() {
         return value;
@@ -47,7 +38,7 @@ public class HarQueryParam {
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

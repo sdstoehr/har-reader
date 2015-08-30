@@ -1,10 +1,8 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
  * Root object of exported data.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#log">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarLog {
 
@@ -29,7 +27,6 @@ public class HarLog {
      * @return Version number of the format.
      * Defaults to {@link #DEFAULT_VERSION}
      */
-    @NotNull
     public String getVersion() {
         return version;
     }
@@ -44,27 +41,24 @@ public class HarLog {
     /**
      * @return Information about the application used to generate HAR.
      */
-    @Valid
-    @NotNull
     public HarCreatorBrowser getCreator() {
+        if (creator == null) {
+            creator = new HarCreatorBrowser();
+        }
         return creator;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if creator is null.
-     */
     public void setCreator(HarCreatorBrowser creator) {
-        if (creator == null) {
-            throw new IllegalArgumentException("Creator must not be null!");
-        }
         this.creator = creator;
     }
 
     /**
-     * @return Information about the browser used, may be null.
+     * @return Information about the browser used.
      */
-    @Valid
     public HarCreatorBrowser getBrowser() {
+        if (browser == null) {
+            browser = new HarCreatorBrowser();
+        }
         return browser;
     }
 
@@ -75,37 +69,33 @@ public class HarLog {
     /**
      * @return List of all exported pages, may be empty.
      */
-    @Valid
-    @NotNull
     public List<HarPage> getPages() {
+        if (pages == null) {
+            pages = new ArrayList<>();
+        }
         return pages;
     }
 
     public void setPages(List<HarPage> pages) {
-        if (pages == null) {
-            pages = new ArrayList<>();
-        }
         this.pages = pages;
     }
 
     /**
      * @return List of all exported requests, may be empty.
      */
-    @Valid
-    @NotNull
     public List<HarEntry> getEntries() {
+        if (entries == null) {
+            entries = new ArrayList<>();
+        }
         return entries;
     }
 
     public void setEntries(List<HarEntry> entries) {
-        if (entries == null) {
-            entries = new ArrayList<>();
-        }
         this.entries = entries;
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

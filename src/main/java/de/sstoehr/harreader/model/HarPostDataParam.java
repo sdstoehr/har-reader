@@ -1,15 +1,13 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Information about POST params.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#params">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarPostDataParam {
 
@@ -20,25 +18,18 @@ public class HarPostDataParam {
     private String comment;
 
     /**
-     * @return Name of param.
+     * @return Name of param, null if not present.
      */
-    @NotNull
     public String getName() {
         return name;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if name is null
-     */
     public void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Name must not be null!");
-        }
         this.name = name;
     }
 
     /**
-     * @return Value of a param or content of posted file, may be null.
+     * @return Value of a param or content of posted file, null if not present.
      */
     public String getValue() {
         return value;
@@ -49,7 +40,7 @@ public class HarPostDataParam {
     }
 
     /**
-     * @return Name of posted file, may be null.
+     * @return Name of posted file, null if not present.
      */
     public String getFileName() {
         return fileName;
@@ -60,7 +51,7 @@ public class HarPostDataParam {
     }
 
     /**
-     * @return Content type of posted file, may be null.
+     * @return Content type of posted file, null if not present.
      */
     public String getContentType() {
         return contentType;
@@ -71,7 +62,7 @@ public class HarPostDataParam {
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;

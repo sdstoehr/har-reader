@@ -1,7 +1,6 @@
 package de.sstoehr.harreader.model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.Date;
 
@@ -30,15 +29,4 @@ public class HarCookieTest extends AbstractMapperTest<HarCookie> {
         Assert.assertNotNull(cookie);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNameNull() {
-        HarCookie cookie = new HarCookie();
-        cookie.setName(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testValueNull() {
-        HarCookie cookie = new HarCookie();
-        cookie.setValue(null);
-    }
 }

@@ -2,16 +2,15 @@ package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Information about a cookie used in request and/or response.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#cookies">specification</a>
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarCookie {
 
@@ -25,43 +24,29 @@ public class HarCookie {
     private String comment;
 
     /**
-     * @return Name of the cookie.
+     * @return Name of the cookie, null if not present.
      */
-    @NotNull
     public String getName() {
         return name;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if name is null
-     */
     public void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Name must not be null!");
-        }
         this.name = name;
     }
 
     /**
-     * @return Value of the cookie.
+     * @return Value of the cookie, null if not present.
      */
-    @NotNull
     public String getValue() {
         return value;
     }
 
-    /**
-     * @throws java.lang.IllegalArgumentException if value is null
-     */
     public void setValue(String value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Value must not be null!");
-        }
         this.value = value;
     }
 
     /**
-     * @return The cookie's path, may be null.
+     * @return The cookie's path, null if not present.
      */
     public String getPath() {
         return path;
@@ -72,7 +57,7 @@ public class HarCookie {
     }
 
     /**
-     * @return The cookie's domain, may be null.
+     * @return The cookie's domain, null if not present.
      */
     public String getDomain() {
         return domain;
@@ -83,7 +68,7 @@ public class HarCookie {
     }
 
     /**
-     * @return The cookie's expiration time, may be null.
+     * @return The cookie's expiration time, null if not present.
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     public Date getExpires() {
@@ -95,7 +80,7 @@ public class HarCookie {
     }
 
     /**
-     * @return Whether the cookie is HTTP only, may be null.
+     * @return Whether the cookie is HTTP only, null if not present.
      */
     public Boolean getHttpOnly() {
         return httpOnly;
@@ -106,7 +91,7 @@ public class HarCookie {
     }
 
     /**
-     * @return Whether the cookie was transmitted via SSL, may be null.
+     * @return Whether the cookie was transmitted via SSL, null if not present.
      */
     public Boolean getSecure() {
         return secure;
@@ -117,7 +102,7 @@ public class HarCookie {
     }
 
     /**
-     * @return Comment provided by the user or application, may be null.
+     * @return Comment provided by the user or application, null if not present.
      */
     public String getComment() {
         return comment;
