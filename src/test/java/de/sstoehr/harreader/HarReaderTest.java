@@ -36,6 +36,19 @@ public class HarReaderTest {
         Assert.assertNotNull(har);
     }
 
+    @Test(expected = HarReaderException.class)
+    public void invalidIntegerStrict() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.invalid-integer.har");
+        harReader.readFromFile(harFile);
+    }
+
+    @Test
+    public void invalidIntegerLax() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.invalid-integer.har");
+        Har har = harReader.readFromFile(harFile, HarReaderMode.LAX);
+        Assert.assertNotNull(har);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void mapperFactoryNotNull() {
         new HarReader(null);
