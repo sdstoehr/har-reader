@@ -13,6 +13,7 @@ public class DefaultMapperFactory implements MapperFactory {
         SimpleModule module = new SimpleModule();
         if (mode == HarReaderMode.LAX) {
             module.addDeserializer(Date.class, new ExceptionIgnoringDateDeserializer());
+            module.addDeserializer(Integer.class, new ExceptionIgnoringIntegerDeserializer());
         }
         mapper.registerModule(module);
         return mapper;
