@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
@@ -19,7 +19,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 
 Reading HAR from File:
 
-```
+```java
 HarReader harReader = new HarReader();
 Har har = harReader.readFromFile(new File("myhar.har"));
 System.out.println(har.getLog().getCreator().getName());
@@ -27,21 +27,47 @@ System.out.println(har.getLog().getCreator().getName());
 
 Reading HAR from String:
 
-```
+```java
 HarReader harReader = new HarReader();
 Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }");
 ```
 
-## Migrating from 1.* to 2.0
+### Customizing HAR reader
 
-`HarReader` can't be called statically anymore. Please create your own `HarReader` instance:
+As of version 2.0.0 you can create your own `MapperFactory` [(DefaultMapperFactory)](src/main/java/de/sstoehr/harreader/jackson/DefaultMapperFactory.java)
 
-* `HarReader.fromFile()` should be `harReader.readFromFile()`
-* `HarReader.fromString()` should be  `harReader.readFromString()`
+ 
+```java
+public class MyMapperFactory implements MapperFactory {
+    public ObjectMapper instance(HarReaderMode mode) {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        
+        // configure Jackson object mapper as needed
 
-`HarReader` should be thread-safe (when using the `DefaultMapperFactory`).
+        mapper.registerModule(module);
+        return mapper;
+    }
+}
+```
 
-In old versions `HarReader` threw `IllegalArgumentExceptions` when the HAR contained null values, although the spec
-stated, that this field is not optional. This behaviour was changed. `HarReader` does not check, whether required
-fields are not null.
-To allow easier read access, `HarReader` will return "empty" objects and lists wherever possible.  
+You can now use your configuration by instantiating the `HarReader` with your `MapperFactory`:
+
+```java
+HarReader harReader = new HarReader(new MyMapperFactory());
+```
+
+## Latest Releases
+
+### 2.0.1 - 2016-04-16 
+
+* Ignore invalid integers in lax mode
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.0.1)
+
+### 2.0.0 - 2015-08-30
+
+* HAR reader is now easier customizable. Use your own `MapperFactory` to adjust HAR reader for your project!
+* HAR reader threw exceptions, when required fields were empty. This behaviour was changed, so that you can now read non-standard-compliant HAR files
+  
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.0.0)  
