@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * Information about events occuring during page load.
+ * Information about events occurring during page load.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#pageTimings">specification</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
