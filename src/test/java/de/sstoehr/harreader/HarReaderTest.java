@@ -53,4 +53,20 @@ public class HarReaderTest {
     public void mapperFactoryNotNull() {
         new HarReader(null);
     }
+
+    @Test
+    public void testEquals() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.har");
+        Har har1 = harReader.readFromFile(harFile);
+        Har har2 = harReader.readFromFile(harFile);
+        Assert.assertTrue(har1.equals(har2));
+    }
+
+    @Test
+    public void testHashCode() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.har");
+        Har har1 = harReader.readFromFile(harFile);
+        Har har2 = harReader.readFromFile(harFile);
+        Assert.assertEquals(har1.hashCode(), har2.hashCode());
+    }
 }

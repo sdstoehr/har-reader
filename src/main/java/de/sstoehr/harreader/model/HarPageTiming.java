@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about events occurring during page load.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#pageTimings">specification</a>
@@ -56,5 +58,20 @@ public class HarPageTiming {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarPageTiming that = (HarPageTiming) o;
+        return Objects.equals(onContentLoad, that.onContentLoad) &&
+                Objects.equals(onLoad, that.onLoad) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(onContentLoad, onLoad, comment);
     }
 }

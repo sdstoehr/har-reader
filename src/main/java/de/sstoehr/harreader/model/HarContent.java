@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about the response's content.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#content">specification</a>
@@ -84,5 +86,23 @@ public class HarContent {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarContent that = (HarContent) o;
+        return Objects.equals(size, that.size) &&
+                Objects.equals(compression, that.compression) &&
+                Objects.equals(mimeType, that.mimeType) &&
+                Objects.equals(text, that.text) &&
+                Objects.equals(encoding, that.encoding) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, compression, mimeType, text, encoding, comment);
     }
 }

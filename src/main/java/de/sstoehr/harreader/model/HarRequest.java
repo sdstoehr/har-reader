@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Information about a performed request.
@@ -155,5 +156,28 @@ public class HarRequest {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarRequest that = (HarRequest) o;
+        return method == that.method &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(httpVersion, that.httpVersion) &&
+                Objects.equals(cookies, that.cookies) &&
+                Objects.equals(headers, that.headers) &&
+                Objects.equals(queryString, that.queryString) &&
+                Objects.equals(postData, that.postData) &&
+                Objects.equals(headersSize, that.headersSize) &&
+                Objects.equals(bodySize, that.bodySize) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method, url, httpVersion, cookies, headers, queryString, postData, headersSize,
+                bodySize, comment);
     }
 }

@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarTiming {
@@ -122,5 +124,25 @@ public class HarTiming {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarTiming harTiming = (HarTiming) o;
+        return Objects.equals(blocked, harTiming.blocked) &&
+                Objects.equals(dns, harTiming.dns) &&
+                Objects.equals(connect, harTiming.connect) &&
+                Objects.equals(send, harTiming.send) &&
+                Objects.equals(wait, harTiming.wait) &&
+                Objects.equals(receive, harTiming.receive) &&
+                Objects.equals(ssl, harTiming.ssl) &&
+                Objects.equals(comment, harTiming.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(blocked, dns, connect, send, wait, receive, ssl, comment);
     }
 }

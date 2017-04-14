@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about query params.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#queryString">specification</a>
@@ -46,5 +48,20 @@ public class HarQueryParam {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarQueryParam that = (HarQueryParam) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(value, that.value) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, comment);
     }
 }

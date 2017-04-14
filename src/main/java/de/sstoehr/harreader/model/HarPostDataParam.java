@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about POST params.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#params">specification</a>
@@ -70,5 +72,22 @@ public class HarPostDataParam {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarPostDataParam that = (HarPostDataParam) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(value, that.value) &&
+                Objects.equals(fileName, that.fileName) &&
+                Objects.equals(contentType, that.contentType) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, fileName, contentType, comment);
     }
 }

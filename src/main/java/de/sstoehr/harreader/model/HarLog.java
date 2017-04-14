@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Root object of exported data.
@@ -103,5 +104,23 @@ public class HarLog {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarLog harLog = (HarLog) o;
+        return Objects.equals(version, harLog.version) &&
+                Objects.equals(creator, harLog.creator) &&
+                Objects.equals(browser, harLog.browser) &&
+                Objects.equals(pages, harLog.pages) &&
+                Objects.equals(entries, harLog.entries) &&
+                Objects.equals(comment, harLog.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(version, creator, browser, pages, entries, comment);
     }
 }

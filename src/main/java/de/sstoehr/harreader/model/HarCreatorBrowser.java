@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about the application/browser used for creating HAR.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#creator">specification</a>
@@ -46,5 +48,20 @@ public class HarCreatorBrowser {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarCreatorBrowser that = (HarCreatorBrowser) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(version, that.version) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, version, comment);
     }
 }

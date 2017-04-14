@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Information about an exported page.
@@ -77,5 +78,22 @@ public class HarPage {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarPage harPage = (HarPage) o;
+        return Objects.equals(startedDateTime, harPage.startedDateTime) &&
+                Objects.equals(id, harPage.id) &&
+                Objects.equals(title, harPage.title) &&
+                Objects.equals(pageTimings, harPage.pageTimings) &&
+                Objects.equals(comment, harPage.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startedDateTime, id, title, pageTimings, comment);
     }
 }

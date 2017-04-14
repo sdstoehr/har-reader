@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -152,5 +153,28 @@ public class HarResponse {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarResponse that = (HarResponse) o;
+        return status == that.status &&
+                Objects.equals(statusText, that.statusText) &&
+                Objects.equals(httpVersion, that.httpVersion) &&
+                Objects.equals(cookies, that.cookies) &&
+                Objects.equals(headers, that.headers) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(redirectURL, that.redirectURL) &&
+                Objects.equals(headersSize, that.headersSize) &&
+                Objects.equals(bodySize, that.bodySize) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
+                bodySize, comment);
     }
 }

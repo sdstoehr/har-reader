@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Information about a request coming from browser cache.
@@ -49,6 +50,21 @@ public class HarCache {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarCache harCache = (HarCache) o;
+        return Objects.equals(beforeRequest, harCache.beforeRequest) &&
+                Objects.equals(afterRequest, harCache.afterRequest) &&
+                Objects.equals(comment, harCache.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(beforeRequest, afterRequest, comment);
     }
 
     /**
@@ -120,6 +136,23 @@ public class HarCache {
 
         public void setComment(String comment) {
             this.comment = comment;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            HarCacheInfo that = (HarCacheInfo) o;
+            return Objects.equals(expires, that.expires) &&
+                    Objects.equals(lastAccess, that.lastAccess) &&
+                    Objects.equals(eTag, that.eTag) &&
+                    Objects.equals(hitCount, that.hitCount) &&
+                    Objects.equals(comment, that.comment);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(expires, lastAccess, eTag, hitCount, comment);
         }
     }
 }

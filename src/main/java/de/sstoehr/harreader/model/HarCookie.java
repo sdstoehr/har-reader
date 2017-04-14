@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Information about a cookie used in request and/or response.
@@ -110,5 +111,25 @@ public class HarCookie {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarCookie harCookie = (HarCookie) o;
+        return Objects.equals(name, harCookie.name) &&
+                Objects.equals(value, harCookie.value) &&
+                Objects.equals(path, harCookie.path) &&
+                Objects.equals(domain, harCookie.domain) &&
+                Objects.equals(expires, harCookie.expires) &&
+                Objects.equals(httpOnly, harCookie.httpOnly) &&
+                Objects.equals(secure, harCookie.secure) &&
+                Objects.equals(comment, harCookie.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, path, domain, expires, httpOnly, secure, comment);
     }
 }

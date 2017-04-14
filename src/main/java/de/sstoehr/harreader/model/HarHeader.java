@@ -3,6 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 /**
  * Information about a header used in request and/or response.
  * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#headers">specification</a>
@@ -46,5 +48,20 @@ public class HarHeader {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarHeader harHeader = (HarHeader) o;
+        return Objects.equals(name, harHeader.name) &&
+                Objects.equals(value, harHeader.value) &&
+                Objects.equals(comment, harHeader.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, comment);
     }
 }

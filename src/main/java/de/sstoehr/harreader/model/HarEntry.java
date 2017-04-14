@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Information about a single HTTP request.
@@ -146,5 +147,28 @@ public class HarEntry {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarEntry harEntry = (HarEntry) o;
+        return Objects.equals(pageref, harEntry.pageref) &&
+                Objects.equals(startedDateTime, harEntry.startedDateTime) &&
+                Objects.equals(time, harEntry.time) &&
+                Objects.equals(request, harEntry.request) &&
+                Objects.equals(response, harEntry.response) &&
+                Objects.equals(cache, harEntry.cache) &&
+                Objects.equals(timings, harEntry.timings) &&
+                Objects.equals(serverIPAddress, harEntry.serverIPAddress) &&
+                Objects.equals(connection, harEntry.connection) &&
+                Objects.equals(comment, harEntry.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pageref, startedDateTime, time, request, response, cache, timings, serverIPAddress,
+                connection, comment);
     }
 }

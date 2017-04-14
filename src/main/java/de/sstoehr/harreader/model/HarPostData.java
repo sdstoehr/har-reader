@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Information about POST data.
@@ -64,5 +65,21 @@ public class HarPostData {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HarPostData that = (HarPostData) o;
+        return Objects.equals(mimeType, that.mimeType) &&
+                Objects.equals(params, that.params) &&
+                Objects.equals(text, that.text) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mimeType, params, text, comment);
     }
 }
