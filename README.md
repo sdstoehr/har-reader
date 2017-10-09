@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.3</version>
 </dependency>
 ```
 
@@ -58,6 +58,14 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 2.0.3 - 2017-04-14
+
+* Added equals and hashCode methods
+
+### 2.0.2 - 2016-11-21
+
+* Added CCM_POST HttpMethod to enum
 
 ### 2.0.1 - 2016-04-16 
 
