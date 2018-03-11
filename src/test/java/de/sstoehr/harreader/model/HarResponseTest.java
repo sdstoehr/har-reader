@@ -9,7 +9,7 @@ public class HarResponseTest extends AbstractMapperTest<HarResponse> {
     public void testMapping() {
         HarResponse response = map("{\"status\": 200,\"statusText\": \"OK\",\"httpVersion\": \"HTTP/1.1\","
         + "\"cookies\": [],\"headers\": [],\"content\": {},\"redirectURL\": \"redirectUrl\",\"headersSize\": 318,"
-        + "\"bodySize\": 16997,\"comment\": \"My comment\"}", HarResponse.class);
+        + "\"bodySize\": 16997,\"comment\": \"My comment\", \"_add\": \"additional info\"}", HarResponse.class);
 
         Assert.assertNotNull(response);
         Assert.assertEquals(200, response.getStatus());
@@ -22,6 +22,7 @@ public class HarResponseTest extends AbstractMapperTest<HarResponse> {
         Assert.assertEquals(318L, (long) response.getHeadersSize());
         Assert.assertEquals(16997L, (long) response.getBodySize());
         Assert.assertEquals("My comment", response.getComment());
+        Assert.assertEquals("additional info", response.getAdditional().get("_add"));
     }
 
     @Test

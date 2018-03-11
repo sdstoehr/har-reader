@@ -15,7 +15,7 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
     public void testMapping() {
         HarEntry entry = map("{\"pageref\":\"aPageref\",\"startedDateTime\":\"2014-01-01T12:00:00\",\"time\":12345,"
         + "\"request\":{},\"response\":{},\"cache\":{},\"timings\":{},\"serverIPAddress\":\"1.2.3.4\",\"connection\":\"aConnection\","
-        + "\"comment\":\"my comment\"}", HarEntry.class);
+        + "\"comment\":\"my comment\", \"_add\": \"additional info\"}", HarEntry.class);
 
         Assert.assertNotNull(entry);
         Assert.assertEquals("aPageref", entry.getPageref());
@@ -28,6 +28,7 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
         Assert.assertEquals("1.2.3.4", entry.getServerIPAddress());
         Assert.assertEquals("aConnection", entry.getConnection());
         Assert.assertEquals("my comment", entry.getComment());
+        Assert.assertEquals("additional info", entry.getAdditional().get("_add"));
 
         entry = map(UNKNOWN_PROPERTY, HarEntry.class);
         Assert.assertNotNull(entry);

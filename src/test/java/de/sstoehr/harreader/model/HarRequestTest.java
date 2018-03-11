@@ -10,7 +10,8 @@ public class HarRequestTest extends AbstractMapperTest<HarRequest> {
         HarRequest request = map("{\"method\": \"GET\",\"url\": "
          + "\"http://www.sebastianstoehr.de/\",\"httpVersion\": "
          + "\"HTTP/1.1\",\"cookies\": [],\"headers\": [],\"queryString\": [],"
-         + "\"headersSize\": 676,\"bodySize\": -1, \"postData\": {}, \"comment\":\"my comment\"}", HarRequest.class);
+         + "\"headersSize\": 676,\"bodySize\": -1, \"postData\": {}, \"comment\":\"my comment\","
+         + "\"_add\": \"additional info\"}", HarRequest.class);
 
         Assert.assertNotNull(request);
         Assert.assertEquals(HttpMethod.GET, request.getMethod());
@@ -23,6 +24,7 @@ public class HarRequestTest extends AbstractMapperTest<HarRequest> {
         Assert.assertEquals(676L, (long) request.getHeadersSize());
         Assert.assertEquals(-1L, (long) request.getBodySize());
         Assert.assertEquals("my comment", request.getComment());
+        Assert.assertEquals("additional info", request.getAdditional().get("_add"));
     }
 
     @Test

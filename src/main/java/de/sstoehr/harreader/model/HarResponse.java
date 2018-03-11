@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,6 +27,7 @@ public class HarResponse {
     private Long headersSize;
     private Long bodySize;
     private String comment;
+    private Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Response status, null if not present.
@@ -155,6 +160,16 @@ public class HarResponse {
         this.comment = comment;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String name, Object value) {
+        this.additional.put(name, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -169,12 +184,13 @@ public class HarResponse {
                 Objects.equals(redirectURL, that.redirectURL) &&
                 Objects.equals(headersSize, that.headersSize) &&
                 Objects.equals(bodySize, that.bodySize) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(additional, that.additional);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(status, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
-                bodySize, comment);
+                bodySize, comment, additional);
     }
 }

@@ -14,7 +14,7 @@ public class HarPageTest extends AbstractMapperTest<HarPage> {
     @Override
     public void testMapping() {
         HarPage page = map("{\"startedDateTime\":\"2014-01-01T12:00:00\",\"id\":\"anId\","
-        + "\"title\":\"aTitle\",\"pageTimings\":{},\"comment\":\"my comment\"}", HarPage.class);
+        + "\"title\":\"aTitle\",\"pageTimings\":{},\"comment\":\"my comment\", \"_add\": \"additional info\"}", HarPage.class);
 
         Assert.assertNotNull(page);
         Assert.assertEquals(EXPECTED_STARTED, page.getStartedDateTime());
@@ -22,6 +22,7 @@ public class HarPageTest extends AbstractMapperTest<HarPage> {
         Assert.assertEquals("aTitle", page.getTitle());
         Assert.assertNotNull(page.getPageTimings());
         Assert.assertEquals("my comment", page.getComment());
+        Assert.assertEquals("additional info", page.getAdditional().get("_add"));
 
         page = map(UNKNOWN_PROPERTY, HarPage.class);
         Assert.assertNotNull(page);

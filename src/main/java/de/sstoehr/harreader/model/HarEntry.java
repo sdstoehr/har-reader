@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,6 +29,7 @@ public class HarEntry {
     private String serverIPAddress;
     private String connection;
     private String comment;
+    private Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Reference to parent page, to which the request belongs to, null if not present.
@@ -149,6 +154,16 @@ public class HarEntry {
         this.comment = comment;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String name, Object value) {
+        this.additional.put(name, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,12 +178,13 @@ public class HarEntry {
                 Objects.equals(timings, harEntry.timings) &&
                 Objects.equals(serverIPAddress, harEntry.serverIPAddress) &&
                 Objects.equals(connection, harEntry.connection) &&
-                Objects.equals(comment, harEntry.comment);
+                Objects.equals(comment, harEntry.comment) &&
+                Objects.equals(additional, harEntry.additional);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(pageref, startedDateTime, time, request, response, cache, timings, serverIPAddress,
-                connection, comment);
+                connection, comment, additional);
     }
 }

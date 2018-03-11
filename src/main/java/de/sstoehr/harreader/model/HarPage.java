@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -20,6 +24,7 @@ public class HarPage {
     private String title;
     private HarPageTiming pageTimings;
     private String comment;
+    private Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Start time of page load, null if not present.
@@ -80,6 +85,16 @@ public class HarPage {
         this.comment = comment;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String name, Object value) {
+        this.additional.put(name, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,11 +104,12 @@ public class HarPage {
                 Objects.equals(id, harPage.id) &&
                 Objects.equals(title, harPage.title) &&
                 Objects.equals(pageTimings, harPage.pageTimings) &&
-                Objects.equals(comment, harPage.comment);
+                Objects.equals(comment, harPage.comment) &&
+                Objects.equals(additional, harPage.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startedDateTime, id, title, pageTimings, comment);
+        return Objects.hash(startedDateTime, id, title, pageTimings, comment, additional);
     }
 }
