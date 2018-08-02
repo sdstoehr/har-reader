@@ -6,6 +6,13 @@ import org.junit.Test;
 public class HttpStatusTest {
 
     @Test
+    public void testByCode() {
+        for (HttpStatus status : HttpStatus.values()) {
+            Assert.assertEquals(status, HttpStatus.byCode(status.getCode()));
+        }
+    }
+
+    @Test
     public void test302() {
         Assert.assertEquals(HttpStatus.FOUND, HttpStatus.byCode(302));
     }
