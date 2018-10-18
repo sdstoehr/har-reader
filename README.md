@@ -59,6 +59,12 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 
 ## Latest Releases
 
+### 2.1.3 - 2018-10-18
+
+* Updated dependencies ([CVE-2018-7489](https://nvd.nist.gov/vuln/detail/CVE-2018-7489))
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.1.3)
+
 ### 2.1.2 - 2018-08-02
 
 * Added support for several HTTP status codes, e.g. (308, 422 - 451, 505 - 511)
