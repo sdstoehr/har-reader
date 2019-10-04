@@ -10,7 +10,7 @@
 
     <groupId>de.sstoehr</groupId>
     <artifactId>har-reader</artifactId>
-    <version>2.1.6-SNAPSHOT</version>
+    <version>2.1.6</version>
     <packaging>jar</packaging>
 
     <name>har-reader</name>
