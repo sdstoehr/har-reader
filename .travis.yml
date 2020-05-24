@@ -1,8 +1,8 @@
 language: java
 
 jdk:
-  - openjdk11
-  - openjdk12
+  - openjdk8
+  - openjdk14
 script: "mvn verify -B"
 after_success:
   - mvn cobertura:cobertura coveralls:report
