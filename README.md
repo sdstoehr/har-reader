@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.1.7</version>
+  <version>2.1.8</version>
 </dependency>
 ```
 
@@ -32,6 +32,17 @@ Reading HAR from String:
 HarReader harReader = new HarReader();
 Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }");
 ```
+
+Some HAR generators use date formats, which are not according to the specification.
+You can tell HAR reader to ignore those fields instead of throwing an exception:
+
+```java
+HarReader harReader = new HarReader();   
+Har har = harReader.readFromFile(new File("myhar.har"), HarReaderMode.LAX);
+Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }", HarReaderMode.LAX);
+```
+
+You can also follow the next section and configure your own mapping configuration to deal with these fields.
 
 ### Customizing HAR reader
 
@@ -59,6 +70,12 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 2.1.8 - 2020-05-24
+
+* Updated dependencies
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.1.8)
 
 ### 2.1.7 - 2019-11-05
 
