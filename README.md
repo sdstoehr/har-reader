@@ -7,14 +7,13 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.1.8</version>
+  <version>2.1.9</version>
 </dependency>
 ```
 
 [![Build Status](https://travis-ci.org/sdstoehr/har-reader.svg?branch=master)](https://travis-ci.org/sdstoehr/har-reader)
 [![codecov](https://codecov.io/gh/sdstoehr/har-reader/branch/master/graph/badge.svg)](https://codecov.io/gh/sdstoehr/har-reader)
 [![Maven Central](https://img.shields.io/maven-central/v/de.sstoehr/har-reader.svg)](http://mvnrepository.com/artifact/de.sstoehr/har-reader)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=sdstoehr/har-reader)](https://dependabot.com)
 
 ## Usage
 
