@@ -71,6 +71,14 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 
 ## Latest Releases
 
+### 2.1.9 - 2020-06-30
+
+* Updated dependencies
+
+_This is the first release, which is provided both on GitHub and Maven Central repository._
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.1.9)
+
 ### 2.1.8 - 2020-05-24
 
 * Updated dependencies
