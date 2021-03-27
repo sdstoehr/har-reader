@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -18,6 +22,7 @@ public class HarCache {
     private HarCacheInfo beforeRequest;
     private HarCacheInfo afterRequest;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return State of the cache entry before the request, null if not present.
@@ -52,6 +57,19 @@ public class HarCache {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,12 +77,13 @@ public class HarCache {
         HarCache harCache = (HarCache) o;
         return Objects.equals(beforeRequest, harCache.beforeRequest) &&
                 Objects.equals(afterRequest, harCache.afterRequest) &&
-                Objects.equals(comment, harCache.comment);
+                Objects.equals(comment, harCache.comment) &&
+                Objects.equals(additional, harCache.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(beforeRequest, afterRequest, comment);
+        return Objects.hash(beforeRequest, afterRequest, comment, additional);
     }
 
     /**
@@ -80,6 +99,7 @@ public class HarCache {
         private String eTag;
         private Integer hitCount;
         private String comment;
+        private final Map<String, Object> additional = new HashMap<>();
 
         /**
          * @return Expiration time of entry, null if not present.
@@ -138,6 +158,19 @@ public class HarCache {
             this.comment = comment;
         }
 
+        /**
+         * @return Map with additional keys, which are not officially supported by the HAR specification
+         */
+        @JsonAnyGetter
+        public Map<String, Object> getAdditional() {
+            return additional;
+        }
+
+        @JsonAnySetter
+        public void setAdditionalField(String key, Object value) {
+            this.additional.put(key, value);
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -147,12 +180,13 @@ public class HarCache {
                     Objects.equals(lastAccess, that.lastAccess) &&
                     Objects.equals(eTag, that.eTag) &&
                     Objects.equals(hitCount, that.hitCount) &&
-                    Objects.equals(comment, that.comment);
+                    Objects.equals(comment, that.comment)  &&
+                    Objects.equals(additional, that.additional);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(expires, lastAccess, eTag, hitCount, comment);
+            return Objects.hash(expires, lastAccess, eTag, hitCount, comment, additional);
         }
     }
 }

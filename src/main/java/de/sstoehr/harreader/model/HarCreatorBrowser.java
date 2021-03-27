@@ -1,8 +1,12 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -16,6 +20,7 @@ public class HarCreatorBrowser {
     private String name;
     private String version;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Name of the application/browser used for creating HAR, null if not present.
@@ -50,6 +55,19 @@ public class HarCreatorBrowser {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,11 +75,12 @@ public class HarCreatorBrowser {
         HarCreatorBrowser that = (HarCreatorBrowser) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(version, that.version) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(additional, that.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, version, comment);
+        return Objects.hash(name, version, comment, additional);
     }
 }

@@ -64,7 +64,7 @@ public class HarLogTest extends AbstractMapperTest<HarLog> {
 
     @Override
     public void testMapping() {
-        HarLog log = map("{\"creator\": {}, \"browser\": {}, \"comment\": \"My comment\"}", HarLog.class);
+        HarLog log = map("{\"creator\": {}, \"browser\": {}, \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarLog.class);
 
         Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
         Assert.assertNotNull(log.getCreator());
@@ -72,6 +72,9 @@ public class HarLogTest extends AbstractMapperTest<HarLog> {
         Assert.assertEquals(EXPECTED_PAGES_LIST, log.getPages());
         Assert.assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
         Assert.assertEquals("My comment", log.getComment());
+
+        Assert.assertNotNull(log.getAdditional());
+        Assert.assertEquals("unknown", log.getAdditional().get("_unknown"));
 
         log = map(UNKNOWN_PROPERTY, HarLog.class);
         Assert.assertNotNull(log);

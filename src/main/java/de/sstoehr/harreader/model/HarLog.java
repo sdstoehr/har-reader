@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -23,6 +27,7 @@ public class HarLog {
     private List<HarPage> pages = new ArrayList<>();
     private List<HarEntry> entries = new ArrayList<>();
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Version number of the format.
@@ -106,6 +111,19 @@ public class HarLog {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,11 +134,12 @@ public class HarLog {
                 Objects.equals(browser, harLog.browser) &&
                 Objects.equals(pages, harLog.pages) &&
                 Objects.equals(entries, harLog.entries) &&
-                Objects.equals(comment, harLog.comment);
+                Objects.equals(comment, harLog.comment) &&
+                Objects.equals(additional, harLog.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(version, creator, browser, pages, entries, comment);
+        return Objects.hash(version, creator, browser, pages, entries, comment, additional);
     }
 }

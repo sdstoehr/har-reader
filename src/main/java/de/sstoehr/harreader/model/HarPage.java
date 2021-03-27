@@ -24,7 +24,7 @@ public class HarPage {
     private String title;
     private HarPageTiming pageTimings;
     private String comment;
-    private Map<String, Object> additional = new HashMap<>();
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Start time of page load, null if not present.
@@ -85,14 +85,17 @@ public class HarPage {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
     @JsonAnyGetter
     public Map<String, Object> getAdditional() {
         return additional;
     }
 
     @JsonAnySetter
-    public void setAdditionalField(String name, Object value) {
-        this.additional.put(name, value);
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
     }
 
     @Override

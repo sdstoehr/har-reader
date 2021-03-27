@@ -29,7 +29,7 @@ public class HarEntry {
     private String serverIPAddress;
     private String connection;
     private String comment;
-    private Map<String, Object> additional = new HashMap<>();
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Reference to parent page, to which the request belongs to, null if not present.
@@ -154,14 +154,17 @@ public class HarEntry {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
     @JsonAnyGetter
     public Map<String, Object> getAdditional() {
         return additional;
     }
 
     @JsonAnySetter
-    public void setAdditionalField(String name, Object value) {
-        this.additional.put(name, value);
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
     }
 
     @Override

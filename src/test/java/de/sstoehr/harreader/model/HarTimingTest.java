@@ -8,7 +8,7 @@ public class HarTimingTest extends AbstractMapperTest<HarTiming> {
     @Override
     public void testMapping() {
         HarTiming timing = map("{\"blocked\": 3804,\"dns\": 23,\"connect\": 5,\"send\": 9,\"wait\": 5209,"
-        + "\"receive\": 79, \"ssl\": 123, \"comment\": \"my comment\"}", HarTiming.class);
+        + "\"receive\": 79, \"ssl\": 123, \"comment\": \"my comment\",\"_unknown\":\"unknown\"}", HarTiming.class);
 
         Assert.assertNotNull(timing);
         Assert.assertEquals(3804, (int) timing.getBlocked());
@@ -19,6 +19,9 @@ public class HarTimingTest extends AbstractMapperTest<HarTiming> {
         Assert.assertEquals(79, (int) timing.getReceive());
         Assert.assertEquals(123, (int) timing.getSsl());
         Assert.assertEquals("my comment", timing.getComment());
+
+        Assert.assertNotNull(timing.getAdditional());
+        Assert.assertEquals("unknown", timing.getAdditional().get("_unknown"));
     }
 
     @Test
