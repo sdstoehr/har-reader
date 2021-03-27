@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,5 +61,10 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
         HarEntry entry = new HarEntry();
         entry.setTimings(null);
         Assert.assertNotNull(entry.getTimings());
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarEntry.class).verify();
     }
 }

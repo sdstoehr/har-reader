@@ -1,8 +1,12 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,6 +23,7 @@ public class HarContent {
     private String text;
     private String encoding;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Length of returned content in bytes, null if not present.
@@ -88,21 +93,35 @@ public class HarContent {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarContent)) return false;
         HarContent that = (HarContent) o;
         return Objects.equals(size, that.size) &&
                 Objects.equals(compression, that.compression) &&
                 Objects.equals(mimeType, that.mimeType) &&
                 Objects.equals(text, that.text) &&
                 Objects.equals(encoding, that.encoding) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(additional, that.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(size, compression, mimeType, text, encoding, comment);
+        return Objects.hash(size, compression, mimeType, text, encoding, comment, additional);
     }
 }

@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -23,6 +27,7 @@ public class HarCookie {
     private Boolean httpOnly;
     private Boolean secure;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Name of the cookie, null if not present.
@@ -113,10 +118,23 @@ public class HarCookie {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarCookie)) return false;
         HarCookie harCookie = (HarCookie) o;
         return Objects.equals(name, harCookie.name) &&
                 Objects.equals(value, harCookie.value) &&
@@ -125,11 +143,12 @@ public class HarCookie {
                 Objects.equals(expires, harCookie.expires) &&
                 Objects.equals(httpOnly, harCookie.httpOnly) &&
                 Objects.equals(secure, harCookie.secure) &&
-                Objects.equals(comment, harCookie.comment);
+                Objects.equals(comment, harCookie.comment) &&
+                Objects.equals(additional, harCookie.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value, path, domain, expires, httpOnly, secure, comment);
+        return Objects.hash(name, value, path, domain, expires, httpOnly, secure, comment, additional);
     }
 }

@@ -1,8 +1,12 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,6 +23,7 @@ public class HarTiming {
     private Integer receive;
     private Integer ssl;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return Time spent in a queue waiting for a network connection.
@@ -126,10 +131,23 @@ public class HarTiming {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarTiming)) return false;
         HarTiming harTiming = (HarTiming) o;
         return Objects.equals(blocked, harTiming.blocked) &&
                 Objects.equals(dns, harTiming.dns) &&
@@ -138,11 +156,12 @@ public class HarTiming {
                 Objects.equals(wait, harTiming.wait) &&
                 Objects.equals(receive, harTiming.receive) &&
                 Objects.equals(ssl, harTiming.ssl) &&
-                Objects.equals(comment, harTiming.comment);
+                Objects.equals(comment, harTiming.comment) &&
+                Objects.equals(additional, harTiming.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(blocked, dns, connect, send, wait, receive, ssl, comment);
+        return Objects.hash(blocked, dns, connect, send, wait, receive, ssl, comment, additional);
     }
 }

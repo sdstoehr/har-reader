@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,13 +34,21 @@ public class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
 
     @Override
     public void testMapping() {
-        HarPageTiming pageTiming = map("{\"onContentLoad\": 1234, \"onLoad\": 5678, \"comment\": \"My comment\"}", HarPageTiming.class);
+        HarPageTiming pageTiming = map("{\"onContentLoad\": 1234, \"onLoad\": 5678, \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarPageTiming.class);
 
         Assert.assertEquals(1234, (int) pageTiming.getOnContentLoad());
         Assert.assertEquals(5678, (int) pageTiming.getOnLoad());
         Assert.assertEquals("My comment", pageTiming.getComment());
 
+        Assert.assertNotNull(pageTiming.getAdditional());
+        Assert.assertEquals("unknown", pageTiming.getAdditional().get("_unknown"));
+
         pageTiming = map(UNKNOWN_PROPERTY, HarPageTiming.class);
         Assert.assertNotNull(pageTiming);
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarPageTiming.class).verify();
     }
 }

@@ -1,10 +1,14 @@
 package de.sstoehr.harreader.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,6 +23,7 @@ public class HarPostData {
     private List<HarPostDataParam> params = new ArrayList<>();
     private String text;
     private String comment;
+    private final Map<String, Object> additional = new HashMap<>();
 
     /**
      * @return MIME type of posted data, null if not present.
@@ -67,19 +72,33 @@ public class HarPostData {
         this.comment = comment;
     }
 
+    /**
+     * @return Map with additional keys, which are not officially supported by the HAR specification
+     */
+    @JsonAnyGetter
+    public Map<String, Object> getAdditional() {
+        return additional;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalField(String key, Object value) {
+        this.additional.put(key, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarPostData)) return false;
         HarPostData that = (HarPostData) o;
         return Objects.equals(mimeType, that.mimeType) &&
                 Objects.equals(params, that.params) &&
                 Objects.equals(text, that.text) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(comment, that.comment) &&
+                Objects.equals(additional, that.additional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mimeType, params, text, comment);
+        return Objects.hash(mimeType, params, text, comment, additional);
     }
 }

@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,5 +34,10 @@ public class HarPageTest extends AbstractMapperTest<HarPage> {
         HarPage page = new HarPage();
         page.setPageTimings(null);
         Assert.assertNotNull(page.getPageTimings());
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarPage.class).verify();
     }
 }

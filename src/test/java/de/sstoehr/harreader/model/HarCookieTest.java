@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Date;
 
@@ -13,7 +15,7 @@ public class HarCookieTest extends AbstractMapperTest<HarCookie> {
     @Override
     public void testMapping() {
         HarCookie cookie = map("{\"name\":\"aName\",\"value\":\"aValue\",\"path\":\"/\",\"domain\":\"sstoehr.de\"," +
-    "\"expires\":\"2014-01-01T12:00:00\",\"httpOnly\":\"true\",\"secure\":\"false\",\"comment\":\"my comment\"}", HarCookie.class);
+    "\"expires\":\"2014-01-01T12:00:00\",\"httpOnly\":\"true\",\"secure\":\"false\",\"comment\":\"my comment\",\"_unknown\":\"unknown\"}", HarCookie.class);
 
         Assert.assertNotNull(cookie);
         Assert.assertEquals("aName", cookie.getName());
@@ -25,8 +27,15 @@ public class HarCookieTest extends AbstractMapperTest<HarCookie> {
         Assert.assertEquals(false, cookie.getSecure());
         Assert.assertEquals("my comment", cookie.getComment());
 
+        Assert.assertNotNull(cookie.getAdditional());
+        Assert.assertEquals("unknown", cookie.getAdditional().get("_unknown"));
+
         cookie = map(UNKNOWN_PROPERTY, HarCookie.class);
         Assert.assertNotNull(cookie);
     }
 
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarCookie.class).verify();
+    }
 }

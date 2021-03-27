@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,12 +13,15 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
 
     @Override
     public void testMapping() {
-        HarPostData postData = map("{\"mimeType\": \"aMimeType\", \"params\": [], \"text\":\"aText\", \"comment\": \"My comment\"}", HarPostData.class);
+        HarPostData postData = map("{\"mimeType\": \"aMimeType\", \"params\": [], \"text\":\"aText\", \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarPostData.class);
 
         Assert.assertEquals("aMimeType", postData.getMimeType());
         Assert.assertEquals(EXPECTED_LIST, postData.getParams());
         Assert.assertEquals("aText", postData.getText());
         Assert.assertEquals("My comment", postData.getComment());
+
+        Assert.assertNotNull(postData.getAdditional());
+        Assert.assertEquals("unknown", postData.getAdditional().get("_unknown"));
 
         postData = map(UNKNOWN_PROPERTY, HarPostData.class);
         Assert.assertNotNull(postData);
@@ -28,5 +32,10 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
         HarPostData postData = new HarPostData();
         postData.setParams(null);
         Assert.assertNotNull(postData.getParams());
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarPostData.class).verify();
     }
 }
