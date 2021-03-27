@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class HarCreatorBrowserTest extends AbstractMapperTest<HarCreatorBrowser> {
 
@@ -18,6 +20,11 @@ public class HarCreatorBrowserTest extends AbstractMapperTest<HarCreatorBrowser>
 
         creatorBrowser = map(UNKNOWN_PROPERTY, HarCreatorBrowser.class);
         Assert.assertNotNull(creatorBrowser);
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarCreatorBrowser.class).verify();
     }
 
 }

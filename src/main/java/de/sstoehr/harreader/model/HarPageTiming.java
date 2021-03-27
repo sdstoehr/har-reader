@@ -81,7 +81,7 @@ public class HarPageTiming {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarPageTiming)) return false;
         HarPageTiming that = (HarPageTiming) o;
         return Objects.equals(onContentLoad, that.onContentLoad) &&
                 Objects.equals(onLoad, that.onLoad) &&

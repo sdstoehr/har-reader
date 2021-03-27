@@ -134,7 +134,7 @@ public class HarCookie {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarCookie)) return false;
         HarCookie harCookie = (HarCookie) o;
         return Objects.equals(name, harCookie.name) &&
                 Objects.equals(value, harCookie.value) &&

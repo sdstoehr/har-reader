@@ -88,7 +88,7 @@ public class HarPostData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarPostData)) return false;
         HarPostData that = (HarPostData) o;
         return Objects.equals(mimeType, that.mimeType) &&
                 Objects.equals(params, that.params) &&

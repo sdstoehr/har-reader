@@ -170,7 +170,7 @@ public class HarEntry {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarEntry)) return false;
         HarEntry harEntry = (HarEntry) o;
         return Objects.equals(pageref, harEntry.pageref) &&
                 Objects.equals(startedDateTime, harEntry.startedDateTime) &&

@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Date;
 
@@ -32,4 +34,8 @@ public class HarCookieTest extends AbstractMapperTest<HarCookie> {
         Assert.assertNotNull(cookie);
     }
 
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarCookie.class).verify();
+    }
 }

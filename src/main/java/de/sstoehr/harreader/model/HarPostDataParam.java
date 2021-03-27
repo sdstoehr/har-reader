@@ -95,7 +95,7 @@ public class HarPostDataParam {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarPostDataParam)) return false;
         HarPostDataParam that = (HarPostDataParam) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(value, that.value) &&

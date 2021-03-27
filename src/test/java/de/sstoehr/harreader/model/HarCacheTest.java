@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Date;
 
@@ -37,4 +39,9 @@ public class HarCacheTest extends AbstractMapperTest<HarCache> {
 
     }
 
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarCache.class).verify();
+        EqualsVerifier.simple().forClass(HarCache.HarCacheInfo.class).verify();
+    }
 }

@@ -71,7 +71,7 @@ public class HarQueryParam {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarQueryParam)) return false;
         HarQueryParam that = (HarQueryParam) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(value, that.value) &&

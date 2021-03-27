@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
 
@@ -16,4 +18,8 @@ public class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
         Assert.assertEquals("unknown", queryParam.getAdditional().get("_unknown"));
     }
 
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarQueryParam.class).verify();
+    }
 }

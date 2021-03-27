@@ -179,7 +179,7 @@ public class HarRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarRequest)) return false;
         HarRequest that = (HarRequest) o;
         return method == that.method &&
                 Objects.equals(url, that.url) &&

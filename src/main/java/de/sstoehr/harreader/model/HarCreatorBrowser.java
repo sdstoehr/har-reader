@@ -71,7 +71,7 @@ public class HarCreatorBrowser {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarCreatorBrowser)) return false;
         HarCreatorBrowser that = (HarCreatorBrowser) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(version, that.version) &&

@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class HarHeaderTest extends AbstractMapperTest<HarHeader> {
 
@@ -20,4 +22,8 @@ public class HarHeaderTest extends AbstractMapperTest<HarHeader> {
         Assert.assertNotNull(header);
     }
 
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarHeader.class).verify();
+    }
 }

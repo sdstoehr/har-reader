@@ -127,7 +127,7 @@ public class HarLog {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarLog)) return false;
         HarLog harLog = (HarLog) o;
         return Objects.equals(version, harLog.version) &&
                 Objects.equals(creator, harLog.creator) &&

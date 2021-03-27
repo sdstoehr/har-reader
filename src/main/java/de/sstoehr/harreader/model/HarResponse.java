@@ -176,7 +176,7 @@ public class HarResponse {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarResponse)) return false;
         HarResponse that = (HarResponse) o;
         return status == that.status &&
                 Objects.equals(statusText, that.statusText) &&

@@ -101,7 +101,7 @@ public class HarPage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarPage)) return false;
         HarPage harPage = (HarPage) o;
         return Objects.equals(startedDateTime, harPage.startedDateTime) &&
                 Objects.equals(id, harPage.id) &&

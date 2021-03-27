@@ -73,7 +73,7 @@ public class HarCache {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarCache)) return false;
         HarCache harCache = (HarCache) o;
         return Objects.equals(beforeRequest, harCache.beforeRequest) &&
                 Objects.equals(afterRequest, harCache.afterRequest) &&
@@ -174,7 +174,7 @@ public class HarCache {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (!(o instanceof HarCacheInfo)) return false;
             HarCacheInfo that = (HarCacheInfo) o;
             return Objects.equals(expires, that.expires) &&
                     Objects.equals(lastAccess, that.lastAccess) &&

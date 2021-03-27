@@ -109,7 +109,7 @@ public class HarContent {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarContent)) return false;
         HarContent that = (HarContent) o;
         return Objects.equals(size, that.size) &&
                 Objects.equals(compression, that.compression) &&

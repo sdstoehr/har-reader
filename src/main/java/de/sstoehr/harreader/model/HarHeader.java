@@ -71,7 +71,7 @@ public class HarHeader {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarHeader)) return false;
         HarHeader harHeader = (HarHeader) o;
         return Objects.equals(name, harHeader.name) &&
                 Objects.equals(value, harHeader.value) &&

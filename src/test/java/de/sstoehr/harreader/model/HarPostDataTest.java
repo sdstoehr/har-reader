@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,5 +32,10 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
         HarPostData postData = new HarPostData();
         postData.setParams(null);
         Assert.assertNotNull(postData.getParams());
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarPostData.class).verify();
     }
 }

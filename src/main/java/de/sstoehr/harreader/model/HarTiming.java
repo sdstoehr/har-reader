@@ -147,7 +147,7 @@ public class HarTiming {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof HarTiming)) return false;
         HarTiming harTiming = (HarTiming) o;
         return Objects.equals(blocked, harTiming.blocked) &&
                 Objects.equals(dns, harTiming.dns) &&

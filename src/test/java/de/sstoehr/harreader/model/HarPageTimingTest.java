@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,5 +45,10 @@ public class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
 
         pageTiming = map(UNKNOWN_PROPERTY, HarPageTiming.class);
         Assert.assertNotNull(pageTiming);
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.simple().forClass(HarPageTiming.class).verify();
     }
 }
