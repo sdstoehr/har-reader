@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.1.10</version>
+  <version>2.2.0</version>
 </dependency>
 ```
 
@@ -69,6 +69,13 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 2.2.0 - 2021-03-27
+
+* Updated dependencies
+* Added support for fields, which are not supported in official spec. You can access these fields using `Map<String, Object> getAdditional()`
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.2.0)
 
 ### 2.1.10 - 2020-10-05
 
