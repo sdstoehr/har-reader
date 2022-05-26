@@ -24,8 +24,8 @@ public class HarResponse {
     private List<HarHeader> headers;
     private HarContent content;
     private String redirectURL;
-    private Long headersSize;
-    private Long bodySize;
+    private Long headersSize = DEFAULT_SIZE;
+    private Long bodySize = DEFAULT_SIZE;
     private String comment;
     private final Map<String, Object> additional = new HashMap<>();
 
