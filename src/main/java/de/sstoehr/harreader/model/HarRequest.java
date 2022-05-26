@@ -28,8 +28,8 @@ public class HarRequest {
     private List<HarHeader> headers;
     private List<HarQueryParam> queryString;
     private HarPostData postData;
-    private Long headersSize;
-    private Long bodySize;
+    private Long headersSize = DEFAULT_SIZE;
+    private Long bodySize = DEFAULT_SIZE;
     private String comment;
     private final Map<String, Object> additional = new HashMap<>();
 
