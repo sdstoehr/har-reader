@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Information about a performed response.
+ * @see <a href="http://www.softwareishard.com/blog/har-12-spec/#response">specification</a>
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HarResponse {
