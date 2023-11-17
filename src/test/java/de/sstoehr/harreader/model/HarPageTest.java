@@ -1,43 +1,46 @@
 package de.sstoehr.harreader.model;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Date;
 
-public class HarPageTest extends AbstractMapperTest<HarPage> {
+import org.junit.jupiter.api.Test;
+
+class HarPageTest extends AbstractMapperTest<HarPage> {
 
     private final static Date EXPECTED_STARTED = new Date() {{
         setTime(1388577600000L);
     }};
 
     @Override
-    public void testMapping() {
+    void testMapping() {
         HarPage page = map("{\"startedDateTime\":\"2014-01-01T12:00:00\",\"id\":\"anId\","
         + "\"title\":\"aTitle\",\"pageTimings\":{},\"comment\":\"my comment\", \"_add\": \"additional info\"}", HarPage.class);
 
-        Assert.assertNotNull(page);
-        Assert.assertEquals(EXPECTED_STARTED, page.getStartedDateTime());
-        Assert.assertEquals("anId", page.getId());
-        Assert.assertEquals("aTitle", page.getTitle());
-        Assert.assertNotNull(page.getPageTimings());
-        Assert.assertEquals("my comment", page.getComment());
-        Assert.assertEquals("additional info", page.getAdditional().get("_add"));
+        assertNotNull(page);
+        assertEquals(EXPECTED_STARTED, page.getStartedDateTime());
+        assertEquals("anId", page.getId());
+        assertEquals("aTitle", page.getTitle());
+        assertNotNull(page.getPageTimings());
+        assertEquals("my comment", page.getComment());
+        assertEquals("additional info", page.getAdditional().get("_add"));
 
         page = map(UNKNOWN_PROPERTY, HarPage.class);
-        Assert.assertNotNull(page);
+        assertNotNull(page);
     }
 
     @Test
-    public void testPageTimingsNull() {
+    void testPageTimingsNull() {
         HarPage page = new HarPage();
         page.setPageTimings(null);
-        Assert.assertNotNull(page.getPageTimings());
+        assertNotNull(page.getPageTimings());
     }
 
     @Test
-    public void equalsContract() {
+    void equalsContract() {
         EqualsVerifier.simple().forClass(HarPage.class).verify();
     }
 }

@@ -1,29 +1,31 @@
 package de.sstoehr.harreader.model;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class HarTest extends AbstractMapperTest<Har>{
+import org.junit.jupiter.api.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+
+class HarTest extends AbstractMapperTest<Har>{
 
     @Test
-    public void testLogNull() {
+    void testLogNull() {
         Har har = new Har();
         har.setLog(null);
-        Assert.assertNotNull(har.getLog());
+        assertNotNull(har.getLog());
     }
 
     @Override
-    public void testMapping() {
+    void testMapping() {
         Har har = map("{\"log\": {}}", Har.class);
-        Assert.assertNotNull(har.getLog());
+        assertNotNull(har.getLog());
 
         har = map(UNKNOWN_PROPERTY, Har.class);
-        Assert.assertNotNull(har);
+        assertNotNull(har);
     }
 
     @Test
-    public void equalsContract() {
+    void equalsContract() {
         EqualsVerifier.simple().forClass(Har.class).verify();
     }
 
