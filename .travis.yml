@@ -1,8 +1,0 @@
-language: java
-
-jdk:
-  - openjdk11
-  - openjdk14
-script: "mvn verify -B"
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
