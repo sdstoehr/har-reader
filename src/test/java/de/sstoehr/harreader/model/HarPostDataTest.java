@@ -1,11 +1,14 @@
 package de.sstoehr.harreader.model;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
 
@@ -15,23 +18,23 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
     public void testMapping() {
         HarPostData postData = map("{\"mimeType\": \"aMimeType\", \"params\": [], \"text\":\"aText\", \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarPostData.class);
 
-        Assert.assertEquals("aMimeType", postData.getMimeType());
-        Assert.assertEquals(EXPECTED_LIST, postData.getParams());
-        Assert.assertEquals("aText", postData.getText());
-        Assert.assertEquals("My comment", postData.getComment());
+        assertEquals("aMimeType", postData.getMimeType());
+        assertEquals(EXPECTED_LIST, postData.getParams());
+        assertEquals("aText", postData.getText());
+        assertEquals("My comment", postData.getComment());
 
-        Assert.assertNotNull(postData.getAdditional());
-        Assert.assertEquals("unknown", postData.getAdditional().get("_unknown"));
+        assertNotNull(postData.getAdditional());
+        assertEquals("unknown", postData.getAdditional().get("_unknown"));
 
         postData = map(UNKNOWN_PROPERTY, HarPostData.class);
-        Assert.assertNotNull(postData);
+        assertNotNull(postData);
     }
 
     @Test
     public void testParams() {
         HarPostData postData = new HarPostData();
         postData.setParams(null);
-        Assert.assertNotNull(postData.getParams());
+        assertNotNull(postData.getParams());
     }
 
     @Test

@@ -1,27 +1,28 @@
 package de.sstoehr.harreader.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HttpStatusTest {
+import org.junit.jupiter.api.Test;
+
+class HttpStatusTest {
 
     @Test
-    public void testByCode() {
+    void testByCode() {
         for (HttpStatus status : HttpStatus.values()) {
-            Assert.assertEquals(status, HttpStatus.byCode(status.getCode()));
+            assertEquals(status, HttpStatus.byCode(status.getCode()));
         }
     }
 
     @Test
-    public void test302() {
-        Assert.assertEquals(HttpStatus.FOUND, HttpStatus.byCode(302));
+    void test302() {
+        assertEquals(HttpStatus.FOUND, HttpStatus.byCode(302));
     }
 
     @Test
-    public void testInvalidCode() {
-        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(0));
-        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(1000));
-        Assert.assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(-999));
+    void testInvalidCode() {
+        assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(0));
+        assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(1000));
+        assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, HttpStatus.byCode(-999));
     }
 
 }

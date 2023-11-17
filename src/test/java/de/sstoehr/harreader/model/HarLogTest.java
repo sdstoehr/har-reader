@@ -1,88 +1,91 @@
 package de.sstoehr.harreader.model;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HarLogTest extends AbstractMapperTest<HarLog> {
+import org.junit.jupiter.api.Test;
+
+class HarLogTest extends AbstractMapperTest<HarLog> {
 
     private static final String EXPECTED_DEFAULT_VERSION = "1.1";
     private static final List<HarPage> EXPECTED_PAGES_LIST = new ArrayList<>();
     private static final List<HarEntry> EXPECTED_ENTRIES_LIST = new ArrayList<>();
 
     @Test
-    public void testVersion() {
+    void testVersion() {
         HarLog log = new HarLog();
-        Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
 
         log.setVersion("1.2");
-        Assert.assertEquals("1.2", log.getVersion());
+        assertEquals("1.2", log.getVersion());
 
         log.setVersion(null);
-        Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
 
         log.setVersion("");
-        Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
 
         log.setVersion("  ");
-        Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
     }
 
     @Test
-    public void testPages() {
+    void testPages() {
         HarLog log = new HarLog();
-        Assert.assertEquals(EXPECTED_PAGES_LIST, log.getPages());
+        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
 
         log.setPages(null);
-        Assert.assertEquals(EXPECTED_PAGES_LIST, log.getPages());
+        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
     }
 
     @Test
-    public void testEntries() {
+    void testEntries() {
         HarLog log = new HarLog();
-        Assert.assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
+        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
 
         log.setEntries(null);
-        Assert.assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
+        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
     }
 
     @Test
-    public void testCreatorNull() {
+    void testCreatorNull() {
         HarLog log = new HarLog();
         log.setCreator(null);
-        Assert.assertNotNull(log.getCreator());
+        assertNotNull(log.getCreator());
     }
 
     @Test
-    public void testBrowserNull() {
+    void testBrowserNull() {
         HarLog log = new HarLog();
         log.setBrowser(null);
-        Assert.assertNotNull(log.getBrowser());
+        assertNotNull(log.getBrowser());
     }
 
     @Override
-    public void testMapping() {
+    void testMapping() {
         HarLog log = map("{\"creator\": {}, \"browser\": {}, \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarLog.class);
 
-        Assert.assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
-        Assert.assertNotNull(log.getCreator());
-        Assert.assertNotNull(log.getBrowser());
-        Assert.assertEquals(EXPECTED_PAGES_LIST, log.getPages());
-        Assert.assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
-        Assert.assertEquals("My comment", log.getComment());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertNotNull(log.getCreator());
+        assertNotNull(log.getBrowser());
+        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
+        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
+        assertEquals("My comment", log.getComment());
 
-        Assert.assertNotNull(log.getAdditional());
-        Assert.assertEquals("unknown", log.getAdditional().get("_unknown"));
+        assertNotNull(log.getAdditional());
+        assertEquals("unknown", log.getAdditional().get("_unknown"));
 
         log = map(UNKNOWN_PROPERTY, HarLog.class);
-        Assert.assertNotNull(log);
+        assertNotNull(log);
     }
 
     @Test
-    public void equalsContract() {
+    void equalsContract() {
         EqualsVerifier.simple().forClass(HarLog.class).verify();
     }
 }

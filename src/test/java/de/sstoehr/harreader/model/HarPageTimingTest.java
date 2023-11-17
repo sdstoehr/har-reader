@@ -1,54 +1,57 @@
 package de.sstoehr.harreader.model;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Assert;
-import org.junit.Test;
 
-public class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
+
+class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
 
     private static final Integer EXPECTED_DEFAULT_DURATION = -1;
 
     @Test
-    public void testOnContentLoad() {
+    void testOnContentLoad() {
         HarPageTiming pageTiming = new HarPageTiming();
-        Assert.assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnContentLoad());
+        assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnContentLoad());
 
         pageTiming.setOnContentLoad(1234);
-        Assert.assertEquals(1234, (int) pageTiming.getOnContentLoad());
+        assertEquals(1234, (int) pageTiming.getOnContentLoad());
 
         pageTiming.setOnContentLoad(null);
-        Assert.assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnContentLoad());
+        assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnContentLoad());
     }
 
     @Test
-    public void testOnLoad() {
+    void testOnLoad() {
         HarPageTiming pageTiming = new HarPageTiming();
-        Assert.assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnLoad());
+        assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnLoad());
 
         pageTiming.setOnLoad(1234);
-        Assert.assertEquals(1234, (int) pageTiming.getOnLoad());
+        assertEquals(1234, (int) pageTiming.getOnLoad());
 
         pageTiming.setOnLoad(null);
-        Assert.assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnLoad());
+        assertEquals(EXPECTED_DEFAULT_DURATION, pageTiming.getOnLoad());
     }
 
     @Override
-    public void testMapping() {
+    void testMapping() {
         HarPageTiming pageTiming = map("{\"onContentLoad\": 1234, \"onLoad\": 5678, \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarPageTiming.class);
 
-        Assert.assertEquals(1234, (int) pageTiming.getOnContentLoad());
-        Assert.assertEquals(5678, (int) pageTiming.getOnLoad());
-        Assert.assertEquals("My comment", pageTiming.getComment());
+        assertEquals(1234, (int) pageTiming.getOnContentLoad());
+        assertEquals(5678, (int) pageTiming.getOnLoad());
+        assertEquals("My comment", pageTiming.getComment());
 
-        Assert.assertNotNull(pageTiming.getAdditional());
-        Assert.assertEquals("unknown", pageTiming.getAdditional().get("_unknown"));
+        assertNotNull(pageTiming.getAdditional());
+        assertEquals("unknown", pageTiming.getAdditional().get("_unknown"));
 
         pageTiming = map(UNKNOWN_PROPERTY, HarPageTiming.class);
-        Assert.assertNotNull(pageTiming);
+        assertNotNull(pageTiming);
     }
 
     @Test
-    public void equalsContract() {
+    void equalsContract() {
         EqualsVerifier.simple().forClass(HarPageTiming.class).verify();
     }
 }
