@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.2.1</version>
+  <version>2.3.0</version>
 </dependency>
 ```
 
@@ -69,6 +69,14 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 2.3.0 - 2023-11-17
+
+* Updated dependencies
+* Requires Java 8 or later: dropped support for Java 7
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.3.0)
+
 
 ### 2.2.1 - 2022-05-26
 
