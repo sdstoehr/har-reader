@@ -77,6 +77,14 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
     @Test
     void testUnknownMethod() {
         HarRequest request = new HarRequest();
+        request.setMethod(HttpMethod.POST);
+        assertEquals("POST", request.getRawMethod());
+        assertEquals(HttpMethod.POST, request.getMethod());
+    }
+
+    @Test
+    void testUnknownMethodRaw() {
+        HarRequest request = new HarRequest();
         request.setRawMethod("NOT_PART_OF_ENUM");
         assertEquals("NOT_PART_OF_ENUM", request.getRawMethod());
         assertEquals(HttpMethod.UNKNOWN, request.getMethod());
