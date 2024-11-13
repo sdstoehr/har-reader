@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class HarResponse {
     protected static final Long DEFAULT_SIZE = -1L;
 
     private HttpStatus status;
+    private int rawStatus = HttpStatus.UNKNOWN_HTTP_STATUS.getCode();
     private String statusText;
     private String httpVersion;
     private List<HarCookie> cookies;
@@ -34,7 +36,7 @@ public class HarResponse {
     private final Map<String, Object> additional = new HashMap<>();
 
     /**
-     * @return Response status, null if not present.
+     * @return Response status, 0 if not present or unknown.
      */
     public int getStatus() {
         if (status == null) {
@@ -45,6 +47,21 @@ public class HarResponse {
 
     public void setStatus(int status) {
         this.status = HttpStatus.byCode(status);
+        this.rawStatus = status;
+    }
+
+    /**
+     * @return Response status, 0 if not present
+     */
+    @JsonProperty("status")
+    public int getRawStatus() {
+        return rawStatus;
+    }
+
+    @JsonProperty("status")
+    public void setRawStatus(int rawStatus) {
+        this.status = HttpStatus.byCode(rawStatus);
+        this.rawStatus = rawStatus;
     }
 
     /**
@@ -183,6 +200,7 @@ public class HarResponse {
         if (!(o instanceof HarResponse)) return false;
         HarResponse that = (HarResponse) o;
         return status == that.status &&
+                rawStatus == that.rawStatus &&
                 Objects.equals(statusText, that.statusText) &&
                 Objects.equals(httpVersion, that.httpVersion) &&
                 Objects.equals(cookies, that.cookies) &&
@@ -197,7 +215,7 @@ public class HarResponse {
 
     @Override
     public int hashCode() {
-        return Objects.hash(status, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
+        return Objects.hash(status, rawStatus, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
                 bodySize, comment, additional);
     }
 }

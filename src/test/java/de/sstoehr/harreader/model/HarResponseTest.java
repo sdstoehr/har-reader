@@ -33,6 +33,25 @@ class HarResponseTest extends AbstractMapperTest<HarResponse> {
     void testStatus() {
         HarResponse response = new HarResponse();
         assertEquals(0, response.getStatus());
+        assertEquals(0, response.getRawStatus());
+    }
+
+    @Test
+    void testUnknownStatus() {
+        HarResponse response = new HarResponse();
+        response.setStatus(600);
+
+        assertEquals(0, response.getStatus()); // old behaviour, falling back to UNKNOWN_STATUS_CODE
+        assertEquals(600, response.getRawStatus());
+    }
+
+    @Test
+    void testUnknownStatusRaw() {
+        HarResponse response = new HarResponse();
+        response.setRawStatus(600);
+
+        assertEquals(0, response.getStatus()); // old behaviour, falling back to UNKNOWN_STATUS_CODE
+        assertEquals(600, response.getRawStatus());
     }
 
     @Test

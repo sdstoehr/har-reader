@@ -19,6 +19,7 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
 
         assertNotNull(request);
         assertEquals(HttpMethod.GET, request.getMethod());
+        assertEquals("GET", request.getRawMethod());
         assertEquals("http://www.sebastianstoehr.de/", request.getUrl());
         assertEquals("HTTP/1.1", request.getHttpVersion());
         assertNotNull(request.getCookies());
@@ -71,6 +72,22 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
         HarRequest request = new HarRequest();
         request.setBodySize(null);
         assertEquals(-1L, (long) request.getBodySize());
+    }
+
+    @Test
+    void testUnknownMethod() {
+        HarRequest request = new HarRequest();
+        request.setMethod(HttpMethod.POST);
+        assertEquals("POST", request.getRawMethod());
+        assertEquals(HttpMethod.POST, request.getMethod());
+    }
+
+    @Test
+    void testUnknownMethodRaw() {
+        HarRequest request = new HarRequest();
+        request.setRawMethod("NOT_PART_OF_ENUM");
+        assertEquals("NOT_PART_OF_ENUM", request.getRawMethod());
+        assertEquals(HttpMethod.UNKNOWN, request.getMethod());
     }
 
     @Test
