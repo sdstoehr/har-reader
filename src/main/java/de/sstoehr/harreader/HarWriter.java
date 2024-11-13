@@ -21,10 +21,10 @@ public final class HarWriter extends AbstractHarIO {
     }
 
     /**
-     * Serialize HAR as a byte array. It's functionally equivalent to calling {@link #writeTo(OutputStream)} with
+     * Serialize HAR as a byte array. It's functionally equivalent to calling {@link #writeTo(OutputStream, Har)} with
      * {@link java.io.ByteArrayOutputStream} and getting bytes, but more efficient. Encoding used will be UTF-8.
      * @return Serialized HAR as a byte array
-     * @throws IOException if a low-level I/O problem occurs
+     * @throws HarWriterException if a low-level I/O problem occurs
      */
     public byte[] writeAsBytes(Har har) throws HarWriterException {
         return wrap(m -> m.writeValueAsBytes(har));
