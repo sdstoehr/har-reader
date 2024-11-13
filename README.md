@@ -43,6 +43,40 @@ Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }", HarReaderMode.LA
 
 You can also follow the next section and configure your own mapping configuration to deal with these fields.
 
+Writing HAR to File:
+
+```java
+Har har = new Har();
+HarWriter harWriter = new HarWriter();
+harWriter.writeTo(new File("myhar.har"), har);
+```
+
+Writing HAR to OutputStream:
+
+```java
+Har har = new Har();
+HarWriter harWriter = new HarWriter();
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+harWriter.writeTo(baos, har);
+```
+
+Writing HAR to Writer:
+
+```java
+Har har = new Har();
+HarWriter harWriter = new HarWriter();
+StringWriter sw = new StringWriter();
+harWriter.writeTo(sw, har);
+```
+
+Writing HAR as bytes:
+
+```java
+Har har = new Har();
+HarWriter harWriter = new HarWriter();
+byte[] harBytes = harWriter.writeAsBytes(har);
+```
+
 ### Customizing HAR reader
 
 As of version 2.0.0 you can create your own `MapperFactory` [(DefaultMapperFactory)](src/main/java/de/sstoehr/harreader/jackson/DefaultMapperFactory.java)
