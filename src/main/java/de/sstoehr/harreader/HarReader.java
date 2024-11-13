@@ -1,26 +1,21 @@
 package de.sstoehr.harreader;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.sstoehr.harreader.jackson.DefaultMapperFactory;
-import de.sstoehr.harreader.jackson.MapperFactory;
-import de.sstoehr.harreader.model.Har;
-
 import java.io.File;
 import java.io.IOException;
 
-public class HarReader {
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-    private final MapperFactory mapperFactory;
+import de.sstoehr.harreader.jackson.MapperFactory;
+import de.sstoehr.harreader.model.Har;
 
-    public HarReader(MapperFactory mapperFactory) {
-        if (mapperFactory == null) {
-            throw new IllegalArgumentException("mapperFactory must not be null!");
-        }
-        this.mapperFactory = mapperFactory;
-    }
+public class HarReader extends AbstractHarIO {
 
     public HarReader() {
-        this(new DefaultMapperFactory());
+        super();
+    }
+    
+    public HarReader(MapperFactory mapperFactory) {
+        super(mapperFactory);
     }
 
     public Har readFromFile(File har) throws HarReaderException {
@@ -28,7 +23,7 @@ public class HarReader {
     }
 
     public Har readFromFile(File har, HarReaderMode mode) throws HarReaderException {
-        ObjectMapper mapper = mapperFactory.instance(mode);
+        ObjectMapper mapper = getMapperFactory().instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {
@@ -41,7 +36,7 @@ public class HarReader {
     }
 
     public Har readFromString(String har, HarReaderMode mode) throws HarReaderException {
-        ObjectMapper mapper = mapperFactory.instance(mode);
+        ObjectMapper mapper = getMapperFactory().instance(mode);
         try {
             return mapper.readValue(har, Har.class);
         } catch (IOException e) {
