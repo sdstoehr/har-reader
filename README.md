@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.1</version>
 </dependency>
 ```
 
@@ -103,6 +103,13 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 2.4.1 - 2024-11-15
+
+* _Changes see 2.4.0_
+* Fixed issue introduced with 2.4.0 with duplicate fields
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.4.1)
 
 ### 2.4.0 - 2024-11-13
 
