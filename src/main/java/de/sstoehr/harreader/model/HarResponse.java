@@ -22,8 +22,8 @@ public class HarResponse {
 
     protected static final Long DEFAULT_SIZE = -1L;
 
-    private HttpStatus status;
-    private int rawStatus = HttpStatus.UNKNOWN_HTTP_STATUS.getCode();
+    private HttpStatus parsedStatus;
+    private int status = HttpStatus.UNKNOWN_HTTP_STATUS.getCode();
     private String statusText;
     private String httpVersion;
     private List<HarCookie> cookies;
@@ -39,15 +39,15 @@ public class HarResponse {
      * @return Response status, 0 if not present or unknown.
      */
     public int getStatus() {
-        if (status == null) {
-            status = HttpStatus.UNKNOWN_HTTP_STATUS;
+        if (parsedStatus == null) {
+            parsedStatus = HttpStatus.UNKNOWN_HTTP_STATUS;
         }
-        return status.getCode();
+        return parsedStatus.getCode();
     }
 
     public void setStatus(int status) {
-        this.status = HttpStatus.byCode(status);
-        this.rawStatus = status;
+        this.parsedStatus = HttpStatus.byCode(status);
+        this.status = status;
     }
 
     /**
@@ -55,13 +55,13 @@ public class HarResponse {
      */
     @JsonProperty("status")
     public int getRawStatus() {
-        return rawStatus;
+        return status;
     }
 
     @JsonProperty("status")
     public void setRawStatus(int rawStatus) {
-        this.status = HttpStatus.byCode(rawStatus);
-        this.rawStatus = rawStatus;
+        this.parsedStatus = HttpStatus.byCode(rawStatus);
+        this.status = rawStatus;
     }
 
     /**
@@ -199,8 +199,8 @@ public class HarResponse {
         if (this == o) return true;
         if (!(o instanceof HarResponse)) return false;
         HarResponse that = (HarResponse) o;
-        return status == that.status &&
-                rawStatus == that.rawStatus &&
+        return parsedStatus == that.parsedStatus &&
+                status == that.status &&
                 Objects.equals(statusText, that.statusText) &&
                 Objects.equals(httpVersion, that.httpVersion) &&
                 Objects.equals(cookies, that.cookies) &&
@@ -215,7 +215,7 @@ public class HarResponse {
 
     @Override
     public int hashCode() {
-        return Objects.hash(status, rawStatus, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
+        return Objects.hash(parsedStatus, status, statusText, httpVersion, cookies, headers, content, redirectURL, headersSize,
                 bodySize, comment, additional);
     }
 }
