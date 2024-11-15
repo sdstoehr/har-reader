@@ -22,8 +22,8 @@ public class HarRequest {
 
     protected static final Long DEFAULT_SIZE = -1L;
 
-    private HttpMethod method;
-    private String rawMethod;
+    private HttpMethod parsedMethod;
+    private String method;
     private String url;
     private String httpVersion;
     private List<HarCookie> cookies;
@@ -39,12 +39,12 @@ public class HarRequest {
      * @return Request method, null if not present.
      */
     public HttpMethod getMethod() {
-        return method;
+        return parsedMethod;
     }
 
     public void setMethod(HttpMethod method) {
-        this.method = method;
-        this.rawMethod = method.name();
+        this.parsedMethod = method;
+        this.method = method.name();
     }
 
     /**
@@ -52,13 +52,13 @@ public class HarRequest {
      */
     @JsonProperty("method")
     public String getRawMethod() {
-        return rawMethod;
+        return method;
     }
 
     @JsonProperty("method")
     public void setRawMethod(String rawMethod) {
-        this.method = HttpMethod.fromString(rawMethod);
-        this.rawMethod = rawMethod;
+        this.parsedMethod = HttpMethod.fromString(rawMethod);
+        this.method = rawMethod;
     }
 
     /**
@@ -198,8 +198,8 @@ public class HarRequest {
         if (this == o) return true;
         if (!(o instanceof HarRequest)) return false;
         HarRequest that = (HarRequest) o;
-        return method == that.method &&
-                Objects.equals(rawMethod, that.rawMethod) &&
+        return parsedMethod == that.parsedMethod &&
+                Objects.equals(method, that.method) &&
                 Objects.equals(url, that.url) &&
                 Objects.equals(httpVersion, that.httpVersion) &&
                 Objects.equals(cookies, that.cookies) &&
@@ -214,7 +214,7 @@ public class HarRequest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, rawMethod, url, httpVersion, cookies, headers, queryString, postData, headersSize,
+        return Objects.hash(parsedMethod, method, url, httpVersion, cookies, headers, queryString, postData, headersSize,
                 bodySize, comment, additional);
     }
 }
