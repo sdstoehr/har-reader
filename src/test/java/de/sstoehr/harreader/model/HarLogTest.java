@@ -4,6 +4,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ class HarLogTest extends AbstractMapperTest<HarLog> {
     void testBrowserNull() {
         HarLog log = new HarLog();
         log.setBrowser(null);
-        assertNotNull(log.getBrowser());
+        assertNull(log.getBrowser());
     }
 
     @Override

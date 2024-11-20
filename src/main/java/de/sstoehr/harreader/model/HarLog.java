@@ -59,12 +59,9 @@ public class HarLog {
     }
 
     /**
-     * @return Information about the browser used.
+     * @return Information about the browser used, may be null.
      */
     public HarCreatorBrowser getBrowser() {
-        if (browser == null) {
-            browser = new HarCreatorBrowser();
-        }
         return browser;
     }
 
