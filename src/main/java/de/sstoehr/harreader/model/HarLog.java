@@ -38,7 +38,7 @@ public class HarLog {
     }
 
     public void setVersion(String version) {
-        if (version == null || version.trim().equals("")) {
+        if (version == null || version.trim().isEmpty()) {
             version = DEFAULT_VERSION;
         }
         this.version = version;
