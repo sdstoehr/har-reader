@@ -19,7 +19,16 @@ class HarWriterTests {
     private static final File HAR_FILE = new File("src/test/resources/sstoehr.har");
 
     @Test
-    void testWriteValueAsBytes() throws HarReaderException, IOException, HarWriterException {
+    void shouldWriteHarAsString() throws HarReaderException, IOException, HarWriterException {
+        Har expected = MAPPER.readValue(HAR_FILE, Har.class);
+
+        Har har = new HarReader().readFromFile(HAR_FILE);
+        HarWriter writer = new HarWriter();
+        assertEquals(MAPPER.writeValueAsString(expected), writer.writeAsString(har));
+    }
+
+    @Test
+    void shouldWriteHarAsBytes() throws HarReaderException, IOException, HarWriterException {
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
         Har har = new HarReader().readFromFile(HAR_FILE);
@@ -28,7 +37,7 @@ class HarWriterTests {
     }
 
     @Test
-    void testWriteToOutputStream() throws HarReaderException, IOException, HarWriterException {
+    void testWriteToOutputStream() throws IOException, HarWriterException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
@@ -38,7 +47,7 @@ class HarWriterTests {
     }
 
     @Test
-    void testWriteToFile() throws HarReaderException, IOException, HarWriterException {
+    void testWriteToFile() throws IOException, HarWriterException {
         File file = File.createTempFile("pref", "suff");
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
@@ -49,7 +58,7 @@ class HarWriterTests {
     }
 
     @Test
-    void testWriteToWriter() throws HarReaderException, IOException, HarWriterException {
+    void testWriteToWriter() throws IOException, HarWriterException {
         StringWriter sw = new StringWriter();
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 

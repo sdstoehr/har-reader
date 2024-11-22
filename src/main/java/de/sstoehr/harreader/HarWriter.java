@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.function.Function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,6 +19,16 @@ public final class HarWriter extends AbstractHarIO {
 
     public HarWriter(MapperFactory mapperFactory) {
         super(mapperFactory);
+    }
+
+    /**
+     * Serialize HAR as a string. It's functionally equivalent to calling {@link #writeTo(Writer, Har)} with
+     * {@link java.io.StringWriter} and constructing String, but more efficient.
+     * @return Serialized HAR as a string
+     * @throws HarWriterException if a low-level I/O problem occurs
+     */
+    public String writeAsString(Har har) throws HarWriterException {
+        return wrap(m -> m.writeValueAsString(har));
     }
 
     /**
@@ -52,19 +63,6 @@ public final class HarWriter extends AbstractHarIO {
     }
 
     private <T> T wrap(IOFunction<ObjectMapper, T> consumer) throws HarWriterException {
-        ObjectMapper mapper = getMapperFactory().instance();
-        try {
-            return consumer.apply(mapper);
-        } catch(IOException thrown) {
-            throw new HarWriterException(thrown);
-        }
+        return wrap(getMapperFactory().instance(), consumer, HarWriterException::new);
     }
-
-    @FunctionalInterface
-    private interface IOFunction<T, R> {
-
-        R apply(T object) throws IOException;
-
-    }
-
 }
