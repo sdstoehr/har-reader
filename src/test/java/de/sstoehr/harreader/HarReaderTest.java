@@ -7,17 +7,46 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import org.junit.jupiter.api.Test;
 
 class HarReaderTest {
 
+    private static final String PATH_TO_VALID_HAR = "src/test/resources/sstoehr.har";
+
     private HarReader harReader = new HarReader();
 
     @Test
-    void test() throws HarReaderException {
-        File harFile = new File("src/test/resources/sstoehr.har");
+    void shouldReadFromFile() throws HarReaderException {
+        File harFile = new File(PATH_TO_VALID_HAR);
         Har har = harReader.readFromFile(harFile);
+        assertNotNull(har);
+    }
+
+    @Test
+    void shouldReadFromInputStream() throws HarReaderException, IOException {
+        File harFile = new File(PATH_TO_VALID_HAR);
+        InputStream inputStream = Files.newInputStream(harFile.toPath());
+        Har har = harReader.readFromInputStream(inputStream);
+        assertNotNull(har);
+    }
+
+    @Test
+    void shouldReadFromString() throws HarReaderException, IOException {
+        byte[] bytes = Files.readAllBytes(new File(PATH_TO_VALID_HAR).toPath());
+        String harAsString = new String(bytes, StandardCharsets.UTF_8);
+        Har har = harReader.readFromString(harAsString);
+        assertNotNull(har);
+    }
+
+    @Test
+    void shouldReadFromBytes() throws HarReaderException, IOException {
+        byte[] harAsBytes = Files.readAllBytes(new File(PATH_TO_VALID_HAR).toPath());
+        Har har = harReader.readFromBytes(harAsBytes);
         assertNotNull(har);
     }
 
@@ -60,7 +89,7 @@ class HarReaderTest {
 
     @Test
     void testEquals() throws HarReaderException {
-        File harFile = new File("src/test/resources/sstoehr.har");
+        File harFile = new File(PATH_TO_VALID_HAR);
         Har har1 = harReader.readFromFile(harFile);
         Har har2 = harReader.readFromFile(harFile);
         assertTrue(har1.equals(har2));
@@ -68,7 +97,7 @@ class HarReaderTest {
 
     @Test
     void testHashCode() throws HarReaderException {
-        File harFile = new File("src/test/resources/sstoehr.har");
+        File harFile = new File(PATH_TO_VALID_HAR);
         Har har1 = harReader.readFromFile(harFile);
         Har har2 = harReader.readFromFile(harFile);
         assertEquals(har1.hashCode(), har2.hashCode());
