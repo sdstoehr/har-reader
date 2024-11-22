@@ -1,6 +1,8 @@
 package de.sstoehr.harreader;
 
-public class HarReaderException extends Exception {
+import java.io.IOException;
+
+public class HarReaderException extends IOException {
 
     public HarReaderException(Throwable cause) {
         super(cause);
