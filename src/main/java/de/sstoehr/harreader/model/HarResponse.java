@@ -22,7 +22,7 @@ public class HarResponse {
 
     protected static final Long DEFAULT_SIZE = -1L;
 
-    private HttpStatus parsedStatus;
+    private HttpStatus parsedStatus = HttpStatus.UNKNOWN_HTTP_STATUS;
     private int status = HttpStatus.UNKNOWN_HTTP_STATUS.getCode();
     private String statusText;
     private String httpVersion;
@@ -39,9 +39,6 @@ public class HarResponse {
      * @return Response status, 0 if not present or unknown.
      */
     public int getStatus() {
-        if (parsedStatus == null) {
-            parsedStatus = HttpStatus.UNKNOWN_HTTP_STATUS;
-        }
         return parsedStatus.getCode();
     }
 
