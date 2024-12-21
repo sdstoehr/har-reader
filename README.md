@@ -7,7 +7,7 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>2.5.0</version>
+  <version>3.0.0</version>
 </dependency>
 ```
 
@@ -103,6 +103,16 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 ```
 
 ## Latest Releases
+
+### 3.0.0 - 2024-12-21
+
+* Minimum Java version is now 17
+  * Make use of records 
+  * Use `ZonedDateTime` instead of `Date`
+* Properly annotated fields with `@Nullable` and `@NotNull`
+* _Please see full list of breaking changes in the changelog details_
+
+[Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-3.0.0)
 
 ### 2.5.0 - 2024-11-20
 
