@@ -15,6 +15,7 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
     private static final List<HarPostDataParam> EXPECTED_LIST = new ArrayList<>();
 
     @Override
+    @Test
     public void testMapping() {
         HarPostData postData = map("{\"mimeType\": \"aMimeType\", \"params\": [], \"text\":\"aText\", \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarPostData.class);
 
