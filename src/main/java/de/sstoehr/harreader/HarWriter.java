@@ -1,10 +1,8 @@
 package de.sstoehr.harreader;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.function.Function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

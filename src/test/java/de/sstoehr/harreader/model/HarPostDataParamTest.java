@@ -28,6 +28,11 @@ class HarPostDataParamTest extends AbstractMapperTest<HarPostDataParam> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarPostDataParam());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPostDataParam.class).verify();
     }

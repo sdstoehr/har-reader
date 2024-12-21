@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
-class HarTest extends AbstractMapperTest<Har>{
+class HarTest extends AbstractMapperTest<Har> {
 
     @Test
     void testLogNull() {

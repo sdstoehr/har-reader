@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.sstoehr.harreader.jackson.DefaultMapperFactory;
 import org.junit.jupiter.api.Test;
 
 import de.sstoehr.harreader.model.Har;
@@ -23,7 +24,7 @@ class HarWriterTests {
     private static final File HAR_FILE = new File("src/test/resources/sstoehr.har");
 
     @Test
-    void shouldWriteHarAsString() throws HarReaderException, IOException, HarWriterException {
+    void shouldWriteHarAsString() throws IOException {
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
         Har har = new HarReader().readFromFile(HAR_FILE);
@@ -32,16 +33,16 @@ class HarWriterTests {
     }
 
     @Test
-    void shouldWriteHarAsBytes() throws HarReaderException, IOException, HarWriterException {
+    void shouldWriteHarAsBytes() throws IOException {
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
         Har har = new HarReader().readFromFile(HAR_FILE);
-        HarWriter writer = new HarWriter();
+        HarWriter writer = new HarWriter(new DefaultMapperFactory());
         assertEquals(MAPPER.writeValueAsString(expected), new String(writer.writeAsBytes(har), StandardCharsets.UTF_8));
     }
 
     @Test
-    void testWriteToOutputStream() throws IOException, HarWriterException {
+    void testWriteToOutputStream() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
@@ -51,7 +52,7 @@ class HarWriterTests {
     }
 
     @Test
-    void testWriteToFile() throws IOException, HarWriterException {
+    void testWriteToFile() throws IOException {
         File file = File.createTempFile("pref", "suff");
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 
@@ -62,7 +63,7 @@ class HarWriterTests {
     }
 
     @Test
-    void testWriteToWriter() throws IOException, HarWriterException {
+    void testWriteToWriter() throws IOException {
         StringWriter sw = new StringWriter();
         Har expected = MAPPER.readValue(HAR_FILE, Har.class);
 

@@ -93,6 +93,11 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarRequest());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarRequest.class).verify();
     }

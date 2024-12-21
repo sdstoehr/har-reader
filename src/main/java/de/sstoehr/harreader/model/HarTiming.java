@@ -1,6 +1,11 @@
 package de.sstoehr.harreader.model;
 
-import com.fasterxml.jackson.annotation.*;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +28,8 @@ public record HarTiming(
     protected static final Integer DEFAULT_TIME = -1;
 
     public HarTiming() {
-        this(DEFAULT_TIME, DEFAULT_TIME, DEFAULT_TIME, null, null, null, DEFAULT_TIME, null, new HashMap<>());
+        this(DEFAULT_TIME, DEFAULT_TIME, DEFAULT_TIME,
+                null, null, null, DEFAULT_TIME, null, new HashMap<>());
     }
 
     public HarTiming(@Nullable Integer blocked,

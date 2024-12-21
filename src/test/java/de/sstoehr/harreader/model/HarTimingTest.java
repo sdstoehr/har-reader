@@ -71,6 +71,11 @@ class HarTimingTest extends AbstractMapperTest<HarTiming> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarTiming());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarTiming.class).verify();
     }

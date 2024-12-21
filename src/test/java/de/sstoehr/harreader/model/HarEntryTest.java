@@ -64,6 +64,11 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarEntry());
+    }
+
+    @Test
     public void equalsContract() {
         EqualsVerifier.simple().forClass(HarEntry.class).verify();
     }

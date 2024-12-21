@@ -46,6 +46,11 @@ class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarPageTiming());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPageTiming.class).verify();
     }

@@ -39,6 +39,11 @@ class HarCookieTest extends AbstractMapperTest<HarCookie> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarCookie());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarCookie.class).verify();
     }

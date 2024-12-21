@@ -84,6 +84,11 @@ class HarResponseTest extends AbstractMapperTest<HarResponse> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarResponse());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarResponse.class).verify();
     }

@@ -23,6 +23,11 @@ class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarQueryParam());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarQueryParam.class).verify();
     }

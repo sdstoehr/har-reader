@@ -40,6 +40,11 @@ class HarPageTest extends AbstractMapperTest<HarPage> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarPage());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPage.class).verify();
     }

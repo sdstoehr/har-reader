@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
+
 class HarContentTest extends AbstractMapperTest<HarContent> {
 
     @Override
@@ -27,6 +28,11 @@ class HarContentTest extends AbstractMapperTest<HarContent> {
 
         content = map(UNKNOWN_PROPERTY, HarContent.class);
         assertNotNull(content);
+    }
+
+    @Test
+    void testNullability() {
+        testNullability(new HarContent());
     }
 
     @Test

@@ -85,6 +85,11 @@ class HarLogTest extends AbstractMapperTest<HarLog> {
     }
 
     @Test
+    void testNullability() {
+        testNullability(new HarLog());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarLog.class).verify();
     }
