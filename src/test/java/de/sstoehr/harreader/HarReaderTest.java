@@ -28,7 +28,7 @@ class HarReaderTest {
     }
 
     @Test
-    void shouldReadFromInputStream() throws HarReaderException, IOException {
+    void shouldReadFromInputStream() throws IOException {
         File harFile = new File(PATH_TO_VALID_HAR);
         InputStream inputStream = Files.newInputStream(harFile.toPath());
         Har har = harReader.readFromInputStream(inputStream);
@@ -36,7 +36,7 @@ class HarReaderTest {
     }
 
     @Test
-    void shouldReadFromString() throws HarReaderException, IOException {
+    void shouldReadFromString() throws IOException {
         byte[] bytes = Files.readAllBytes(new File(PATH_TO_VALID_HAR).toPath());
         String harAsString = new String(bytes, StandardCharsets.UTF_8);
         Har har = harReader.readFromString(harAsString);
@@ -44,7 +44,7 @@ class HarReaderTest {
     }
 
     @Test
-    void shouldReadFromBytes() throws HarReaderException, IOException {
+    void shouldReadFromBytes() throws IOException {
         byte[] harAsBytes = Files.readAllBytes(new File(PATH_TO_VALID_HAR).toPath());
         Har har = harReader.readFromBytes(harAsBytes);
         assertNotNull(har);
@@ -57,7 +57,7 @@ class HarReaderTest {
     }
 
     @Test
-    void invalidDateStrict() throws HarReaderException {
+    void invalidDateStrict() {
         File harFile = new File("src/test/resources/sstoehr.invalid-date.har");
         assertThrows(HarReaderException.class, () -> harReader.readFromFile(harFile));
     }
@@ -70,7 +70,7 @@ class HarReaderTest {
     }
 
     @Test
-    void invalidIntegerStrict() throws HarReaderException {
+    void invalidIntegerStrict() {
         File harFile = new File("src/test/resources/sstoehr.invalid-integer.har");
         assertThrows(HarReaderException.class, () -> harReader.readFromFile(harFile));
     }

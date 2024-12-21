@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Date;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Information about an exported page.
@@ -17,79 +18,37 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarPage {
+public record HarPage(
+        @Nullable @JsonFormat(shape = JsonFormat.Shape.STRING) ZonedDateTime startedDateTime,
+        @Nullable String id,
+        @Nullable String title,
+        @Nonnull HarPageTiming pageTimings,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
-    private Date startedDateTime;
-    private String id;
-    private String title;
-    private HarPageTiming pageTimings;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return Start time of page load, null if not present.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    public Date getStartedDateTime() {
-        return startedDateTime;
+    public HarPage() {
+        this(null, null, null, new HarPageTiming(), null, new HashMap<>());
     }
 
-    public void setStartedDateTime(Date startedDateTime) {
+    public HarPage(@Nullable ZonedDateTime startedDateTime,
+                   @Nullable String id,
+                   @Nullable String title,
+                   @Nullable HarPageTiming pageTimings,
+                   @Nullable String comment,
+                   @Nullable Map<String, Object> additional) {
         this.startedDateTime = startedDateTime;
-    }
-
-    /**
-     * @return Unique identifier, null if not present.
-     */
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
         this.id = id;
-    }
-
-    /**
-     * @return Page title, null if not present.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * @return Detailed information about page loading timings.
-     */
-    public HarPageTiming getPageTimings() {
-        if (pageTimings == null) {
-            pageTimings = new HarPageTiming();
-        }
-        return pageTimings;
-    }
-
-    public void setPageTimings(HarPageTiming pageTimings) {
-        this.pageTimings = pageTimings;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
+        this.pageTimings = (pageTimings == null) ? new HarPageTiming() : pageTimings;
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -98,21 +57,4 @@ public class HarPage {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarPage)) return false;
-        HarPage harPage = (HarPage) o;
-        return Objects.equals(startedDateTime, harPage.startedDateTime) &&
-                Objects.equals(id, harPage.id) &&
-                Objects.equals(title, harPage.title) &&
-                Objects.equals(pageTimings, harPage.pageTimings) &&
-                Objects.equals(comment, harPage.comment) &&
-                Objects.equals(additional, harPage.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(startedDateTime, id, title, pageTimings, comment, additional);
-    }
 }

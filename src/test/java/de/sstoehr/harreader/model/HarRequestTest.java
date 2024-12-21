@@ -1,15 +1,15 @@
 package de.sstoehr.harreader.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class HarRequestTest extends AbstractMapperTest<HarRequest> {
 
     @Override
+    @Test
     void testMapping() {
         HarRequest request = map("{\"method\": \"GET\",\"url\": "
          + "\"http://www.sebastianstoehr.de/\",\"httpVersion\": "
@@ -18,76 +18,83 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
          + "\"_add\": \"additional info\"}", HarRequest.class);
 
         assertNotNull(request);
-        assertEquals(HttpMethod.GET, request.getMethod());
-        assertEquals("GET", request.getRawMethod());
-        assertEquals("http://www.sebastianstoehr.de/", request.getUrl());
-        assertEquals("HTTP/1.1", request.getHttpVersion());
-        assertNotNull(request.getCookies());
-        assertNotNull(request.getHeaders());
-        assertNotNull(request.getQueryString());
-        assertNotNull(request.getPostData());
-        assertEquals(676L, (long) request.getHeadersSize());
-        assertEquals(-1L, (long) request.getBodySize());
-        assertEquals("my comment", request.getComment());
-        assertEquals("additional info", request.getAdditional().get("_add"));
+        assertEquals(HttpMethod.GET, request.httpMethod());
+        assertEquals("GET", request.method());
+        assertEquals("http://www.sebastianstoehr.de/", request.url());
+        assertEquals("HTTP/1.1", request.httpVersion());
+        assertNotNull(request.cookies());
+        assertNotNull(request.headers());
+        assertNotNull(request.queryString());
+        assertNotNull(request.postData());
+        assertEquals(676L, (long) request.headersSize());
+        assertEquals(-1L, (long) request.bodySize());
+        assertEquals("my comment", request.comment());
+        assertEquals("additional info", request.additional().get("_add"));
     }
 
     @Test
     void testCookies() {
         HarRequest request = new HarRequest();
-        request.setCookies(null);
-        assertNotNull(request.getCookies());
+        assertNotNull(request.cookies());
     }
 
     @Test
     void testHeaders() {
         HarRequest request = new HarRequest();
-        request.setHeaders(null);
-        assertNotNull(request.getHeaders());
+        assertNotNull(request.headers());
     }
 
     @Test
     void testQueryString() {
         HarRequest request = new HarRequest();
-        request.setQueryString(null);
-        assertNotNull(request.getQueryString());
+        assertNotNull(request.queryString());
     }
 
     @Test
     void testPostData() {
         HarRequest request = new HarRequest();
-        request.setPostData(null);
-        assertNotNull(request.getPostData());
+        assertNotNull(request.postData());
     }
 
     @Test
     void testHeadersSize() {
         HarRequest request = new HarRequest();
-        request.setHeadersSize(null);
-        assertEquals(-1L, (long) request.getHeadersSize());
+        assertEquals(-1L, (long) request.headersSize());
     }
 
     @Test
     void testBodySize() {
         HarRequest request = new HarRequest();
-        request.setBodySize(null);
-        assertEquals(-1L, (long) request.getBodySize());
+        assertEquals(-1L, (long) request.bodySize());
     }
 
     @Test
     void testUnknownMethod() {
-        HarRequest request = new HarRequest();
-        request.setMethod(HttpMethod.POST);
-        assertEquals("POST", request.getRawMethod());
-        assertEquals(HttpMethod.POST, request.getMethod());
+        HarRequest request = new HarRequest("POST", null, null, null, null, null, null, null,
+                null, null, null);
+        assertEquals("POST", request.method());
+        assertEquals(HttpMethod.POST, request.httpMethod());
     }
 
     @Test
     void testUnknownMethodRaw() {
-        HarRequest request = new HarRequest();
-        request.setRawMethod("NOT_PART_OF_ENUM");
-        assertEquals("NOT_PART_OF_ENUM", request.getRawMethod());
-        assertEquals(HttpMethod.UNKNOWN, request.getMethod());
+        HarRequest request = new HarRequest("NOT_PART_OF_ENUM", null, null, null, null, null, null, null,
+                null, null, null);
+        assertEquals("NOT_PART_OF_ENUM", request.method());
+        assertEquals(HttpMethod.UNKNOWN, request.httpMethod());
+    }
+
+    @Test
+    void testNullMethodRaw() {
+        HarRequest request = new HarRequest(null, null, null, null, null, null, null, null,
+                null, null, null);
+        assertNull(request.method());
+        assertEquals(HttpMethod.UNKNOWN, request.httpMethod());
+    }
+
+    @Test
+    void testNullability() {
+        testNullability(new HarRequest());
     }
 
     @Test

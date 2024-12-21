@@ -15,7 +15,7 @@ public class HarReader extends AbstractHarIO {
     public HarReader() {
         super();
     }
-    
+
     public HarReader(MapperFactory mapperFactory) {
         super(mapperFactory);
     }

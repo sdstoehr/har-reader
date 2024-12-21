@@ -6,19 +6,19 @@ import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
-class HarTest extends AbstractMapperTest<Har>{
+class HarTest extends AbstractMapperTest<Har> {
 
     @Test
     void testLogNull() {
-        Har har = new Har();
-        har.setLog(null);
-        assertNotNull(har.getLog());
+        Har har = new Har(null);
+        assertNotNull(har.log());
     }
 
     @Override
+    @Test
     void testMapping() {
         Har har = map("{\"log\": {}}", Har.class);
-        assertNotNull(har.getLog());
+        assertNotNull(har.log());
 
         har = map(UNKNOWN_PROPERTY, Har.class);
         assertNotNull(har);

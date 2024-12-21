@@ -10,83 +10,82 @@ import org.junit.jupiter.api.Test;
 class HarResponseTest extends AbstractMapperTest<HarResponse> {
 
     @Override
+    @Test
     void testMapping() {
         HarResponse response = map("{\"status\": 200,\"statusText\": \"OK\",\"httpVersion\": \"HTTP/1.1\","
         + "\"cookies\": [],\"headers\": [],\"content\": {},\"redirectURL\": \"redirectUrl\",\"headersSize\": 318,"
         + "\"bodySize\": 16997,\"comment\": \"My comment\", \"_add\": \"additional info\"}", HarResponse.class);
 
         assertNotNull(response);
-        assertEquals(200, response.getStatus());
-        assertEquals("OK", response.getStatusText());
-        assertEquals("HTTP/1.1", response.getHttpVersion());
-        assertNotNull(response.getCookies());
-        assertNotNull(response.getHeaders());
-        assertNotNull(response.getContent());
-        assertEquals("redirectUrl", response.getRedirectURL());
-        assertEquals(318L, (long) response.getHeadersSize());
-        assertEquals(16997L, (long) response.getBodySize());
-        assertEquals("My comment", response.getComment());
-        assertEquals("additional info", response.getAdditional().get("_add"));
+        assertEquals(200, response.status());
+        assertEquals("OK", response.statusText());
+        assertEquals("HTTP/1.1", response.httpVersion());
+        assertNotNull(response.cookies());
+        assertNotNull(response.headers());
+        assertNotNull(response.content());
+        assertEquals("redirectUrl", response.redirectURL());
+        assertEquals(318L, (long) response.headersSize());
+        assertEquals(16997L, (long) response.bodySize());
+        assertEquals("My comment", response.comment());
+        assertEquals("additional info", response.additional().get("_add"));
     }
 
     @Test
     void testStatus() {
         HarResponse response = new HarResponse();
-        assertEquals(0, response.getStatus());
-        assertEquals(0, response.getRawStatus());
+        assertEquals(0, response.status());
+        assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, response.httpStatus());
+    }
+
+    @Test
+    void testKnownStatus() {
+        HarResponse response = new HarResponse(404, null, null, null, null, null, null, null, null, null, null);
+
+        assertEquals(404, response.status());
+        assertEquals(HttpStatus.NOT_FOUND, response.httpStatus());
     }
 
     @Test
     void testUnknownStatus() {
-        HarResponse response = new HarResponse();
-        response.setStatus(600);
+        HarResponse response = new HarResponse(600, null, null, null, null, null, null, null, null, null, null);
 
-        assertEquals(0, response.getStatus()); // old behaviour, falling back to UNKNOWN_STATUS_CODE
-        assertEquals(600, response.getRawStatus());
-    }
-
-    @Test
-    void testUnknownStatusRaw() {
-        HarResponse response = new HarResponse();
-        response.setRawStatus(600);
-
-        assertEquals(0, response.getStatus()); // old behaviour, falling back to UNKNOWN_STATUS_CODE
-        assertEquals(600, response.getRawStatus());
+        assertEquals(600, response.status());
+        assertEquals(HttpStatus.UNKNOWN_HTTP_STATUS, response.httpStatus());
     }
 
     @Test
     void testCookies() {
         HarResponse response = new HarResponse();
-        response.setCookies(null);
-        assertNotNull(response.getCookies());
+        assertNotNull(response.cookies());
     }
 
     @Test
     void testHeaders() {
         HarResponse response = new HarResponse();
-        response.setHeaders(null);
-        assertNotNull(response.getHeaders());
+        assertNotNull(response.headers());
     }
 
     @Test
     void testContent() {
         HarResponse response = new HarResponse();
-        response.setContent(null);
-        assertNotNull(response.getContent());
+        assertNotNull(response.content());
     }
     
     @Test
     void testHeadersSize() {
         HarResponse response = new HarResponse();
-        response.setHeadersSize(null);
-        assertEquals(-1L, (long) response.getHeadersSize());
+        assertEquals(-1L, (long) response.headersSize());
     }
 
     @Test
     void testBodySize() {
         HarResponse response = new HarResponse();
-        response.setBodySize(null);
-        assertEquals(-1L, (long) response.getBodySize());
+        assertEquals(-1L, (long) response.bodySize());
+    }
+
+    @Test
+    void testNullability() {
+        testNullability(new HarResponse());
     }
 
     @Test
