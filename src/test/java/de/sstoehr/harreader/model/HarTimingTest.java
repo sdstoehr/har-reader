@@ -76,6 +76,32 @@ class HarTimingTest extends AbstractMapperTest<HarTiming> {
     }
 
     @Test
+    void testBuilder() {
+        HarTiming timing = HarTiming.builder().build();
+        testNullability(timing);
+
+        timing = HarTiming.builder()
+                .blocked(3804)
+                .dns(23)
+                .connect(5)
+                .send(9)
+                .waitTime(5209)
+                .receive(79)
+                .ssl(123)
+                .comment("my comment")
+                .build();
+
+        assertEquals(3804, (int) timing.blocked());
+        assertEquals(23, (int) timing.dns());
+        assertEquals(5, (int) timing.connect());
+        assertEquals(9, (int) timing.send());
+        assertEquals(5209, (int) timing.waitTime());
+        assertEquals(79, (int) timing.receive());
+        assertEquals(123, (int) timing.ssl());
+        assertEquals("my comment", timing.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarTiming.class).verify();
     }

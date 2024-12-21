@@ -46,6 +46,22 @@ class HarCacheTest extends AbstractMapperTest<HarCache> {
     }
 
     @Test
+    void testBuilder() {
+        HarCache cache = HarCache.builder().build();
+        testNullability(cache);
+
+        cache = HarCache.builder()
+                .beforeRequest(HarCache.HarCacheInfo.builder().build())
+                .afterRequest(HarCache.HarCacheInfo.builder().build())
+                .comment("comment")
+                .build();
+
+        assertNotNull(cache.beforeRequest());
+        assertNotNull(cache.afterRequest());
+        assertEquals("comment", cache.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarCache.class).verify();
     }

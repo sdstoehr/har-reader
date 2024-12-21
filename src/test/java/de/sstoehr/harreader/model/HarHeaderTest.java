@@ -32,6 +32,22 @@ class HarHeaderTest extends AbstractMapperTest<HarHeader> {
     }
 
     @Test
+    void testBuilder() {
+        HarHeader header = HarHeader.builder().build();
+        testNullability(header);
+
+        header = HarHeader.builder()
+                .name("aName")
+                .value("aValue")
+                .comment("my comment")
+                .build();
+
+        assertEquals("aName", header.name());
+        assertEquals("aValue", header.value());
+        assertEquals("my comment", header.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarHeader.class).verify();
     }

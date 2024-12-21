@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,6 +19,7 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder(toBuilder = true)
 public record HarCache(
         @Nullable HarCacheInfo beforeRequest,
         @Nullable HarCacheInfo afterRequest,
@@ -55,6 +57,7 @@ public record HarCache(
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @Builder(toBuilder = true)
     public record HarCacheInfo(@Nullable @JsonFormat(shape = JsonFormat.Shape.STRING) ZonedDateTime expires,
                                       @Nullable @JsonFormat(shape = JsonFormat.Shape.STRING) ZonedDateTime lastAccess,
                                       @Nullable String eTag,

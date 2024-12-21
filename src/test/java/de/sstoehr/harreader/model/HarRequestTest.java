@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HarRequestTest extends AbstractMapperTest<HarRequest> {
@@ -95,6 +98,37 @@ class HarRequestTest extends AbstractMapperTest<HarRequest> {
     @Test
     void testNullability() {
         testNullability(new HarRequest());
+    }
+
+    @Test
+    void testBuilder() {
+        HarRequest request = HarRequest.builder().build();
+        testNullability(request);
+
+        request = HarRequest.builder()
+                .method("GET")
+                .url("http://www.sebastianstoehr.de/")
+                .httpVersion("HTTP/1.1")
+                .cookies(List.of(HarCookie.builder().build()))
+                .headers(List.of(HarHeader.builder().build()))
+                .queryString(Collections.emptyList())
+                .postData(HarPostData.builder().build())
+                .headersSize(676L)
+                .bodySize(-1L)
+                .comment("my comment")
+                .build();
+
+        assertEquals(HttpMethod.GET, request.httpMethod());
+        assertEquals("GET", request.method());
+        assertEquals("http://www.sebastianstoehr.de/", request.url());
+        assertEquals("HTTP/1.1", request.httpVersion());
+        assertNotNull(request.cookies());
+        assertNotNull(request.headers());
+        assertNotNull(request.queryString());
+        assertNotNull(request.postData());
+        assertEquals(676L, (long) request.headersSize());
+        assertEquals(-1L, (long) request.bodySize());
+        assertEquals("my comment", request.comment());
     }
 
     @Test

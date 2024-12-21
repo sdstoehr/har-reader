@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
+import lombok.Singular;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,12 +20,13 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder(toBuilder = true)
 public record HarLog(
         @Nonnull String version,
         @Nonnull HarCreatorBrowser creator,
         @Nullable HarCreatorBrowser browser,
-        @Nonnull List<HarPage> pages,
-        @Nonnull List<HarEntry> entries,
+        @Nonnull @Singular("page") List<HarPage> pages,
+        @Nonnull @Singular("entry") List<HarEntry> entries,
         @Nullable String comment,
         @Nonnull Map<String, Object> additional) {
 

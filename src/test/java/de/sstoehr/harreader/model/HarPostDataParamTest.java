@@ -33,6 +33,26 @@ class HarPostDataParamTest extends AbstractMapperTest<HarPostDataParam> {
     }
 
     @Test
+    void testBuilder() {
+        HarPostDataParam postDataParam = HarPostDataParam.builder().build();
+        testNullability(postDataParam);
+
+        postDataParam = HarPostDataParam.builder()
+                .name("aName")
+                .value("aValue")
+                .fileName("aFilename")
+                .contentType("aContentType")
+                .comment("My comment")
+                .build();
+
+        assertEquals("aName", postDataParam.name());
+        assertEquals("aValue", postDataParam.value());
+        assertEquals("aFilename", postDataParam.fileName());
+        assertEquals("aContentType", postDataParam.contentType());
+        assertEquals("My comment", postDataParam.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPostDataParam.class).verify();
     }

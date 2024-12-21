@@ -44,6 +44,32 @@ class HarCookieTest extends AbstractMapperTest<HarCookie> {
     }
 
     @Test
+    void testBuilder() {
+        HarCookie cookie = HarCookie.builder().build();
+        testNullability(cookie);
+
+        cookie = HarCookie.builder()
+                .name("aName")
+                .value("aValue")
+                .path("/")
+                .domain("sstoehr.de")
+                .expires(EXPECTED_EXPIRES)
+                .httpOnly(true)
+                .secure(false)
+                .comment("my comment")
+                .build();
+
+        assertEquals("aName", cookie.name());
+        assertEquals("aValue", cookie.value());
+        assertEquals("/", cookie.path());
+        assertEquals("sstoehr.de", cookie.domain());
+        assertEquals(EXPECTED_EXPIRES, cookie.expires());
+        assertEquals(true, cookie.httpOnly());
+        assertEquals(false, cookie.secure());
+        assertEquals("my comment", cookie.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarCookie.class).verify();
     }

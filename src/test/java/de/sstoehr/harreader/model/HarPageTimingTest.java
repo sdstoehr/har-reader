@@ -51,6 +51,22 @@ class HarPageTimingTest extends AbstractMapperTest<HarPageTiming> {
     }
 
     @Test
+    void testBuilder() {
+        HarPageTiming pageTiming = HarPageTiming.builder().build();
+        testNullability(pageTiming);
+
+        pageTiming = HarPageTiming.builder()
+                .onContentLoad(1234)
+                .onLoad(5678)
+                .comment("My comment")
+                .build();
+
+        assertEquals(1234, (int) pageTiming.onContentLoad());
+        assertEquals(5678, (int) pageTiming.onLoad());
+        assertEquals("My comment", pageTiming.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPageTiming.class).verify();
     }
