@@ -42,6 +42,24 @@ public class HarPostDataTest extends AbstractMapperTest<HarPostData> {
     }
 
     @Test
+    void testBuilder() {
+        HarPostData postData = HarPostData.builder().build();
+        testNullability(postData);
+
+        postData = HarPostData.builder()
+                .mimeType("aMimeType")
+                .params(EXPECTED_LIST)
+                .text("aText")
+                .comment("My comment")
+                .build();
+
+        assertEquals("aMimeType", postData.mimeType());
+        assertEquals(EXPECTED_LIST, postData.params());
+        assertEquals("aText", postData.text());
+        assertEquals("My comment", postData.comment());
+    }
+
+    @Test
     public void equalsContract() {
         EqualsVerifier.simple().forClass(HarPostData.class).verify();
     }

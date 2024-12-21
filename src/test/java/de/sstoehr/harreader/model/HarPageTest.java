@@ -45,6 +45,26 @@ class HarPageTest extends AbstractMapperTest<HarPage> {
     }
 
     @Test
+    void testBuilder() {
+        HarPage page = HarPage.builder().build();
+        testNullability(page);
+
+        page = HarPage.builder()
+                .startedDateTime(EXPECTED_STARTED)
+                .id("anId")
+                .title("aTitle")
+                .pageTimings(HarPageTiming.builder().build())
+                .comment("my comment")
+                .build();
+
+        assertEquals(EXPECTED_STARTED, page.startedDateTime());
+        assertEquals("anId", page.id());
+        assertEquals("aTitle", page.title());
+        assertNotNull(page.pageTimings());
+        assertEquals("my comment", page.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarPage.class).verify();
     }

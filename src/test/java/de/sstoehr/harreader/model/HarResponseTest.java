@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class HarResponseTest extends AbstractMapperTest<HarResponse> {
 
     @Override
@@ -86,6 +88,36 @@ class HarResponseTest extends AbstractMapperTest<HarResponse> {
     @Test
     void testNullability() {
         testNullability(new HarResponse());
+    }
+
+    @Test
+    void testBuilder() {
+        HarResponse response = HarResponse.builder().build();
+        testNullability(response);
+
+        response = HarResponse.builder()
+                .status(200)
+                .statusText("OK")
+                .httpVersion("HTTP/1.1")
+                .cookies(List.of(HarCookie.builder().build()))
+                .headers(List.of(HarHeader.builder().build()))
+                .content(HarContent.builder().build())
+                .redirectURL("redirectUrl")
+                .headersSize(318L)
+                .bodySize(16997L)
+                .comment("My comment")
+                .build();
+
+        assertEquals(200, response.status());
+        assertEquals("OK", response.statusText());
+        assertEquals("HTTP/1.1", response.httpVersion());
+        assertNotNull(response.cookies());
+        assertNotNull(response.headers());
+        assertNotNull(response.content());
+        assertEquals("redirectUrl", response.redirectURL());
+        assertEquals(318L, (long) response.headersSize());
+        assertEquals(16997L, (long) response.bodySize());
+        assertEquals("My comment", response.comment());
     }
 
     @Test

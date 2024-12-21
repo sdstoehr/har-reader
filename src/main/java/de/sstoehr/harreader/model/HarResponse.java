@@ -1,6 +1,8 @@
 package de.sstoehr.harreader.model;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Builder;
+import lombok.Singular;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,12 +17,13 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder(toBuilder = true)
 public record HarResponse(
         int status,
         @Nullable String statusText,
         @Nullable String httpVersion,
-        @Nonnull List<HarCookie> cookies,
-        @Nonnull List<HarHeader> headers,
+        @Nonnull @Singular("cookie") List<HarCookie> cookies,
+        @Nonnull @Singular("header") List<HarHeader> headers,
         @Nonnull HarContent content,
         @Nullable String redirectURL,
         @Nonnull Long headersSize,

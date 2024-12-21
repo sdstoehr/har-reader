@@ -69,6 +69,36 @@ public class HarEntryTest extends AbstractMapperTest<HarEntry> {
     }
 
     @Test
+    void testBuilder() {
+        HarEntry entry = HarEntry.builder().build();
+        testNullability(entry);
+
+        entry = HarEntry.builder()
+                .pageref("aPageref")
+                .startedDateTime(EXPECTED_STARTED)
+                .time(12345)
+                .request(HarRequest.builder().build())
+                .response(HarResponse.builder().build())
+                .cache(HarCache.builder().build())
+                .timings(HarTiming.builder().build())
+                .serverIPAddress("server.ip")
+                .connection("connection")
+                .comment("comment")
+                .build();
+
+        assertEquals("aPageref", entry.pageref());
+        assertEquals(EXPECTED_STARTED, entry.startedDateTime());
+        assertEquals(12345, (int) entry.time());
+        assertNotNull(entry.request());
+        assertNotNull(entry.response());
+        assertNotNull(entry.cache());
+        assertNotNull(entry.timings());
+        assertEquals("server.ip", entry.serverIPAddress());
+        assertEquals("connection", entry.connection());
+        assertEquals("comment", entry.comment());
+    }
+
+    @Test
     public void equalsContract() {
         EqualsVerifier.simple().forClass(HarEntry.class).verify();
     }

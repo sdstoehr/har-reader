@@ -36,6 +36,28 @@ class HarContentTest extends AbstractMapperTest<HarContent> {
     }
 
     @Test
+    void testBuilder() {
+        HarContent content = HarContent.builder().build();
+        testNullability(content);
+
+        content = HarContent.builder()
+                .size(123L)
+                .compression(45L)
+                .mimeType("mime/type")
+                .text("my content")
+                .encoding("base64")
+                .comment("my comment")
+                .build();
+
+        assertEquals(123L, (long) content.size());
+        assertEquals(45L, (long) content.compression());
+        assertEquals("mime/type", content.mimeType());
+        assertEquals("my content", content.text());
+        assertEquals("base64", content.encoding());
+        assertEquals("my comment", content.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarContent.class).verify();
     }

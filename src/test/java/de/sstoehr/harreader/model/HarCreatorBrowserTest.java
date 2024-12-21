@@ -32,6 +32,22 @@ class HarCreatorBrowserTest extends AbstractMapperTest<HarCreatorBrowser> {
     }
 
     @Test
+    void testBuilder() {
+        HarCreatorBrowser creatorBrowser = HarCreatorBrowser.builder().build();
+        testNullability(creatorBrowser);
+
+        creatorBrowser = HarCreatorBrowser.builder()
+                .name("aName")
+                .version("aVersion")
+                .comment("my comment")
+                .build();
+
+        assertEquals("aName", creatorBrowser.name());
+        assertEquals("aVersion", creatorBrowser.version());
+        assertEquals("my comment", creatorBrowser.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarCreatorBrowser.class).verify();
     }

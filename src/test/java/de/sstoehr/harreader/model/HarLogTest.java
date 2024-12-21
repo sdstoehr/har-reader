@@ -90,6 +90,24 @@ class HarLogTest extends AbstractMapperTest<HarLog> {
     }
 
     @Test
+    void testBuilder() {
+        HarLog log = HarLog.builder().build();
+        testNullability(log);
+
+        log = HarLog.builder()
+                .version("1.2")
+                .creator(HarCreatorBrowser.builder().build())
+                .browser(HarCreatorBrowser.builder().build())
+                .comment("My comment")
+                .build();
+
+        assertEquals("1.2", log.version());
+        assertNotNull(log.creator());
+        assertNotNull(log.browser());
+        assertEquals("My comment", log.comment());
+    }
+
+    @Test
     void equalsContract() {
         EqualsVerifier.simple().forClass(HarLog.class).verify();
     }
