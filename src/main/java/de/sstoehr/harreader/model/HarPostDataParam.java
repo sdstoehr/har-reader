@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Information about POST params.
@@ -15,75 +16,36 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarPostDataParam {
+public record HarPostDataParam(@Nullable String name,
+        @Nullable String value,
+        @Nullable String fileName,
+        @Nullable String contentType,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
-    private String name;
-    private String value;
-    private String fileName;
-    private String contentType;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return Name of param, null if not present.
-     */
-    public String getName() {
-        return name;
+    public HarPostDataParam() {
+        this(null, null, null, null, null, new HashMap<>());
     }
 
-    public void setName(String name) {
+    public HarPostDataParam(@Nullable String name,
+                            @Nullable String value,
+                            @Nullable String fileName,
+                            @Nullable String contentType,
+                            @Nullable String comment,
+                            @Nullable Map<String, Object> additional) {
         this.name = name;
-    }
-
-    /**
-     * @return Value of a param or content of posted file, null if not present.
-     */
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
         this.value = value;
-    }
-
-    /**
-     * @return Name of posted file, null if not present.
-     */
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    /**
-     * @return Content type of posted file, null if not present.
-     */
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
         this.contentType = contentType;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -92,21 +54,4 @@ public class HarPostDataParam {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarPostDataParam)) return false;
-        HarPostDataParam that = (HarPostDataParam) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(value, that.value) &&
-                Objects.equals(fileName, that.fileName) &&
-                Objects.equals(contentType, that.contentType) &&
-                Objects.equals(comment, that.comment) &&
-                Objects.equals(additional, that.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, value, fileName, contentType, comment, additional);
-    }
 }

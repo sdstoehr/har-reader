@@ -1,141 +1,56 @@
 package de.sstoehr.harreader.model;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarTiming {
+public record HarTiming(
+        @Nonnull Integer blocked,
+        @Nonnull Integer dns,
+        @Nonnull Integer connect,
+        @Nullable Integer send,
+        @JsonProperty("wait") @Nullable Integer waitTime,
+        @Nullable Integer receive,
+        @Nonnull Integer ssl,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
     protected static final Integer DEFAULT_TIME = -1;
 
-    private Integer blocked;
-    private Integer dns;
-    private Integer connect;
-    private Integer send;
-    private Integer wait;
-    private Integer receive;
-    private Integer ssl;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return Time spent in a queue waiting for a network connection.
-     * {@link #DEFAULT_TIME} if the timing does not apply to the current request.
-     */
-    public Integer getBlocked() {
-        if (blocked == null) {
-            return DEFAULT_TIME;
-        }
-        return blocked;
+    public HarTiming() {
+        this(DEFAULT_TIME, DEFAULT_TIME, DEFAULT_TIME, null, null, null, DEFAULT_TIME, null, new HashMap<>());
     }
 
-    public void setBlocked(Integer blocked) {
-        this.blocked = blocked;
-    }
-
-    /**
-     * @return DNS resolution time. The time required to resolve a host name.
-     * {@link #DEFAULT_TIME} if the timing does not apply to the current request.
-     */
-    public Integer getDns() {
-        if (dns == null) {
-            return DEFAULT_TIME;
-        }
-        return dns;
-    }
-
-    public void setDns(Integer dns) {
-        this.dns = dns;
-    }
-
-    /**
-     * @return Time required to create TCP connection.
-     * {@link #DEFAULT_TIME} if the timing does not apply to the current request.
-     */
-    public Integer getConnect() {
-        if (connect == null) {
-            return DEFAULT_TIME;
-        }
-        return connect;
-    }
-
-    public void setConnect(Integer connect) {
-        this.connect = connect;
-    }
-
-    /**
-     * @return Time required to send HTTP request to the server, null if not present.
-     */
-    public Integer getSend() {
-        return send;
-    }
-
-    public void setSend(Integer send) {
+    public HarTiming(@Nullable Integer blocked,
+                     @Nullable Integer dns,
+                     @Nullable Integer connect,
+                     @Nullable Integer send,
+                     @Nullable Integer waitTime,
+                     @Nullable Integer receive,
+                     @Nullable Integer ssl,
+                     @Nullable String comment,
+                     @Nullable Map<String, Object> additional) {
+        this.blocked = (blocked == null) ? DEFAULT_TIME : blocked;
+        this.dns = (dns == null) ? DEFAULT_TIME : dns;
+        this.connect = (connect == null) ? DEFAULT_TIME : connect;
         this.send = send;
-    }
-
-    /**
-     * @return Waiting for a response from the server, null if not present.
-     */
-    public Integer getWait() {
-        return wait;
-    }
-
-    public void setWait(Integer wait) {
-        this.wait = wait;
-    }
-
-    /**
-     * @return Time required to read entire response from the server (or cache), null if not present.
-     */
-    public Integer getReceive() {
-        return receive;
-    }
-
-    public void setReceive(Integer receive) {
+        this.waitTime = waitTime;
         this.receive = receive;
-    }
-
-    /**
-     * @return Time required for SSL/TLS negotiation.
-     * If this field is defined then the time is also included in the connect field
-     * (to ensure backward compatibility with HAR 1.1).
-     * {@link #DEFAULT_TIME} if the timing does not apply to the current request.
-     */
-    public Integer getSsl() {
-        if (ssl == null) {
-            return DEFAULT_TIME;
-        }
-        return ssl;
-    }
-
-    public void setSsl(Integer ssl) {
-        this.ssl = ssl;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
+        this.ssl = (ssl == null) ? DEFAULT_TIME : ssl;
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -144,24 +59,4 @@ public class HarTiming {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarTiming)) return false;
-        HarTiming harTiming = (HarTiming) o;
-        return Objects.equals(blocked, harTiming.blocked) &&
-                Objects.equals(dns, harTiming.dns) &&
-                Objects.equals(connect, harTiming.connect) &&
-                Objects.equals(send, harTiming.send) &&
-                Objects.equals(wait, harTiming.wait) &&
-                Objects.equals(receive, harTiming.receive) &&
-                Objects.equals(ssl, harTiming.ssl) &&
-                Objects.equals(comment, harTiming.comment) &&
-                Objects.equals(additional, harTiming.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(blocked, dns, connect, send, wait, receive, ssl, comment, additional);
-    }
 }

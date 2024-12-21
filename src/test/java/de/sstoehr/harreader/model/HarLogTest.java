@@ -20,66 +20,65 @@ class HarLogTest extends AbstractMapperTest<HarLog> {
     @Test
     void testVersion() {
         HarLog log = new HarLog();
-        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.version());
 
-        log.setVersion("1.2");
-        assertEquals("1.2", log.getVersion());
+        log = new HarLog("1.2", null, null, null, null, null, null);
+        assertEquals("1.2", log.version());
 
-        log.setVersion(null);
-        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        log = new HarLog(null, null, null, null, null, null, null);
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.version());
 
-        log.setVersion("");
-        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        log = new HarLog("", null, null, null, null, null, null);
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.version());
 
-        log.setVersion("  ");
-        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
+        log = new HarLog("  ", null, null, null, null, null, null);
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.version());
     }
 
     @Test
     void testPages() {
         HarLog log = new HarLog();
-        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
+        assertEquals(EXPECTED_PAGES_LIST, log.pages());
 
-        log.setPages(null);
-        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
+        log = new HarLog("1.2", null, null, null, null, null, null);
+        assertEquals(EXPECTED_PAGES_LIST, log.pages());
     }
 
     @Test
     void testEntries() {
         HarLog log = new HarLog();
-        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
+        assertEquals(EXPECTED_ENTRIES_LIST, log.entries());
 
-        log.setEntries(null);
-        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
+        log = new HarLog("1.2", null, null, null, null, null, null);
+        assertEquals(EXPECTED_ENTRIES_LIST, log.entries());
     }
 
     @Test
     void testCreatorNull() {
         HarLog log = new HarLog();
-        log.setCreator(null);
-        assertNotNull(log.getCreator());
+        assertNotNull(log.creator());
     }
 
     @Test
     void testBrowserNull() {
         HarLog log = new HarLog();
-        log.setBrowser(null);
-        assertNull(log.getBrowser());
+        assertNull(log.browser());
     }
 
     @Override
+    @Test
     void testMapping() {
         HarLog log = map("{\"creator\": {}, \"browser\": {}, \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarLog.class);
 
-        assertEquals(EXPECTED_DEFAULT_VERSION, log.getVersion());
-        assertNotNull(log.getCreator());
-        assertNotNull(log.getBrowser());
-        assertEquals(EXPECTED_PAGES_LIST, log.getPages());
-        assertEquals(EXPECTED_ENTRIES_LIST, log.getEntries());
-        assertEquals("My comment", log.getComment());
+        assertEquals(EXPECTED_DEFAULT_VERSION, log.version());
+        assertNotNull(log.creator());
+        assertNotNull(log.browser());
+        assertEquals(EXPECTED_PAGES_LIST, log.pages());
+        assertEquals(EXPECTED_ENTRIES_LIST, log.entries());
+        assertEquals("My comment", log.comment());
 
-        assertNotNull(log.getAdditional());
-        assertEquals("unknown", log.getAdditional().get("_unknown"));
+        assertNotNull(log.additional());
+        assertEquals("unknown", log.additional().get("_unknown"));
 
         log = map(UNKNOWN_PROPERTY, HarLog.class);
         assertNotNull(log);

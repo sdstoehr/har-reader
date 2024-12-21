@@ -1,5 +1,6 @@
 package de.sstoehr.harreader.model;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public enum HttpStatus {
         return code;
     }
 
+    @Nonnull
     public static HttpStatus byCode(int code) {
         HttpStatus status = CODE_MAP.get(code);
         if (status == null) {

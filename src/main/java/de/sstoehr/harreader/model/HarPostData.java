@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Information about POST data.
@@ -17,66 +18,34 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarPostData {
+public record HarPostData(
+        @Nullable String mimeType,
+        @Nonnull List<HarPostDataParam> params,
+        @Nullable String text,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
-    private String mimeType;
-    private List<HarPostDataParam> params = new ArrayList<>();
-    private String text;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return MIME type of posted data, null if not present.
-     */
-    public String getMimeType() {
-        return mimeType;
+    public HarPostData() {
+        this(null, Collections.emptyList(), null, null, new HashMap<>());
     }
 
-    public void setMimeType(String mimeType) {
+    public HarPostData(@Nullable String mimeType,
+                       @Nullable List<HarPostDataParam> params,
+                       @Nullable String text,
+                       @Nullable String comment,
+                       @Nullable Map<String, Object> additional) {
         this.mimeType = mimeType;
-    }
-
-    /**
-     * @return List of posted params.
-     */
-    public List<HarPostDataParam> getParams() {
-        if (params == null) {
-            params = new ArrayList<>();
-        }
-        return params;
-    }
-
-    public void setParams(List<HarPostDataParam> params) {
-        this.params = params;
-    }
-
-    /**
-     * @return Plain text posted data, null if not present.
-     */
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
+        this.params = (params == null) ? Collections.emptyList() : params;
         this.text = text;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -85,20 +54,4 @@ public class HarPostData {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarPostData)) return false;
-        HarPostData that = (HarPostData) o;
-        return Objects.equals(mimeType, that.mimeType) &&
-                Objects.equals(params, that.params) &&
-                Objects.equals(text, that.text) &&
-                Objects.equals(comment, that.comment) &&
-                Objects.equals(additional, that.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mimeType, params, text, comment, additional);
-    }
 }

@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Information about query params.
@@ -15,51 +16,31 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarQueryParam {
+public record HarQueryParam(
+        @Nullable String name,
+        @Nullable String value,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
-    private String name;
-    private String value;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return Name of param, null if not present.
-     */
-    public String getName() {
-        return name;
+    public HarQueryParam() {
+        this(null, null, null, new HashMap<>());
     }
 
-    public void setName(String name) {
+    public HarQueryParam(@Nullable String name,
+                         @Nullable String value,
+                         @Nullable String comment,
+                         @Nullable Map<String, Object> additional) {
         this.name = name;
-    }
-
-    /**
-     * @return Value of param, null if not present.
-     */
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
         this.value = value;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -68,19 +49,4 @@ public class HarQueryParam {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarQueryParam)) return false;
-        HarQueryParam that = (HarQueryParam) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(value, that.value) &&
-                Objects.equals(comment, that.comment) &&
-                Objects.equals(additional, that.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, value, comment, additional);
-    }
 }

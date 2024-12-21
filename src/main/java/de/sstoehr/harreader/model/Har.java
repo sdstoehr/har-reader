@@ -3,7 +3,8 @@ package de.sstoehr.harreader.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Main HTTP Archive Class.
@@ -11,34 +12,9 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Har {
+public record Har(@Nonnull HarLog log) {
 
-    private HarLog log;
-
-    /**
-     * @return HAR log.
-     */
-    public HarLog getLog() {
-        if (log == null) {
-            log = new HarLog();
-        }
-        return log;
-    }
-
-    public void setLog(HarLog log) {
-        this.log = log;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Har har = (Har) o;
-        return Objects.equals(log, har.log);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(log);
+    public Har(@Nullable HarLog log) {
+        this.log = (log == null) ? new HarLog() : log;
     }
 }

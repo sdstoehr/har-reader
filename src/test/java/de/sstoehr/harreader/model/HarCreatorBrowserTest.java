@@ -10,16 +10,17 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 class HarCreatorBrowserTest extends AbstractMapperTest<HarCreatorBrowser> {
 
     @Override
+    @Test
     public void testMapping() {
         HarCreatorBrowser creatorBrowser = map("{\"name\":\"aName\",\"version\":\"aVersion\",\"comment\":\"my comment\",\"_unknown\":\"unknown\"}", HarCreatorBrowser.class);
 
         assertNotNull(creatorBrowser);
-        assertEquals("aName", creatorBrowser.getName());
-        assertEquals("aVersion", creatorBrowser.getVersion());
-        assertEquals("my comment", creatorBrowser.getComment());
+        assertEquals("aName", creatorBrowser.name());
+        assertEquals("aVersion", creatorBrowser.version());
+        assertEquals("my comment", creatorBrowser.comment());
 
-        assertNotNull(creatorBrowser.getAdditional());
-        assertEquals("unknown", creatorBrowser.getAdditional().get("_unknown"));
+        assertNotNull(creatorBrowser.additional());
+        assertEquals("unknown", creatorBrowser.additional().get("_unknown"));
 
         creatorBrowser = map(UNKNOWN_PROPERTY, HarCreatorBrowser.class);
         assertNotNull(creatorBrowser);

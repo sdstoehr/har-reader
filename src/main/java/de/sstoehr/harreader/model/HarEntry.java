@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Date;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Information about a single HTTP request.
@@ -17,148 +18,53 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HarEntry {
+public record HarEntry(
+        @Nullable String pageref,
+        @Nullable @JsonFormat(shape = JsonFormat.Shape.STRING) ZonedDateTime startedDateTime,
+        @Nullable Integer time,
+        @Nonnull HarRequest request,
+        @Nonnull HarResponse response,
+        @Nonnull HarCache cache,
+        @Nonnull HarTiming timings,
+        @Nullable String serverIPAddress,
+        @Nullable String connection,
+        @Nullable String comment,
+        @Nonnull Map<String, Object> additional) {
 
-    private String pageref;
-    private Date startedDateTime;
-    private Integer time;
-    private HarRequest request;
-    private HarResponse response;
-    private HarCache cache;
-    private HarTiming timings;
-    private String serverIPAddress;
-    private String connection;
-    private String comment;
-    private final Map<String, Object> additional = new HashMap<>();
-
-    /**
-     * @return Reference to parent page, to which the request belongs to, null if not present.
-     */
-    public String getPageref() {
-        return pageref;
+    public HarEntry() {
+        this(null, null, null, new HarRequest(), new HarResponse(),
+                new HarCache(), new HarTiming(), null, null, null, new HashMap<>());
     }
 
-    public void setPageref(String pageref) {
+    public HarEntry(@Nullable String pageref,
+                    @Nullable ZonedDateTime startedDateTime,
+                    @Nullable Integer time,
+                    @Nullable HarRequest request,
+                    @Nullable HarResponse response,
+                    @Nullable HarCache cache,
+                    @Nullable HarTiming timings,
+                    @Nullable String serverIPAddress,
+                    @Nullable String connection,
+                    @Nullable String comment,
+                    @Nullable Map<String, Object> additional) {
         this.pageref = pageref;
-    }
-
-    /**
-     * @return Start time of request, null if not present.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    public Date getStartedDateTime() {
-        return startedDateTime;
-    }
-
-    public void setStartedDateTime(Date startedDateTime) {
         this.startedDateTime = startedDateTime;
-    }
-
-    /**
-     * @return Total request time (in ms), null if not present.
-     */
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
         this.time = time;
-    }
-
-    /**
-     * @return Detailed request information.
-     */
-    public HarRequest getRequest() {
-        if (request == null) {
-            request = new HarRequest();
-        }
-        return request;
-    }
-
-    public void setRequest(HarRequest request) {
-        this.request = request;
-    }
-
-    /**
-     * @return Detailed response information.
-     */
-    public HarResponse getResponse() {
-        if (response == null) {
-            response = new HarResponse();
-        }
-        return response;
-    }
-
-    public void setResponse(HarResponse response) {
-        this.response = response;
-    }
-
-    /**
-     * @return Information about cache usage.
-     */
-    public HarCache getCache() {
-        if (cache == null) {
-            cache = new HarCache();
-        }
-        return cache;
-    }
-
-    public void setCache(HarCache cache) {
-        this.cache = cache;
-    }
-
-    /**
-     * @return Detailed information about request/response timings.
-     */
-    public HarTiming getTimings() {
-        if (timings == null) {
-            timings = new HarTiming();
-        }
-        return timings;
-    }
-
-    public void setTimings(HarTiming timings) {
-        this.timings = timings;
-    }
-
-    /**
-     * @return Server IP address (result of DNS resolution), null if not present.
-     */
-    public String getServerIPAddress() {
-        return serverIPAddress;
-    }
-
-    public void setServerIPAddress(String serverIPAddress) {
+        this.request = (request == null) ? new HarRequest() : request;
+        this.response = (response == null) ? new HarResponse() : response;
+        this.cache = (cache == null) ? new HarCache() : cache;
+        this.timings = (timings == null) ? new HarTiming() : timings;
         this.serverIPAddress = serverIPAddress;
-    }
-
-    /**
-     * @return Unique ID of TCP/IP connection, null if not present.
-     */
-    public String getConnection() {
-        return connection;
-    }
-
-    public void setConnection(String connection) {
         this.connection = connection;
-    }
-
-    /**
-     * @return Comment provided by the user or application, null if not present.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
         this.comment = comment;
+        this.additional = (additional == null) ? new HashMap<>() : additional;
     }
 
     /**
      * @return Map with additional keys, which are not officially supported by the HAR specification
      */
     @JsonAnyGetter
-    public Map<String, Object> getAdditional() {
+    public Map<String, Object> additional() {
         return additional;
     }
 
@@ -167,27 +73,4 @@ public class HarEntry {
         this.additional.put(key, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HarEntry)) return false;
-        HarEntry harEntry = (HarEntry) o;
-        return Objects.equals(pageref, harEntry.pageref) &&
-                Objects.equals(startedDateTime, harEntry.startedDateTime) &&
-                Objects.equals(time, harEntry.time) &&
-                Objects.equals(request, harEntry.request) &&
-                Objects.equals(response, harEntry.response) &&
-                Objects.equals(cache, harEntry.cache) &&
-                Objects.equals(timings, harEntry.timings) &&
-                Objects.equals(serverIPAddress, harEntry.serverIPAddress) &&
-                Objects.equals(connection, harEntry.connection) &&
-                Objects.equals(comment, harEntry.comment) &&
-                Objects.equals(additional, harEntry.additional);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pageref, startedDateTime, time, request, response, cache, timings, serverIPAddress,
-                connection, comment, additional);
-    }
 }

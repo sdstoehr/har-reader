@@ -10,15 +10,16 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 class HarQueryParamTest extends AbstractMapperTest<HarQueryParam> {
 
     @Override
+    @Test
     void testMapping() {
         HarQueryParam queryParam = map("{\"name\": \"aName\", \"value\":\"aValue\", \"comment\": \"My comment\",\"_unknown\":\"unknown\"}", HarQueryParam.class);
 
-        assertEquals("aName", queryParam.getName());
-        assertEquals("aValue", queryParam.getValue());
-        assertEquals("My comment", queryParam.getComment());
+        assertEquals("aName", queryParam.name());
+        assertEquals("aValue", queryParam.value());
+        assertEquals("My comment", queryParam.comment());
 
-        assertNotNull(queryParam.getAdditional());
-        assertEquals("unknown", queryParam.getAdditional().get("_unknown"));
+        assertNotNull(queryParam.additional());
+        assertEquals("unknown", queryParam.additional().get("_unknown"));
     }
 
     @Test
