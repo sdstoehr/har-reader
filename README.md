@@ -196,6 +196,7 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 
 <details>
 <summary>Older releases</summary>
+  
 ### 2.2.1 - 2022-05-26
 
 * Updated dependencies
