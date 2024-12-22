@@ -17,15 +17,17 @@ Read [HTTP Archives](http://www.softwareishard.com/blog/har-12-spec/) with Java.
 
 ## Usage
 
-Reading HAR from File:
+### Reading HAR
+
+#### Reading HAR from File:
 
 ```java
 HarReader harReader = new HarReader();
 Har har = harReader.readFromFile(new File("myhar.har"));
-System.out.println(har.getLog().getCreator().getName());
+System.out.println(har.log().creator().name());
 ```
 
-Reading HAR from String:
+#### Reading HAR from String:
 
 ```java
 HarReader harReader = new HarReader();
@@ -43,7 +45,9 @@ Har har = harReader.readFromString("{ ... HAR-JSON-Data ... }", HarReaderMode.LA
 
 You can also follow the next section and configure your own mapping configuration to deal with these fields.
 
-Writing HAR to File:
+### Writing HAR
+
+#### Writing HAR to File:
 
 ```java
 Har har = new Har();
@@ -51,7 +55,7 @@ HarWriter harWriter = new HarWriter();
 harWriter.writeTo(new File("myhar.har"), har);
 ```
 
-Writing HAR to OutputStream:
+#### Writing HAR to OutputStream:
 
 ```java
 Har har = new Har();
@@ -60,7 +64,7 @@ ByteArrayOutputStream baos = new ByteArrayOutputStream();
 harWriter.writeTo(baos, har);
 ```
 
-Writing HAR to Writer:
+#### Writing HAR to Writer:
 
 ```java
 Har har = new Har();
@@ -69,12 +73,60 @@ StringWriter sw = new StringWriter();
 harWriter.writeTo(sw, har);
 ```
 
-Writing HAR as bytes:
+#### Writing HAR as bytes:
 
 ```java
 Har har = new Har();
 HarWriter harWriter = new HarWriter();
 byte[] harBytes = harWriter.writeAsBytes(har);
+```
+
+#### Manually creating HAR data structures:
+
+The model objects can be created by using the provided builder API:
+
+```java
+Har har = Har.builder()
+        .log(HarLog.builder()
+                .creator(HarCreatorBrowser.builder()
+                        .name("HAR reader")
+                        .version("1.0")
+                        .build())
+                .entry(HarEntry.builder()
+                        .pageref("page_0")
+                        .startedDateTime(ZonedDateTime.parse("2021-01-01T00:00:00Z"))
+                        .time(42)
+                        .request(HarRequest.builder()
+                                .method(HttpMethod.GET.name())
+                                .url("https://www.example.com")
+                                .httpVersion("HTTP/1.1")
+                                .build())
+                        .response(HarResponse.builder()
+                                .status(200)
+                                .statusText("OK")
+                                .httpVersion("HTTP/1.1")
+                                .build())
+                        .build())
+                .build()
+        ).build();
+```
+
+The builders allow to add single entries to lists or multiple entries at once, e.g.:
+
+```java
+harLogBuilder.page(HarPage page); // add a single page
+harLogBuilder.pages(List<HarPage> pages); // add multiple pages (it is NOT replacing previously added pages!)
+harLogBuilder.clearPages(); // clear previously added pages
+```
+
+To update an existing object, you can use `.toBuilder()` to obtain a prefilled builder:
+
+```java
+Har updatedHar = har.toBuilder()
+        .log(har.log().toBuilder()
+                .comment("Updated comment")
+                .build())
+        .build();
 ```
 
 ### Customizing HAR reader
@@ -142,7 +194,8 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 
 [Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.3.0)
 
-
+<details>
+<summary>Older releases</summary>
 ### 2.2.1 - 2022-05-26
 
 * Updated dependencies
@@ -249,3 +302,4 @@ response.getAdditional().get("_transferSize");
 * HAR reader threw exceptions, when required fields were empty. This behaviour was changed, so that you can now read non-standard-compliant HAR files
   
 [Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-2.0.0)  
+</details>
