@@ -4,7 +4,7 @@
 
     <groupId>de.sstoehr</groupId>
     <artifactId>har-reader</artifactId>
-    <version>3.1.2</version>
+    <version>3.1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>har-reader</name>
@@ -162,7 +162,7 @@
         <url>https://github.com/sdstoehr/har-reader.git</url>
         <connection>scm:git:git@github.com:sdstoehr/har-reader.git</connection>
         <developerConnection>scm:git:git@github.com:sdstoehr/har-reader.git</developerConnection>
-      <tag>har-reader-3.1.2</tag>
+      <tag>har-reader-3.1.1</tag>
   </scm>
 
     <profiles>
