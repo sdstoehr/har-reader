@@ -17,30 +17,30 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder(toBuilder = true)
 public record HarTiming(
-        @Nonnull Integer blocked,
-        @Nonnull Integer dns,
-        @Nonnull Integer connect,
-        @Nullable Integer send,
-        @JsonProperty("wait") @Nullable Integer waitTime,
-        @Nullable Integer receive,
-        @Nonnull Integer ssl,
+        @Nonnull Long blocked,
+        @Nonnull Long dns,
+        @Nonnull Long connect,
+        @Nullable Long send,
+        @JsonProperty("wait") @Nullable Long waitTime,
+        @Nullable Long receive,
+        @Nonnull Long ssl,
         @Nullable String comment,
         @Nonnull Map<String, Object> additional) {
 
-    protected static final Integer DEFAULT_TIME = -1;
+    protected static final Long DEFAULT_TIME = -1L;
 
     public HarTiming() {
         this(DEFAULT_TIME, DEFAULT_TIME, DEFAULT_TIME,
                 null, null, null, DEFAULT_TIME, null, new HashMap<>());
     }
 
-    public HarTiming(@Nullable Integer blocked,
-                     @Nullable Integer dns,
-                     @Nullable Integer connect,
-                     @Nullable Integer send,
-                     @Nullable Integer waitTime,
-                     @Nullable Integer receive,
-                     @Nullable Integer ssl,
+    public HarTiming(@Nullable Long blocked,
+                     @Nullable Long dns,
+                     @Nullable Long connect,
+                     @Nullable Long send,
+                     @Nullable Long waitTime,
+                     @Nullable Long receive,
+                     @Nullable Long ssl,
                      @Nullable String comment,
                      @Nullable Map<String, Object> additional) {
         this.blocked = (blocked == null) ? DEFAULT_TIME : blocked;
