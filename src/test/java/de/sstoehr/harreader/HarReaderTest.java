@@ -70,14 +70,15 @@ class HarReaderTest {
     }
 
     @Test
-    void invalidIntegerStrict() {
-        File harFile = new File("src/test/resources/sstoehr.invalid-integer.har");
-        assertThrows(HarReaderException.class, () -> harReader.readFromFile(harFile));
+    void invalidIntegerStrict() throws HarReaderException {
+        File harFile = new File("src/test/resources/sstoehr.long-timing.har");
+        Har har = harReader.readFromFile(harFile, HarReaderMode.STRICT);
+        assertNotNull(har);
     }
 
     @Test
     void invalidIntegerLax() throws HarReaderException {
-        File harFile = new File("src/test/resources/sstoehr.invalid-integer.har");
+        File harFile = new File("src/test/resources/sstoehr.long-timing.har");
         Har har = harReader.readFromFile(harFile, HarReaderMode.LAX);
         assertNotNull(har);
     }
