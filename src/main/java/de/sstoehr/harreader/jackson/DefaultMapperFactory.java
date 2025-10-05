@@ -1,33 +1,35 @@
 package de.sstoehr.harreader.jackson;
 
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.sstoehr.harreader.HarReaderMode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
+
+import java.time.ZonedDateTime;
+
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES;
+import static tools.jackson.databind.cfg.DateTimeFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE;
 
 public class DefaultMapperFactory implements MapperFactory {
 
     public ObjectMapper instance(HarReaderMode mode) {
-        SimpleModule module = new SimpleModule();
         if (mode == HarReaderMode.LAX) {
-            module.addDeserializer(ZonedDateTime.class, new ExceptionIgnoringZonedDateTimeDeserializer());
-            module.addDeserializer(Integer.class, new ExceptionIgnoringIntegerDeserializer());
+            SimpleModule module = new SimpleModule()
+              .addDeserializer(ZonedDateTime.class, new ExceptionIgnoringZonedDateTimeDeserializer())
+              .addDeserializer(Integer.class, new ExceptionIgnoringIntegerDeserializer());
+            return builder().addModule(module).build();
         }
-        return instance().registerModule(module);
+        return instance();
     }
 
     public ObjectMapper instance() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
-
-        return mapper;
+      return builder().build();
     }
+
+  private JsonMapper.Builder builder() {
+    return JsonMapper.builder()
+      .configure(ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)
+      .configure(FAIL_ON_NULL_FOR_PRIMITIVES, false);
+  }
 
 }

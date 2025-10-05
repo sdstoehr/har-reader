@@ -1,19 +1,14 @@
 package de.sstoehr.harreader.model;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.sstoehr.harreader.jackson.DefaultMapperFactory;
 import org.junit.jupiter.api.Assertions;
+import tools.jackson.databind.ObjectMapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class AbstractMapperTest<T> {
 

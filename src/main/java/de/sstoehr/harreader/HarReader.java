@@ -1,12 +1,11 @@
 package de.sstoehr.harreader;
 
-import java.io.File;
-import java.io.InputStream;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.sstoehr.harreader.jackson.MapperFactory;
 import de.sstoehr.harreader.model.Har;
+import tools.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class HarReader extends AbstractHarIO {
 

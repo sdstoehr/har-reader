@@ -1,8 +1,7 @@
 package de.sstoehr.harreader.jackson;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.sstoehr.harreader.HarReaderMode;
+import tools.jackson.databind.ObjectMapper;
 
 public interface MapperFactory {
 
