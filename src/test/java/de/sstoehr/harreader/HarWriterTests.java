@@ -1,19 +1,7 @@
 package de.sstoehr.harreader;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.time.ZonedDateTime;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.sstoehr.harreader.jackson.DefaultMapperFactory;
+import de.sstoehr.harreader.model.Har;
 import de.sstoehr.harreader.model.HarCreatorBrowser;
 import de.sstoehr.harreader.model.HarEntry;
 import de.sstoehr.harreader.model.HarLog;
@@ -21,13 +9,22 @@ import de.sstoehr.harreader.model.HarRequest;
 import de.sstoehr.harreader.model.HarResponse;
 import de.sstoehr.harreader.model.HttpMethod;
 import org.junit.jupiter.api.Test;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.json.JsonMapper;
 
-import de.sstoehr.harreader.model.Har;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.time.ZonedDateTime;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HarWriterTests {
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new JavaTimeModule())
-            .configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+            .configure(DateTimeFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false).build();
     private static final File HAR_FILE = new File("src/test/resources/sstoehr.har");
 
     @Test
@@ -45,7 +42,7 @@ class HarWriterTests {
 
         Har har = new HarReader().readFromFile(HAR_FILE);
         HarWriter writer = new HarWriter(new DefaultMapperFactory());
-        assertEquals(MAPPER.writeValueAsString(expected), new String(writer.writeAsBytes(har), StandardCharsets.UTF_8));
+        assertEquals(MAPPER.writeValueAsString(expected), new String(writer.writeAsBytes(har), UTF_8));
     }
 
     @Test
@@ -55,7 +52,7 @@ class HarWriterTests {
 
         HarWriter writer = new HarWriter();
         writer.writeTo(baos, expected);
-        assertEquals(MAPPER.writeValueAsString(expected), new String(baos.toByteArray(), StandardCharsets.UTF_8));
+        assertEquals(MAPPER.writeValueAsString(expected), baos.toString(UTF_8));
     }
 
     @Test

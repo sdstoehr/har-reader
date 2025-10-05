@@ -1,12 +1,11 @@
 package de.sstoehr.harreader;
 
-import java.io.IOException;
-import java.util.function.Function;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.sstoehr.harreader.jackson.DefaultMapperFactory;
 import de.sstoehr.harreader.jackson.MapperFactory;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.function.Function;
 
 public abstract class AbstractHarIO {
     private final MapperFactory mapperFactory;
@@ -27,10 +26,10 @@ public abstract class AbstractHarIO {
     }
 
     protected static <T, E extends Exception> T wrap(ObjectMapper mapper, IOFunction<ObjectMapper, T> consumer,
-            Function<IOException, E> exceptionFactory) throws E {
+            Function<JacksonException, E> exceptionFactory) throws E {
         try {
             return consumer.apply(mapper);
-        } catch(IOException thrown) {
+        } catch(JacksonException thrown) {
             throw exceptionFactory.apply(thrown);
         }
     }
@@ -38,7 +37,7 @@ public abstract class AbstractHarIO {
     @FunctionalInterface
     protected interface IOFunction<T, R> {
 
-        R apply(T object) throws IOException;
+        R apply(T object) throws JacksonException;
 
     }
 

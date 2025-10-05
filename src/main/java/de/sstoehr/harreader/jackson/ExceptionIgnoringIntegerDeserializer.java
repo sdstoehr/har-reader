@@ -1,21 +1,19 @@
 package de.sstoehr.harreader.jackson;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.deser.std.NumberDeserializers;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.deser.jdk.NumberDeserializers;
 
-import java.io.IOException;
-
-public class ExceptionIgnoringIntegerDeserializer extends JsonDeserializer<Integer> {
+public class ExceptionIgnoringIntegerDeserializer extends ValueDeserializer<Integer> {
     @Override
-    public Integer deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public Integer deserialize(JsonParser jp, DeserializationContext ctxt) {
         try {
             NumberDeserializers.IntegerDeserializer integerDeserializer = new NumberDeserializers.IntegerDeserializer(Integer.class, null);
             return integerDeserializer.deserialize(jp, ctxt);
-        } catch (IOException e) {
-            //ignore
+        } catch (JacksonException ignore) {
+            return null;
         }
-        return null;
     }
 }
