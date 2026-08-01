@@ -44,7 +44,7 @@ Add the dependency to your `pom.xml`:
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 ```
 
@@ -202,7 +202,16 @@ See [DefaultMapperFactory](src/main/java/de/sstoehr/harreader/jackson/DefaultMap
 
 ## Release Notes
 
-### 4.0.3 - 2026-07-01
+### 4.0.4 - 2026-08-01
+
+* Dependency updates
+
+[Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-4.0.4)
+
+<details>
+  <summary>Older releases of 4.x series</summary>
+
+  ### 4.0.3 - 2026-07-01
 
 * Dependency updates
 
@@ -219,6 +228,7 @@ See [DefaultMapperFactory](src/main/java/de/sstoehr/harreader/jackson/DefaultMap
 * Dependency updates
 
 [Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-4.0.1)
+</details>
 
 ### 4.0.0 - 2025-10-05
 
@@ -228,30 +238,16 @@ If you need Jackson 2 support, use version 3.1.6.
 
 [Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-4.0.0)
 
-### 3.1.6 - 2025-10-02
-
-* Dependency updates
-
-[Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-3.1.6)
-
-### 3.1.0 - 2025-04-23
-
-**⚠️ BREAKING CHANGE:** Switched timings from `int` to `long`
-
-[Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-3.1.0)
-
-### 3.0.1 - 2024-12-21
-
-**Major modernization release:**
-- Minimum Java version: 17
-- Records-based model (immutable by default)
-- `ZonedDateTime` instead of `Date`
-- Proper `@Nullable` and `@NotNull` annotations
-
-[Full Release Details & Breaking Changes](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-3.0.1)
-
 <details>
-<summary>View Older Releases</summary>
+<summary>View Older Releases (3.x / 2.x series)</summary>
+  
+### 3.x series
+
+- **3.1.6** (2025-10-02): Dependency updates
+- **3.1.0** (2025-04-23): Switched timings from `int` to `long`
+- **3.0.0** (2024-12-21): Major modernization release, Java 17, Records, `ZonedDateTime` instead of `Date`, `@Nullable` and `@NotNull` annotations
+
+[View All Releases](https://github.com/sdstoehr/har-reader/releases)
 
 ### 2.x Series (Java 8+)
 
