@@ -44,7 +44,7 @@ Add the dependency to your `pom.xml`:
 <dependency>
   <groupId>de.sstoehr</groupId>
   <artifactId>har-reader</artifactId>
-  <version>4.0.4</version>
+  <version>4.0.5</version>
 </dependency>
 ```
 
@@ -201,6 +201,12 @@ HarReader harReader = new HarReader(new MyMapperFactory());
 See [DefaultMapperFactory](src/main/java/de/sstoehr/harreader/jackson/DefaultMapperFactory.java) for reference.
 
 ## Release Notes
+
+### 4.0.5 - 2026-11-01
+
+* Dependency updates
+
+[Full Release Details](https://github.com/sdstoehr/har-reader/releases/tag/har-reader-4.0.5)
 
 ### 4.0.4 - 2026-08-01
 
